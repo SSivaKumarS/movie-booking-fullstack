@@ -12,7 +12,7 @@ export default function AdminScan() {
     if (!bookingId.trim()) return;
     setLoading(true);
     setMessage("");
-    
+
     API.get(`/api/bookings/verify/${bookingId.trim()}`)
       .then((res) => {
         setBooking(res.data?.booking || res.data);
@@ -22,7 +22,7 @@ export default function AdminScan() {
       })
       .catch(() => {
         setBooking(null);
-        setMessage("❌ Invalid Ticket ID or Ticket not found in system database.");
+        setMessage("Invalid Ticket ID or Ticket not found in system database.");
       })
       .finally(() => setLoading(false));
   };
@@ -31,10 +31,10 @@ export default function AdminScan() {
     if (!bookingId.trim()) return;
     API.put(`/api/bookings/use/${bookingId.trim()}`)
       .then((res) => {
-        setMessage(" " + (res.data?.message || "Ticket marked as redeemed successfully!"));
+        setMessage(res.data?.message || "Ticket marked as redeemed successfully!");
       })
       .catch((err) => {
-        setMessage(" Error: " + (err.response?.data?.message || err.message));
+        setMessage("Error: " + (err.response?.data?.message || err.message));
       });
   };
 
@@ -43,11 +43,10 @@ export default function AdminScan() {
       <AdminNavbar />
 
       <div className="max-w-4xl mx-auto p-4 md:p-10 space-y-8 relative z-10">
-        
         {/* Header */}
         <div className="bg-[#0F0F17]/90 border border-gray-800/80 p-6 rounded-3xl backdrop-blur-2xl shadow-2xl text-center space-y-2">
           <span className="bg-red-600/20 text-red-400 border border-red-500/30 text-[10px] font-black px-3 py-0.5 rounded-full uppercase inline-block">
-             Gate QR & Digital Verification
+            Gate QR & Digital Verification
           </span>
           <h1 className="text-2xl md:text-3xl font-black text-white">
             Ticket Entry Scanner & Validator
@@ -70,9 +69,9 @@ export default function AdminScan() {
             <button
               onClick={verifyTicket}
               disabled={loading}
-              className="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-extrabold text-sm px-8 py-4 rounded-2xl transition shadow-xl shadow-red-600/30 whitespace-nowrap disabled:opacity-50"
+              className="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-extrabold text-sm px-8 py-4 rounded-2xl transition shadow-xl shadow-red-600/30 whitespace-nowrap disabled:opacity-50 cursor-pointer"
             >
-              {loading ? "Verifying..." : "⚡ Verify Pass"}
+              {loading ? "Verifying..." : " Verify Pass"}
             </button>
           </div>
 
@@ -124,14 +123,13 @@ export default function AdminScan() {
 
               <button
                 onClick={markUsed}
-                className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs rounded-2xl shadow-xl shadow-emerald-600/30 transition flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs rounded-2xl shadow-xl shadow-emerald-600/30 transition flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span></span> Mark Pass as Redeemed / Admitted
               </button>
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

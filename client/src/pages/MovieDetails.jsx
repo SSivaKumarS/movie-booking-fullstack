@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import API from "../api";
 import TrailerModal from "../components/TrailerModal";
@@ -10,6 +10,7 @@ function MovieDetails() {
   const [movie, setMovie] = useState(null);
   const [isTrailerOpen, setIsTrailerOpen] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarkLoading, setIsBookmarkLoading] = useState(false);
 
   // Reviews state
   const [reviews, setReviews] = useState([]);
@@ -18,7 +19,9 @@ function MovieDetails() {
   const [userRating, setUserRating] = useState(5);
   const [userComment, setUserComment] = useState("");
   const [reviewMsg, setReviewMsg] = useState("");
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
 
+  const reviewsContainerRef = useRef(null);
   const token = localStorage.getItem("token");
 
   const fetchReviews = () => {
@@ -29,7 +32,7 @@ function MovieDetails() {
         setTotalRatings(res.data.totalRatings || 0);
       })
       .catch((err) => {
-        console.log("Reviews fetch error:", err);
+        console.error("Reviews fetch error:", err);
         setReviews([]);
         setAvgRating(0);
         setTotalRatings(0);
@@ -37,24 +40,27 @@ function MovieDetails() {
   };
 
   useEffect(() => {
-    //  Get movie info
+    // Get movie info
     API.get(`/api/movies/${movieId}`)
       .then((res) => setMovie(res.data))
-      .catch((err) => console.log("Movie fetch error:", err));
+      .catch((err) => console.error("Movie fetch error:", err));
 
-    //  Get shows
+    // Get shows
     API.get(`/api/shows/movie/${movieId}`)
-      .then((res) => setShows(res.data))
-      .catch((err) => console.log("Shows fetch error:", err));
+      .then((res) => setShows(res.data || []))
+      .catch((err) => console.error("Shows fetch error:", err));
 
-    //  Get reviews
+    // Get reviews
     fetchReviews();
 
-    //  Check watchlist status if logged in
+    // Check watchlist status if logged in
     if (token) {
       API.get(`/api/users/watchlist`)
         .then((res) => {
-          const found = (res.data || []).some((m) => m._id === movieId || m === movieId);
+          const watchlist = res.data || [];
+          const found = watchlist.some(
+            (m) => (m._id ? m._id === movieId : m === movieId)
+          );
           setIsBookmarked(found);
         })
         .catch(() => {});
@@ -66,11 +72,22 @@ function MovieDetails() {
       alert("Please log in to add movies to your watchlist!");
       return;
     }
+
+    setIsBookmarkLoading(true);
+    // Optimistic toggle
+    setIsBookmarked((prev) => !prev);
+
     try {
       const res = await API.post(`/api/users/watchlist/toggle`, { movieId });
-      setIsBookmarked(res.data.isBookmarked);
+      if (typeof res.data.isBookmarked === "boolean") {
+        setIsBookmarked(res.data.isBookmarked);
+      }
     } catch (err) {
+      // Revert on failure
+      setIsBookmarked((prev) => !prev);
       alert(err.response?.data?.message || "Failed to update watchlist");
+    } finally {
+      setIsBookmarkLoading(false);
     }
   };
 
@@ -82,34 +99,45 @@ function MovieDetails() {
     }
     if (!userComment.trim()) return;
 
+    setIsSubmittingReview(true);
     try {
       await API.post(`/api/reviews`, {
         movieId,
         rating: userRating,
-        comment: userComment,
+        comment: userComment.trim(),
       });
       setReviewMsg("Review submitted successfully! 🎉");
       setUserComment("");
+      setUserRating(5);
       fetchReviews();
-      setTimeout(() => setReviewMsg(""), 3000);
+
+      // Scroll to top of reviews container
+      if (reviewsContainerRef.current) {
+        reviewsContainerRef.current.scrollTop = 0;
+      }
+
+      setTimeout(() => setReviewMsg(""), 3500);
     } catch (err) {
-      setReviewMsg(err.response?.data?.message || "Route updating... Please retry in a moment.");
+      setReviewMsg(
+        err.response?.data?.message || "Failed to post review. Please try again."
+      );
+    } finally {
+      setIsSubmittingReview(false);
     }
   };
 
   if (!movie) {
     return (
       <div className="bg-black min-h-screen text-white flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600" />
       </div>
     );
   }
 
   return (
-    <div className="bg-black min-h-screen text-white p-6 md:p-12">
-      {/* 🎬 Hero Banner Section */}
+    <div className="bg-black min-h-screen text-white p-6 md:p-12 selection:bg-red-600 selection:text-white">
+      {/*  Hero Banner Section */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 bg-gray-900/60 p-8 rounded-3xl border border-gray-800 shadow-2xl backdrop-blur-xl mb-12">
-        
         {/* Poster */}
         <div className="flex flex-col items-center">
           <img
@@ -117,7 +145,7 @@ function MovieDetails() {
             alt={movie.title}
             className="rounded-2xl shadow-2xl object-cover h-[450px] w-full border border-gray-800"
           />
-          
+
           <div className="flex gap-3 mt-6 w-full">
             <button
               onClick={() => setIsTrailerOpen(true)}
@@ -125,17 +153,18 @@ function MovieDetails() {
             >
               <span>▶</span> Watch Trailer
             </button>
-            
+
             <button
               onClick={handleToggleWatchlist}
+              disabled={isBookmarkLoading}
               className={`p-3 rounded-xl border transition flex items-center justify-center ${
                 isBookmarked
                   ? "bg-red-950/80 border-red-500 text-red-500"
                   : "bg-gray-800 border-gray-700 text-gray-300 hover:text-white"
-              }`}
+              } ${isBookmarkLoading ? "opacity-50 cursor-wait" : ""}`}
               title={isBookmarked ? "Remove from Watchlist" : "Add to Watchlist"}
             >
-              {isBookmarked ? "❤️" : "🤍"}
+              {isBookmarked ? "" : ""}
             </button>
           </div>
         </div>
@@ -155,7 +184,7 @@ function MovieDetails() {
             {/* Ratings & Meta */}
             <div className="flex items-center gap-6 mb-6 text-sm text-gray-400">
               <div className="flex items-center gap-1 text-yellow-400 font-bold text-base">
-                ★ {avgRating > 0 ? avgRating : "N/A"}
+                ★ {avgRating > 0 ? Number(avgRating).toFixed(1) : "N/A"}
                 <span className="text-gray-400 font-normal text-xs">
                   ({totalRatings} {totalRatings === 1 ? "review" : "reviews"})
                 </span>
@@ -168,10 +197,10 @@ function MovieDetails() {
             </p>
           </div>
 
-          {/*  Shows Section */}
+          {/* Shows Section */}
           <div>
             <h2 className="text-2xl font-bold mb-4 text-white flex items-center gap-2 border-b border-gray-800 pb-3">
-              <span></span> Available Showtimes
+              Available Showtimes
             </h2>
 
             <div className="max-h-[300px] overflow-y-auto space-y-3 pr-2 custom-scrollbar">
@@ -190,8 +219,8 @@ function MovieDetails() {
                         {show.theatre}
                       </h4>
                       <p className="text-xs text-gray-400 mt-1">
-                         <span className="text-gray-300">{show.date}</span> &nbsp;|&nbsp; 
-                         <span className="text-gray-300">{show.time}</span>
+                        <span className="text-gray-300">{show.date}</span> &nbsp;|&nbsp;
+                        <span className="text-gray-300">{show.time}</span>
                       </p>
                     </div>
 
@@ -208,13 +237,12 @@ function MovieDetails() {
         </div>
       </div>
 
-      {/*  Reviews & Ratings Section */}
+      {/* Reviews & Ratings Section */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        
         {/* Submit Review */}
         <div className="bg-gray-900/60 p-6 rounded-2xl border border-gray-800">
           <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <span></span> Rate & Review
+          Rate & Review
           </h3>
 
           {reviewMsg && (
@@ -235,7 +263,9 @@ function MovieDetails() {
                     type="button"
                     onClick={() => setUserRating(star)}
                     className={`text-2xl transition ${
-                      star <= userRating ? "text-yellow-400 scale-110" : "text-gray-600"
+                      star <= userRating
+                        ? "text-yellow-400 scale-110"
+                        : "text-gray-600"
                     }`}
                   >
                     ★
@@ -254,14 +284,17 @@ function MovieDetails() {
                 onChange={(e) => setUserComment(e.target.value)}
                 placeholder="What did you think of the movie?"
                 className="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition"
-              ></textarea>
+              />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-red-600 hover:bg-red-700 font-semibold text-white py-2.5 rounded-xl transition text-sm shadow-md"
+              disabled={isSubmittingReview}
+              className={`w-full bg-red-600 hover:bg-red-700 font-semibold text-white py-2.5 rounded-xl transition text-sm shadow-md ${
+                isSubmittingReview ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              Post Review
+              {isSubmittingReview ? "Posting..." : "Post Review"}
             </button>
           </form>
         </div>
@@ -269,10 +302,13 @@ function MovieDetails() {
         {/* Reviews List */}
         <div className="md:col-span-2 bg-gray-900/60 p-6 rounded-2xl border border-gray-800">
           <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-            <span></span> Audience Reviews ({totalRatings})
+             Audience Reviews ({totalRatings})
           </h3>
 
-          <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+          <div
+            ref={reviewsContainerRef}
+            className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar"
+          >
             {reviews.length === 0 ? (
               <p className="text-gray-500 text-center py-8">
                 No audience reviews yet. Be the first to leave a review!
@@ -286,10 +322,10 @@ function MovieDetails() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="font-semibold text-white text-sm">
-                        {rev.userName}
+                        {rev.userName || rev.user?.name || "Anonymous"}
                       </span>
                       <span className="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[9px] font-black px-2 py-0.5 rounded-full flex items-center gap-1">
-                        <span></span> Verified Buyer
+                        Verified Buyer
                       </span>
                     </div>
                     <span className="text-yellow-400 font-bold text-sm">

@@ -1,455 +1,3 @@
-// import { useParams } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-
-// function VerifyTicket() {
-
-//   const { bookingId } = useParams();
-//   const [booking, setBooking] = useState(null);
-
-//   useEffect(() => {
-
-//     axios
-//       .get(`http://localhost:5000/api/bookings/${bookingId}`)
-//       .then(res => setBooking(res.data))
-//       .catch(() => alert("Invalid Ticket"));
-
-//   }, [bookingId]);
-
-//   if (!booking) return <p>Loading ticket...</p>;
-
-//   return (
-//     <div className="bg-black min-h-screen text-white p-8 flex justify-center">
-
-//       <div className="bg-gray-900 p-8 rounded-xl w-[400px]">
-
-//         <h1 className="text-2xl font-bold mb-6 text-center">
-//            Ticket Verified
-//         </h1>
-
-//         {/* Movie */}
-//         <img
-//           src={booking.showId?.movieId?.poster}
-//           alt="poster"
-//           className="w-full h-60 object-cover rounded mb-4"
-//         />
-
-//         <h2 className="text-xl font-semibold">
-//           {booking.showId?.movieId?.title}
-//         </h2>
-
-//         <p className="text-gray-400">
-//           {booking.showId?.movieId?.genre}
-//         </p>
-
-//         {/* Theatre */}
-//         <p className="mt-3">
-//            Theatre: {booking.showId?.theatre}
-//         </p>
-
-//         {/* Date */}
-//         <p>
-//            {booking.showId?.date}
-//         </p>
-
-//         {/* Time */}
-//         <p>
-//            {booking.showId?.time}
-//         </p>
-
-//         {/* Seats */}
-//         <p className="mt-3">
-//            Seats: {booking.seats.join(", ")}
-//         </p>
-
-//         {/* Snacks */}
-//         <p className="mt-3">
-//            Snacks:
-//           {booking.snacks?.length > 0
-//             ? booking.snacks.map(s => ` ${s.name} x${s.qty}`).join(", ")
-//             : " None"}
-//         </p>
-
-//         {/* Parking */}
-//         <p className="mt-3">
-//            Parking: {booking.parking?.type || "None"}
-//         </p>
-
-//         {/* Amount */}
-//         <p className="text-red-500 font-bold mt-4">
-//           ₹ {booking.totalPrice}
-//         </p>
-
-//       </div>
-
-//     </div>
-//   );
-// }
-
-// export default VerifyTicket;
-
-
-
-
-
-
-// import { useParams } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-
-// function VerifyTicket() {
-
-//   const { id } = useParams();
-//   const [booking, setBooking] = useState(undefined);
-
-//   useEffect(() => {
-
-//     axios
-//       .get(`http://10.131.192.148:5000/api/bookings/verify/${id}`)
-//       .then(res => {
-//         console.log("Booking Response:", res.data);
-//         setBooking(res.data);
-//       })
-//       .catch(() => setBooking(null));
-
-//   }, [id]);
-
-//   // Loading
-//   if (booking === undefined) return <h2>Loading ticket...</h2>;
-
-//   // If booking not found
-//   if (!booking) return <h2>Ticket Not Found</h2>;
-
-//   return (
-//     <div style={{ padding: 20 }}>
-
-//       <h1>🎟 Ticket Details</h1>
-
-//       <h2>{booking.showId?.movieId?.title}</h2>
-
-//       <p> Theatre: {booking.showId?.theatre}</p>
-//       <p> Date: {booking.showId?.date}</p>
-//       <p> Time: {booking.showId?.time}</p>
-
-//       <p> Seats: {booking.seats?.join(", ")}</p>
-
-//       <p>
-//          Snacks:
-//         {booking.snacks?.length
-//           ? booking.snacks.map(s => `${s.name} x${s.qty}`).join(", ")
-//           : "None"}
-//       </p>
-
-//       <p> Parking: {booking.parking?.type || "None"}</p>
-
-//       <h3>₹ {booking.totalPrice}</h3>
-
-//     </div>
-//   );
-// }
-
-// export default VerifyTicket;
-
-
-
-
-
-
-
-
-// import { useParams } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-
-// function VerifyTicket() {
-
-//   const { id } = useParams();
-
-//   const [booking, setBooking] = useState(null);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-
-//     axios
-//       .get(`http://10.131.192.148:5000/api/bookings/verify/${id}`)
-//       .then(res => {
-//         console.log("Booking Response:", res.data);
-//         setBooking(res.data);
-//       })
-//       .catch(err => {
-//         console.log("Verify Error:", err);
-//         setBooking(null);
-//       })
-//       .finally(() => setLoading(false));
-
-//   }, [id]);
-
-//   //  Proper loading state
-//   if (loading) return <h2 style={{ padding: 20 }}>Loading ticket...</h2>;
-
-//   //  If booking missing
-//   if (!booking) return <h2 style={{ padding: 20 }}>Ticket Not Found</h2>;
-
-//   return (
-//     <div style={{ padding: 20 }}>
-
-//       <h1>🎟 Ticket Details</h1>
-
-//       {/* Poster */}
-//       <img
-//         src={booking.showId?.movieId?.poster}
-//         alt="poster"
-//         style={{ width: 200, borderRadius: 10 }}
-//       />
-
-//       <h2>{booking.showId?.movieId?.title}</h2>
-
-//       <p> Theatre: {booking.showId?.theatre}</p>
-//       <p> Date: {booking.showId?.date}</p>
-//       <p> Time: {booking.showId?.time}</p>
-
-//       <p> Seats: {booking.seats?.join(", ")}</p>
-
-//       <p>
-//          Snacks:
-//         {booking.snacks?.length
-//           ? booking.snacks.map(s => `${s.name} x${s.qty}`).join(", ")
-//           : " None"}
-//       </p>
-
-//       <p> Parking: {booking.parking?.type || "None"}</p>
-
-//       <h3>₹ {booking.totalPrice}</h3>
-
-//     </div>
-//   );
-// }
-
-// export default VerifyTicket;
-
-
-
-
-
-
-
-//       WORKING CORRCT
-
-
-// import { useParams } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-
-// function VerifyTicket() {
-
-//   //const { bookingId } = useParams();
-//   const { bookingId } = useParams();
-
-//   const [booking, setBooking] = useState(undefined);
-
-//   useEffect(() => {
-
-//     if (!bookingId) return;
-// // http://10.131.192.148:5000/api/bookings/verify/${bookingId}
-// // https://pentamerous-jefferson-laudatorily.ngrok-free.dev/api/bookings/verify/${bookingId}
-//     axios
-//       .get(`http://10.131.192.148:5000/api/bookings/verify/${bookingId}`)
-//       .then(res => {
-//         console.log("Booking Response:", res.data);
-//         setBooking(res.data);
-//       })
-//       .catch(() => setBooking(null));
-
-//   }, [bookingId]);
-
-//   if (booking === undefined) return <h2>Loading ticket...</h2>;
-
-//   if (!booking) return <h2>Invalid Ticket</h2>;
-
-//   return (
-//     <div style={{ padding: 20 }}>
-//       <h1>🎟 Ticket Details</h1>
-
-//       <h2>{booking.showId?.movieId?.title}</h2>
-
-//       <p> Theatre: {booking.showId?.theatre}</p>
-//       <p> Date: {booking.showId?.date}</p>
-//       <p> Time: {booking.showId?.time}</p>
-
-//       <p> Seats: {booking.seats?.join(", ")}</p>
-
-//       <p>
-//          Snacks:
-//         {booking.snacks?.length
-//           ? booking.snacks.map(s => `${s.name} x${s.qty}`).join(", ")
-//           : " None"}
-//       </p>
-
-//       <p> Parking: {booking.parking?.type || "None"}</p>
-
-//       <h3>₹ {booking.totalPrice}</h3>
-//     </div>
-//   );
-// }
-
-// export default VerifyTicket;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { useParams } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-
-// function VerifyTicket() {
-
-//   const { bookingId } = useParams();
-//   const [booking, setBooking] = useState(undefined);
-
-//   // useEffect(() => {
-
-//   //   if (!bookingId) return;
-
-//   //   axios
-//   //     .get(`http://10.131.192.148:5000/api/bookings/verify/${bookingId}`)
-//   //     .then(res => setBooking(res.data))
-//   //     .catch(() => setBooking(null));
-
-//   // }, [bookingId]);
-
-
-//   useEffect(() => {
-
-//   if (!bookingId) return;
-
-//   const API_URL =
-//     process.env.REACT_APP_API_URL || "http://localhost:5000";
-
-//   axios
-//     .get(`${API_URL}/api/bookings/verify/${bookingId}`)
-//     .then(res => setBooking(res.data))
-//     .catch(err => {
-//       console.log("Verify ticket error:", err);
-//       setBooking(null);
-//     });
-
-// }, [bookingId]);
-
-
-//   /* ---------- Loading ---------- */
-
-//   if (booking === undefined)
-//     return (
-//       <div className="bg-black min-h-screen flex justify-center items-center text-white text-xl">
-//         Loading Ticket...
-//       </div>
-//     );
-
-//   /* ---------- Invalid ---------- */
-
-//   if (!booking)
-//     return (
-//       <div className="bg-black min-h-screen flex justify-center items-center text-red-500 text-xl">
-//         Invalid Ticket
-//       </div>
-//     );
-
-//   /* ---------- UI ---------- */
-
-//   return (
-//     <div className="bg-black min-h-screen flex justify-center items-center p-4">
-
-//       <div className="bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md p-6 text-white">
-
-//         {/* Movie Poster */}
-//         <img
-//           src={booking.showId?.movieId?.poster}
-//           alt="poster"
-//           className="w-full h-56 rounded-xl mb-4"
-//         />
-
-//         {/* Movie Name */}
-//         <h1 className="text-2xl font-bold">
-//           {booking.showId?.movieId?.title}
-//         </h1>
-
-//         <p className="text-gray-400 mb-4">
-//           {booking.showId?.movieId?.genre}
-//         </p>
-
-//         {/* Ticket Info */}
-//         <div className="space-y-2 border-t border-gray-700 pt-4">
-
-//           <p> Theatre: <span className="text-gray-300">{booking.showId?.theatre}</span></p>
-
-//           <p> Date: <span className="text-gray-300">{booking.showId?.date}</span></p>
-
-//           <p> Time: <span className="text-gray-300">{booking.showId?.time}</span></p>
-
-//           <p> Seats: <span className="text-gray-300">{booking.seats?.join(", ")}</span></p>
-
-//           <p>
-// Snacks:
-// {booking.snacks?.length > 0
-//   ? booking.snacks.map(s =>
-//       `${s.name} x${s.qty} (₹${s.price * s.qty})`
-//     ).join(", ")
-//   : "None"}
-// </p>
-
-
-// <p>
-//  Parking:
-// {booking.parking
-//   ? `${booking.parking.type} (₹${booking.parking.price})`
-//   : "None"}
-// </p>
-
-//         </div>
-
-//         {/* Price */}
-//         <div className="border-t border-gray-700 mt-5 pt-4 text-center">
-
-//           <h2 className="text-3xl font-bold text-red-500">
-//             ₹ {booking.totalPrice}
-//           </h2>
-
-//           <p className="text-green-400 mt-1 font-semibold">
-//             Payment Successful ✔
-//           </p>
-
-//         </div>
-
-//       </div>
-
-//     </div>
-//   );
-// }
-
-// export default VerifyTicket;
-
-
-
-
-
-
-
-
-
-
-
-
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import API from "../api";
@@ -492,159 +40,198 @@ function VerifyTicket() {
     verifyTicket();
   }, [bookingId]);
 
-
-
-  /* ---------- Loading ---------- */
-
+  /* ---------- Loading State ---------- */
   if (booking === undefined)
     return (
-      <div className="bg-black min-h-screen flex justify-center items-center text-white text-xl">
-        Checking Ticket...
+      <div className="bg-[#050508] min-h-screen flex flex-col justify-center items-center text-white space-y-4">
+        <div className="w-12 h-12 border-4 border-rose-500/20 border-t-rose-500 rounded-full animate-spin" />
+        <p className="text-slate-400 text-sm font-semibold tracking-wider uppercase">
+          Verifying Digital Pass...
+        </p>
       </div>
     );
 
-
-  /* ---------- Invalid ---------- */
-
+  /* ---------- Invalid State ---------- */
   if (!booking)
     return (
-      <div className="bg-black min-h-screen flex justify-center items-center text-red-500 text-3xl font-bold">
-         INVALID TICKET
+      <div className="bg-[#050508] min-h-screen flex justify-center items-center p-4">
+        <div className="bg-rose-950/40 border border-rose-500/30 rounded-3xl p-8 max-w-sm w-full text-center space-y-4 backdrop-blur-xl shadow-2xl">
+          <div className="w-16 h-16 bg-rose-600/20 border border-rose-500/40 rounded-full flex items-center justify-center text-rose-500 text-3xl mx-auto">
+            ✕
+          </div>
+          <h2 className="text-2xl font-black text-white tracking-wide">
+            INVALID TICKET
+          </h2>
+          <p className="text-slate-400 text-xs leading-relaxed">
+            This pass code is unverified or does not exist in the active ticketing database.
+          </p>
+        </div>
       </div>
     );
-
 
   const snacks =
     booking.snacks?.length > 0
-      ? booking.snacks
-          .map(s => `${s.name} x${s.qty}`)
-          .join(", ")
+      ? booking.snacks.map((s) => `${s.name} (x${s.qty})`).join(", ")
       : "None";
 
-  const parking =
-    booking.parking
-      ? `${booking.parking.type}`
-      : "None";
+  const parking = booking.parking ? `${booking.parking.type}` : "None";
 
+  const isEntryAllowed = status === "VALID";
 
   return (
+    <div className="bg-[#050508] min-h-screen flex justify-center items-center p-4 sm:p-6 font-sans relative overflow-hidden selection:bg-rose-500 selection:text-white">
+      {/* Background Ambient Glows */}
+      <div
+        className={`absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 blur-[140px] pointer-events-none rounded-full transition-colors duration-700 ${
+          isEntryAllowed ? "bg-emerald-600/20" : "bg-rose-600/20"
+        }`}
+      />
 
-    <div className="bg-black min-h-screen flex justify-center items-center p-6">
+      <div className="max-w-md w-full relative z-10">
+        {/* Pass Header Badge */}
+        <div className="text-center mb-4">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 bg-slate-900/80 px-4 py-1 rounded-full border border-slate-800 backdrop-blur-md">
+            Official Multiplex Scanner Portal
+          </span>
+        </div>
 
-      <div className="bg-[#0f172a] border border-gray-800 rounded-3xl shadow-2xl w-full max-w-md overflow-hidden">
+        {/* Ticket Card Container */}
+        <div className="bg-slate-900/80 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-xl relative">
+          
+          {/* Top Status Banner */}
+          <div
+            className={`py-3 px-6 text-center text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 ${
+              isEntryAllowed
+                ? "bg-emerald-500 text-slate-950"
+                : "bg-rose-600 text-white"
+            }`}
+          >
+            <span
+              className={`w-2.5 h-2.5 rounded-full ${
+                isEntryAllowed ? "bg-slate-950" : "bg-white"
+              } animate-ping`}
+            />
+            {isEntryAllowed ? "ENTRY PERMITTED" : "ACCESS DENIED / TICKET USED"}
+          </div>
 
-        {/* Movie Poster */}
+          {/* Movie Media Frame */}
+          <div className="relative h-48 w-full overflow-hidden">
+            <img
+              src={booking.showId?.movieId?.poster}
+              alt="Movie Poster"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+            <div className="absolute bottom-3 left-6 right-6 flex items-end justify-between">
+              <div>
+                <span className="text-[10px] font-bold text-rose-400 uppercase tracking-widest bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800/50">
+                  {booking.showId?.movieId?.genre || "Cinema"}
+                </span>
+                <h1 className="text-2xl font-black text-white mt-1 leading-tight drop-shadow-md">
+                  {booking.showId?.movieId?.title}
+                </h1>
+              </div>
+            </div>
+          </div>
 
-        <img
-          src={booking.showId?.movieId?.poster}
-          alt="poster"
-          className="w-full h-56 object-cover"
-        />
-
-
-        <div className="p-6 text-white">
-
-          {/* Movie Title */}
-
-          <h1 className="text-2xl font-bold text-center">
-            {booking.showId?.movieId?.title}
-          </h1>
-
-          <p className="text-gray-400 text-center mb-6">
-            {booking.showId?.movieId?.genre}
-          </p>
-
-
-          {/* Ticket Divider */}
-
-          <div className="border-t border-dashed border-gray-600 mb-6"></div>
-
-
-          {/* Ticket Info */}
-
-          <div className="space-y-3 text-sm">
-
-            <div className="flex justify-between">
-              <span> Theatre</span>
-              <span>{booking.showId?.theatre}</span>
+          {/* Ticket Body Details */}
+          <div className="p-6 space-y-5">
+            {/* Primary Grid Details */}
+            <div className="grid grid-cols-2 gap-4 bg-slate-950/60 p-4 rounded-2xl border border-slate-800/80 text-xs">
+              <div>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">
+                  Multiplex
+                </span>
+                <span className="text-white font-bold text-sm truncate block mt-0.5">
+                  {booking.showId?.theatre || "Standard Screen"}
+                </span>
+              </div>
+              <div>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">
+                  Date & Time
+                </span>
+                <span className="text-white font-bold text-sm block mt-0.5">
+                  {booking.showId?.date} • {booking.showId?.time}
+                </span>
+              </div>
             </div>
 
-            <div className="flex justify-between">
-              <span> Date</span>
-              <span>{booking.showId?.date}</span>
+            {/* Ticket Tear Notches (Visual Effect) */}
+            <div className="relative flex items-center justify-between py-1">
+              <div className="w-5 h-5 bg-[#050508] rounded-full -ml-8 border-r border-slate-800" />
+              <div className="flex-1 border-b-2 border-dashed border-slate-800 mx-2" />
+              <div className="w-5 h-5 bg-[#050508] rounded-full -mr-8 border-l border-slate-800" />
             </div>
 
-            <div className="flex justify-between">
-              <span> Time</span>
-              <span>{booking.showId?.time}</span>
+            {/* Itemized Info Rows */}
+            <div className="space-y-3 text-xs">
+              <div className="flex justify-between items-center py-1">
+                <span className="text-slate-400 font-semibold">Allocated Seats</span>
+                <span className="text-emerald-400 font-mono font-black text-base px-2.5 py-0.5 bg-emerald-950/50 rounded-lg border border-emerald-800/40">
+                  {booking.seats?.join(", ")}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center border-t border-slate-800/60 pt-2.5">
+                <span className="text-slate-400 font-semibold">F&B Add-ons</span>
+                <span className="text-slate-200 font-medium text-right max-w-[200px] truncate">
+                  {snacks}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center border-t border-slate-800/60 pt-2.5">
+                <span className="text-slate-400 font-semibold">Parking Slot</span>
+                <span className="text-slate-200 font-medium">{parking}</span>
+              </div>
             </div>
 
-            <div className="flex justify-between">
-              <span> Seats</span>
-              <span className="text-green-400 font-semibold">
-                {booking.seats?.join(", ")}
-              </span>
-            </div>
+            {/* Total Paid & Verification Status */}
+            <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+              <div>
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">
+                  Total Paid
+                </span>
+                <span className="text-2xl font-black text-rose-500">
+                  ₹{booking.totalPrice}
+                </span>
+              </div>
 
-            <div className="flex justify-between">
-              <span> Snacks</span>
-              <span>{snacks}</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span> Parking</span>
-              <span>{parking}</span>
+              <div>
+                {isEntryAllowed ? (
+                  <div className="bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 px-4 py-2 rounded-2xl text-center shadow-lg shadow-emerald-950/50">
+                    <span className="block text-xs font-black tracking-wide">
+                      ENTRY ALLOWED
+                    </span>
+                    <span className="text-[9px] text-emerald-500 font-medium block">
+                      Pass marked as used
+                    </span>
+                  </div>
+                ) : (
+                  <div className="bg-rose-950/80 border border-rose-500/40 text-rose-400 px-4 py-2 rounded-2xl text-center shadow-lg shadow-rose-950/50">
+                    <span className="block text-xs font-black tracking-wide">
+                      ALREADY USED
+                    </span>
+                    <span className="text-[9px] text-rose-500 font-medium block">
+                      Previously checked in
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
 
           </div>
 
-
-          {/* Divider */}
-
-          <div className="border-t border-dashed border-gray-600 my-6"></div>
-
-
-          {/* Price */}
-
-          <div className="text-center">
-
-            <p className="text-gray-400 text-sm">
-              Total Amount
-            </p>
-
-            <h2 className="text-4xl font-bold text-red-500">
-              ₹ {booking.totalPrice}
-            </h2>
-
-          </div>
-
-
-          {/* Status */}
-
-          <div className="mt-6 text-center">
-
-            {status === "VALID" && (
-              <div className="bg-green-600 text-white py-3 rounded-xl text-lg font-bold shadow-lg">
-                 ENTRY ALLOWED
-              </div>
-            )}
-
-            {status === "USED" && (
-              <div className="bg-red-600 text-white py-3 rounded-xl text-lg font-bold shadow-lg">
-                 TICKET ALREADY USED
-              </div>
-            )}
-
+          {/* Verification Timestamp Footer */}
+          <div className="bg-slate-950 p-3 text-center border-t border-slate-800/80">
+            <span className="text-[10px] font-mono text-slate-500">
+              Pass ID: {booking._id || bookingId}
+            </span>
           </div>
 
         </div>
-
       </div>
-
     </div>
-
   );
-
 }
 
 export default VerifyTicket;

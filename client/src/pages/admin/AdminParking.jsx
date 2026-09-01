@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import AdminNavbar from "../../components/AdminNavbar";
 
@@ -17,7 +17,19 @@ export default function AdminParking() {
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
+  const dropdownRef = useRef(null);
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -47,6 +59,15 @@ export default function AdminParking() {
     fetchData();
   }, []);
 
+  const resetForm = () => {
+    setEditId(null);
+    setTheatre("");
+    setBikePrice("");
+    setCarPrice("");
+    setShowDropdown(false);
+    setSearchTheatre("");
+  };
+
   const addParking = async () => {
     if (!theatre || !bikePrice || !carPrice) return alert("Fill all fields");
 
@@ -57,7 +78,6 @@ export default function AdminParking() {
           priceBike: Number(bikePrice),
           priceCar: Number(carPrice),
         });
-        setEditId(null);
       } else {
         await axios.post(`${API_URL}/api/parking`, {
           theatre,
@@ -66,9 +86,7 @@ export default function AdminParking() {
         });
       }
 
-      setTheatre("");
-      setBikePrice("");
-      setCarPrice("");
+      resetForm();
       fetchData();
     } catch (err) {
       console.log("Parking operation failed:", err);
@@ -87,50 +105,44 @@ export default function AdminParking() {
   };
 
   return (
-    <div className="bg-[#06060A] min-h-screen text-white relative selection:bg-red-600 selection:text-white">
+    <div className="bg-[#05050A] min-h-screen text-slate-100 relative selection:bg-rose-500 selection:text-white font-sans antialiased">
       <AdminNavbar />
-      <div className="p-4 md:p-10 relative">
-      
-      {/* Glow Backdrop */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto space-y-8 relative z-10">
-        
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0F0F17]/90 border border-gray-800/80 p-6 rounded-3xl backdrop-blur-2xl shadow-2xl">
+      <div className="p-4 md:p-8 lg:p-12 relative max-w-7xl mx-auto space-y-8">
+        {/* Ambient Glows */}
+        <div className="absolute top-10 left-10 w-96 h-96 bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-40 right-10 w-80 h-80 bg-rose-600/10 rounded-full blur-[140px] pointer-events-none" />
+
+        {/* Header Section */}
+        <header className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0D0D15]/80 border border-slate-800/80 p-6 rounded-3xl backdrop-blur-xl shadow-xl">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="bg-blue-600/20 text-blue-400 border border-blue-500/30 text-[10px] font-black px-3 py-0.5 rounded-full uppercase">
-                 Vehicle Pass Rates
+            <div className="flex items-center gap-2 mb-2">
+              <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[11px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">
+                Vehicle Pass Rates
               </span>
-              <span className="text-[10px] text-gray-500 font-mono">
-                Multiplex Locations: {parkingList.length}
+              <span className="text-[11px] text-slate-400 font-mono">
+                Multiplex Locations: <span className="text-white font-bold">{parkingList.length}</span>
               </span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-black text-white">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
               Parking Rate Manager
             </h1>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-slate-400 mt-1">
               Configure bike and car parking slot fees per theater location
             </p>
           </div>
-        </div>
+        </header>
 
-        {/*  FORM */}
-        <div className="bg-[#0F0F17]/80 border border-gray-800/80 p-6 rounded-3xl backdrop-blur-2xl shadow-2xl space-y-4">
+        {/* Form Panel */}
+        <section className="relative z-10 bg-[#0D0D15]/80 border border-slate-800/80 p-6 rounded-3xl backdrop-blur-xl shadow-xl space-y-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-xs font-black uppercase tracking-wider text-gray-400">
-              {editId ? "Edit Parking Rates" : " Add Parking Location"}
+            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              {editId ? "Edit Parking Rates" : "Add Parking Location"}
             </h2>
             {editId && (
               <button
-                onClick={() => {
-                  setEditId(null);
-                  setTheatre("");
-                  setBikePrice("");
-                  setCarPrice("");
-                }}
-                className="text-[11px] bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold px-3 py-1 rounded-xl transition"
+                onClick={resetForm}
+                className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-3.5 py-1.5 rounded-xl transition-all border border-slate-700"
               >
                 Cancel Edit
               </button>
@@ -138,47 +150,56 @@ export default function AdminParking() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            
-            {/* Theatre Dropdown */}
-            <div className="relative">
-              <input
-                value={theatre}
-                placeholder="Select Theater"
-                onClick={() => setShowDropdown(!showDropdown)}
-                readOnly
-                className="w-full bg-gray-950 border border-gray-800 text-white rounded-2xl px-4 py-3.5 text-xs cursor-pointer focus:outline-none focus:border-red-500 transition"
-              />
+            {/* Custom Dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <div
+                onClick={() => setShowDropdown((prev) => !prev)}
+                className="w-full bg-[#05050A] border border-slate-800 text-white rounded-2xl px-4 py-3 text-xs cursor-pointer flex justify-between items-center hover:border-slate-700 transition"
+              >
+                <span className={theatre ? "text-white font-medium" : "text-slate-500"}>
+                  {theatre || "Select Theater"}
+                </span>
+                <span className="text-slate-500 text-[10px]">▼</span>
+              </div>
 
               {showDropdown && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-[#0F0F17] border border-gray-800 rounded-2xl max-h-48 overflow-y-auto p-2 z-50 shadow-2xl backdrop-blur-xl">
+                <div className="absolute top-full left-0 right-0 mt-2 bg-[#0D0D15] border border-slate-800 rounded-2xl max-h-56 overflow-y-auto p-2 z-50 shadow-2xl backdrop-blur-2xl">
                   <input
                     placeholder="Search theater..."
                     value={searchTheatre}
                     onChange={(e) => setSearchTheatre(e.target.value)}
-                    className="w-full bg-gray-950 border border-gray-800 text-white text-xs px-3 py-2 rounded-xl mb-2 focus:outline-none"
+                    className="w-full bg-[#05050A] border border-slate-800 text-white text-xs px-3 py-2 rounded-xl mb-2 focus:outline-none focus:border-indigo-500 transition"
                   />
 
                   {theatres
                     .filter((t) => t.toLowerCase().includes(searchTheatre.toLowerCase()))
                     .map((t) => {
                       const exists = parkingList.some((p) => p.theatre === t);
+                      const isSelected = editId && theatre === t;
+                      const isDisabled = exists && !isSelected;
+
                       return (
-                        <p
+                        <div
                           key={t}
                           onClick={() => {
-                            if (!exists || editId) {
+                            if (!isDisabled) {
                               setTheatre(t);
                               setShowDropdown(false);
                             }
                           }}
-                          className={`p-2.5 text-xs rounded-xl cursor-pointer transition ${
-                            exists && !editId
-                              ? "opacity-40 text-gray-600 cursor-not-allowed"
-                              : "text-gray-300 hover:text-white hover:bg-red-600/20"
+                          className={`p-2.5 text-xs rounded-xl transition flex justify-between items-center ${
+                            isDisabled
+                              ? "opacity-40 text-slate-600 cursor-not-allowed"
+                              : "text-slate-300 hover:text-white hover:bg-rose-500/10 hover:border hover:border-rose-500/20 cursor-pointer"
                           }`}
                         >
-                           {t} {exists && "(Configured)"}
-                        </p>
+                          <span>{t}</span>
+                          {exists && (
+                            <span className="text-[10px] text-slate-500 font-mono">
+                              (Configured)
+                            </span>
+                          )}
+                        </div>
                       );
                     })}
                 </div>
@@ -190,7 +211,7 @@ export default function AdminParking() {
               placeholder="Bike Price (₹)"
               value={bikePrice}
               onChange={(e) => setBikePrice(e.target.value)}
-              className="bg-gray-950 border border-gray-800 text-white rounded-2xl px-4 py-3.5 text-xs focus:outline-none focus:border-red-500 transition"
+              className="bg-[#05050A] border border-slate-800 text-white rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-rose-500 transition placeholder:text-slate-500"
             />
 
             <input
@@ -198,55 +219,58 @@ export default function AdminParking() {
               placeholder="Car Price (₹)"
               value={carPrice}
               onChange={(e) => setCarPrice(e.target.value)}
-              className="bg-gray-950 border border-gray-800 text-white rounded-2xl px-4 py-3.5 text-xs focus:outline-none focus:border-red-500 transition"
+              className="bg-[#05050A] border border-slate-800 text-white rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-rose-500 transition placeholder:text-slate-500"
             />
 
             <button
               onClick={addParking}
-              className="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-extrabold text-xs px-6 py-3.5 rounded-2xl transition shadow-xl shadow-red-600/30 whitespace-nowrap"
+              className="bg-gradient-to-r from-rose-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white font-bold text-xs px-6 py-3 rounded-2xl transition shadow-lg shadow-rose-600/20 active:scale-[0.98]"
             >
-              {editId ? "Update Rates" : "+ Add Parking Rates"}
+              {editId ? "Update Rates" : "+ Add Rates"}
             </button>
-
           </div>
-        </div>
+        </section>
 
-        {/*  CARDS GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Cards Grid */}
+        <section className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
           {parkingList.length === 0 ? (
-            <p className="col-span-full text-xs text-gray-500 py-10 text-center border border-dashed border-gray-800 rounded-3xl">
-              No parking locations configured yet.
-            </p>
+            <div className="col-span-full py-16 text-center border border-dashed border-slate-800 rounded-3xl bg-[#0D0D15]/40 backdrop-blur-xl">
+              <p className="text-xs text-slate-500">No parking locations configured yet.</p>
+            </div>
           ) : (
             parkingList.map((p) => (
               <div
                 key={p._id}
-                className="bg-[#0F0F17]/80 border border-gray-800/80 p-6 rounded-3xl shadow-2xl backdrop-blur-2xl space-y-4 hover:border-gray-700 transition flex flex-col justify-between"
+                className="bg-[#0D0D15]/80 border border-slate-800/80 p-6 rounded-3xl shadow-xl backdrop-blur-xl flex flex-col justify-between hover:border-slate-700/80 transition space-y-4"
               >
                 <div>
-                  <div className="flex items-center justify-between pb-3 border-b border-gray-800/80">
-                    <h3 className="font-extrabold text-sm text-white flex items-center gap-2">
-                      <span> {p.theatre} Multiplex</span>
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
+                    <h3 className="font-bold text-sm text-white flex items-center gap-2">
+                      <span>{p.theatre} Multiplex</span>
                     </h3>
-                    <span className="text-[10px] font-black bg-emerald-950/80 border border-emerald-800 text-emerald-300 px-2.5 py-0.5 rounded-full">
-                       Revenue: ₹{revenueMap[p.theatre] || 0}
+                    <span className="text-[11px] font-semibold bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-full">
+                      Revenue: ₹{revenueMap[p.theatre] || 0}
                     </span>
                   </div>
 
                   <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
-                    <div className="bg-gray-950 border border-gray-800 p-3 rounded-2xl">
-                      <span className="text-gray-500 block text-[10px]">🏍 Bike Pass Rate</span>
-                      <span className="font-extrabold text-emerald-400 text-sm">₹{p.priceBike}</span>
+                    <div className="bg-[#05050A] border border-slate-800 p-3.5 rounded-2xl">
+                      <span className="text-slate-500 block text-[10px] uppercase font-bold tracking-wider mb-1">
+                        🏍 Bike Pass
+                      </span>
+                      <span className="font-black text-emerald-400 text-base">₹{p.priceBike}</span>
                     </div>
 
-                    <div className="bg-gray-950 border border-gray-800 p-3 rounded-2xl">
-                      <span className="text-gray-500 block text-[10px]">🚗 Car Pass Rate</span>
-                      <span className="font-extrabold text-blue-400 text-sm">₹{p.priceCar}</span>
+                    <div className="bg-[#05050A] border border-slate-800 p-3.5 rounded-2xl">
+                      <span className="text-slate-500 block text-[10px] uppercase font-bold tracking-wider mb-1">
+                        🚗 Car Pass
+                      </span>
+                      <span className="font-black text-indigo-400 text-base">₹{p.priceCar}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex gap-2 pt-2 border-t border-gray-800/80">
+                <div className="flex gap-2 pt-3 border-t border-slate-800/80">
                   <button
                     onClick={() => {
                       setEditId(p._id);
@@ -254,14 +278,14 @@ export default function AdminParking() {
                       setBikePrice(p.priceBike);
                       setCarPrice(p.priceCar);
                     }}
-                    className="flex-1 bg-amber-500 hover:bg-amber-400 text-gray-950 font-bold text-xs py-2 rounded-xl transition text-center"
+                    className="flex-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 hover:bg-amber-500 hover:text-slate-950 font-bold text-xs py-2 rounded-xl transition"
                   >
                     Edit Rates
                   </button>
 
                   <button
                     onClick={() => setDeleteId(p._id)}
-                    className="bg-red-950/80 hover:bg-red-900 border border-red-800 text-red-300 font-bold text-xs px-4 py-2 rounded-xl transition"
+                    className="bg-rose-950/40 border border-rose-500/30 hover:bg-rose-600 hover:text-white text-rose-300 font-bold text-xs px-4 py-2 rounded-xl transition"
                   >
                     Delete
                   </button>
@@ -269,24 +293,26 @@ export default function AdminParking() {
               </div>
             ))
           )}
-        </div>
+        </section>
 
-        {/* DELETE MODAL */}
+        {/* Delete Confirmation Modal */}
         {deleteId && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fadeIn">
-            <div className="bg-[#0F0F17] border border-gray-800 p-8 rounded-3xl text-center space-y-4 max-w-sm w-full shadow-2xl">
-              <h2 className="text-base font-extrabold text-white">Delete parking rates?</h2>
-              <p className="text-xs text-gray-400">This will remove parking selection for this multiplex.</p>
-              <div className="flex justify-center gap-3 pt-2">
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-[#0D0D15] border border-slate-800 p-6 rounded-3xl text-center space-y-4 max-w-xs w-full shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+              <h2 className="text-sm font-extrabold text-white">Delete parking rates?</h2>
+              <p className="text-xs text-slate-400">
+                This will remove the parking configuration for this multiplex location.
+              </p>
+              <div className="flex justify-center gap-2 pt-2">
                 <button
                   onClick={confirmDelete}
-                  className="bg-red-600 hover:bg-red-700 px-6 py-2.5 rounded-2xl text-white font-bold text-xs transition shadow-lg shadow-red-600/30"
+                  className="bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-lg shadow-rose-600/20"
                 >
-                  Confirm Delete
+                  Delete
                 </button>
                 <button
                   onClick={() => setDeleteId(null)}
-                  className="bg-gray-800 hover:bg-gray-700 px-6 py-2.5 rounded-2xl text-white font-bold text-xs transition"
+                  className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs px-5 py-2.5 rounded-xl transition border border-slate-700"
                 >
                   Cancel
                 </button>
@@ -294,9 +320,7 @@ export default function AdminParking() {
             </div>
           </div>
         )}
-
       </div>
     </div>
-  </div>
   );
 }

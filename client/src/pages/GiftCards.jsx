@@ -54,7 +54,7 @@ export default function GiftCards() {
 
   return (
     <div className="bg-[#07070B] min-h-screen text-white p-4 md:p-10 relative selection:bg-red-600 selection:text-white">
-      {/* Glow effects */}
+      {/* Background glow effects */}
       <div className="absolute top-0 left-1/3 w-96 h-96 bg-red-600/10 rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/3 w-96 h-96 bg-purple-600/10 rounded-full blur-[160px] pointer-events-none" />
 
@@ -62,7 +62,7 @@ export default function GiftCards() {
         
         {/* Header */}
         <div className="text-center space-y-2 max-w-2xl mx-auto">
-          <span className="bg-red-600/20 border border-red-500/30 text-red-400 text-[10px] font-black px-3 py-1 rounded-full uppercase">
+          <span className="bg-red-600/20 border border-red-500/30 text-red-400 text-[10px] font-black px-3 py-1 rounded-full uppercase inline-block">
              Gift Movies & Experiences
           </span>
           <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight">
@@ -75,7 +75,7 @@ export default function GiftCards() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           
-          {/* Card Preview & Selection */}
+          {/* Card Preview & Theme Selection */}
           <div className="space-y-6">
             <h2 className="text-xs font-black uppercase tracking-wider text-gray-400">
               1. Choose Gift Card Theme
@@ -109,7 +109,9 @@ export default function GiftCards() {
                     {recipientName || "Friend / Family"}
                   </span>
                 </div>
-                <div className="font-mono text-red-400 font-bold">●●●● CODE READY</div>
+                <div className="font-mono text-emerald-400 font-bold flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> CODE READY
+                </div>
               </div>
             </div>
 
@@ -118,11 +120,12 @@ export default function GiftCards() {
               {cardThemes.map((theme) => (
                 <button
                   key={theme.id}
+                  type="button"
                   onClick={() => setSelectedTheme(theme.id)}
-                  className={`p-3 rounded-2xl border text-xs font-bold text-left transition ${
+                  className={`p-3 rounded-2xl border text-xs font-bold text-left transition cursor-pointer ${
                     selectedTheme === theme.id
-                      ? "border-red-500 bg-red-950/40 text-white shadow-lg"
-                      : "border-gray-800 bg-gray-950/80 text-gray-400 hover:text-white"
+                      ? "border-red-500 bg-red-950/40 text-white shadow-lg shadow-red-500/10"
+                      : "border-gray-800 bg-gray-950/80 text-gray-400 hover:text-white hover:border-gray-700"
                   }`}
                 >
                   {theme.name}
@@ -139,9 +142,9 @@ export default function GiftCards() {
 
             <form onSubmit={handlePurchase} className="space-y-4">
               
-              {/* Preset Amounts */}
-              <div>
-                <label className="block text-[11px] font-bold text-gray-400 uppercase mb-2">
+              {/* Preset & Custom Amount */}
+              <div className="space-y-3">
+                <label className="block text-[11px] font-bold text-gray-400 uppercase">
                   Select Amount (₹)
                 </label>
                 <div className="grid grid-cols-4 gap-2">
@@ -153,20 +156,29 @@ export default function GiftCards() {
                         setAmount(val);
                         setCustomAmount("");
                       }}
-                      className={`py-2.5 rounded-xl border text-xs font-bold transition ${
+                      className={`py-2.5 rounded-xl border text-xs font-bold transition cursor-pointer ${
                         amount === val && !customAmount
-                          ? "bg-red-600 border-red-500 text-white shadow-lg"
-                          : "bg-gray-950 border-gray-800 text-gray-400 hover:text-white"
+                          ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-600/30"
+                          : "bg-gray-950 border-gray-800 text-gray-400 hover:text-white hover:border-gray-700"
                       }`}
                     >
                       ₹{val}
                     </button>
                   ))}
                 </div>
+
+                <input
+                  type="number"
+                  min="100"
+                  placeholder="Or enter custom amount (Min. ₹100)"
+                  value={customAmount}
+                  onChange={(e) => setCustomAmount(e.target.value)}
+                  className="w-full bg-gray-950 border border-gray-800 rounded-2xl p-3.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition"
+                />
               </div>
 
               {/* Recipient Details */}
-              <div className="space-y-3">
+              <div className="space-y-3 pt-2">
                 <input
                   type="text"
                   placeholder="Recipient Name"
@@ -189,15 +201,15 @@ export default function GiftCards() {
                   placeholder="Personal Gift Message (Optional)..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full bg-gray-950 border border-gray-800 rounded-2xl p-3.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition"
+                  className="w-full bg-gray-950 border border-gray-800 rounded-2xl p-3.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black py-4 rounded-2xl text-xs transition shadow-xl shadow-red-600/30 uppercase tracking-wider"
+                className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black py-4 rounded-2xl text-xs transition shadow-xl shadow-red-600/30 uppercase tracking-wider cursor-pointer active:scale-[0.99]"
               >
-                 Purchase Gift Pass Now
+                Purchase Gift Pass Now
               </button>
             </form>
           </div>
@@ -207,8 +219,8 @@ export default function GiftCards() {
         {/* Voucher Delivery Modal */}
         {generatedVoucher && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fadeIn">
-            <div className="bg-[#0F0F17] border border-gray-800 p-8 rounded-3xl text-center space-y-6 max-w-md w-full shadow-2xl relative">
-              <div className="w-16 h-16 bg-emerald-600/20 border border-emerald-500/40 rounded-full flex items-center justify-center text-3xl mx-auto">
+            <div className="bg-[#0F0F17] border border-gray-800 p-8 rounded-3xl text-center space-y-6 max-w-md w-full shadow-2xl relative animate-modalScaleIn">
+              <div className="w-16 h-16 bg-emerald-600/20 border border-emerald-500/40 rounded-full flex items-center justify-center text-3xl mx-auto text-emerald-400">
                 
               </div>
 
@@ -231,7 +243,7 @@ export default function GiftCards() {
 
               <button
                 onClick={() => setGeneratedVoucher(null)}
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-2xl text-xs transition"
+                className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-2xl text-xs transition shadow-lg shadow-red-600/30 cursor-pointer"
               >
                 Close & Return
               </button>
