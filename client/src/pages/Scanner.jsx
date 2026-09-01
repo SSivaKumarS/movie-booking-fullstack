@@ -52,17 +52,19 @@ function Scanner() {
 
     if (cameraActive) {
       qrCodeScanner = new Html5Qrcode("reader");
-      qrCodeScanner.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        async (decodedText) => {
-          const id = decodedText.split("/").pop();
-          verifyTicketId(id);
-        },
-        () => {}
-      ).catch((err) => {
-        console.log("Camera access error:", err);
-      });
+      qrCodeScanner
+        .start(
+          { facingMode: "environment" },
+          { fps: 10, qrbox: 250 },
+          async (decodedText) => {
+            const id = decodedText.split("/").pop();
+            verifyTicketId(id);
+          },
+          () => {}
+        )
+        .catch((err) => {
+          console.log("Camera access error:", err);
+        });
     }
 
     return () => {
@@ -73,76 +75,86 @@ function Scanner() {
   }, [cameraActive]);
 
   return (
-    <div className="bg-[#07070B] min-h-screen text-white p-4 md:p-10 relative">
-      <div className="max-w-3xl mx-auto space-y-8">
-        
+    <div className="bg-[#050508] min-h-screen text-slate-100 p-4 sm:p-6 md:p-12 relative font-sans overflow-x-hidden selection:bg-rose-500 selection:text-white">
+      {/* Background Ambient Glows */}
+      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-rose-600/10 blur-[140px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-indigo-600/5 blur-[160px] pointer-events-none rounded-full" />
+
+      <div className="max-w-2xl mx-auto space-y-6 relative z-10">
         {/* Header */}
-        <div className="text-center space-y-2">
-          <span className="bg-red-600/20 border border-red-500/30 text-red-400 text-[10px] font-black px-3 py-1 rounded-full uppercase">
-             Gate Verification Portal
-          </span>
-          <h1 className="text-3xl font-extrabold text-white">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-2 bg-rose-950/60 border border-rose-500/30 px-3.5 py-1 rounded-full text-rose-400 text-[11px] font-bold tracking-widest uppercase shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+            Gate Verification Portal
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
             Theater Entry Scanner
           </h1>
-          <p className="text-xs text-gray-400">
-            Scan customer QR pass or enter ticket booking ID to verify entry
+          <p className="text-xs sm:text-sm text-slate-400 font-medium max-w-md mx-auto">
+            Scan customer QR pass or enter ticket booking ID to verify and allow entrance.
           </p>
         </div>
 
         {/* Action Toggle Bar */}
-        <div className="bg-gray-950 border border-gray-800 p-2 rounded-2xl flex justify-center gap-3">
+        <div className="bg-slate-900/80 border border-slate-800 p-2 rounded-2xl backdrop-blur-xl shadow-xl flex gap-3">
           <button
             onClick={() => setCameraActive(!cameraActive)}
-            className={`flex-1 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 ${
+            className={`flex-1 py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center justify-center gap-2.5 ${
               cameraActive
-                ? "bg-red-600 text-white shadow-lg shadow-red-600/30"
-                : "bg-gray-900 text-gray-300 hover:text-white"
+                ? "bg-gradient-to-r from-rose-600 to-rose-700 text-white shadow-lg shadow-rose-600/30 border border-rose-400/30"
+                : "bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700/50"
             }`}
           >
-            <span></span> {cameraActive ? "Stop Camera" : "Launch Camera Scanner"}
+            <span>{cameraActive ? "" : ""}</span>
+            <span>{cameraActive ? "Stop Camera" : "Launch Camera Scanner"}</span>
           </button>
         </div>
 
-        {/* Camera Feed */}
+        {/* Camera Feed Container */}
         {cameraActive && (
-          <div className="bg-gray-950 border border-red-500/30 p-4 rounded-3xl overflow-hidden shadow-2xl text-center space-y-3">
-            <div id="reader" className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden" />
-            <p className="text-[11px] text-gray-400">Point phone camera at customer ticket QR code</p>
+          <div className="bg-slate-900/90 border border-rose-500/40 p-5 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-2xl text-center space-y-3 transition-all">
+            <div
+              id="reader"
+              className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-800 bg-black shadow-inner"
+            />
+            <p className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
+              Point device camera directly at the ticket QR code
+            </p>
           </div>
         )}
 
         {/* Manual Ticket ID Lookup */}
-        <div className="bg-[#0F0F17]/90 border border-gray-800 p-6 rounded-3xl space-y-4 backdrop-blur-xl shadow-xl">
-          <h3 className="text-xs font-black uppercase tracking-wider text-gray-400">
-            Manual Ticket ID Lookup
-          </h3>
-          <div className="flex gap-3">
+        <div className="bg-slate-900/60 border border-slate-800/80 p-5 sm:p-6 rounded-3xl space-y-4 backdrop-blur-xl shadow-xl">
+          <h2 className="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <span></span> Manual Ticket ID Lookup
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="text"
               placeholder="Paste Ticket ID (e.g. 64b7f...)"
               value={inputTicketId}
               onChange={(e) => setInputTicketId(e.target.value)}
-              className="flex-1 bg-gray-950 border border-gray-800 text-white rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-red-500 font-mono transition"
+              className="flex-1 bg-slate-950 border border-slate-800 text-white rounded-2xl px-4 py-3.5 text-xs sm:text-sm focus:outline-none focus:border-rose-500 font-mono transition-colors shadow-inner placeholder:text-slate-600"
             />
             <button
               onClick={() => verifyTicketId()}
-              disabled={loading}
-              className="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-extrabold px-6 py-3 rounded-2xl text-xs transition shadow-lg shadow-red-600/30 whitespace-nowrap"
+              disabled={loading || !inputTicketId.trim()}
+              className="bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 disabled:opacity-40 text-white font-extrabold px-6 py-3.5 rounded-2xl text-xs sm:text-sm transition-all duration-200 shadow-lg shadow-rose-600/25 whitespace-nowrap active:scale-95"
             >
               {loading ? "Checking..." : "Verify Entry"}
             </button>
           </div>
         </div>
 
-        {/* Verification Status Alert Badge */}
+        {/* Verification Status Banner */}
         {statusMessage.text && (
           <div
-            className={`p-5 rounded-2xl border text-center font-black text-sm uppercase tracking-wider shadow-2xl animate-fadeIn ${
+            className={`p-5 rounded-2xl border text-center font-black text-xs sm:text-sm uppercase tracking-wider shadow-2xl backdrop-blur-md transition-all duration-300 ${
               statusMessage.type === "success"
-                ? "bg-emerald-950/80 border-emerald-500 text-emerald-300"
+                ? "bg-emerald-950/70 border-emerald-500/80 text-emerald-300 shadow-emerald-950/50"
                 : statusMessage.type === "used"
-                ? "bg-amber-950/80 border-amber-500 text-amber-300"
-                : "bg-red-950/80 border-red-500 text-red-300"
+                ? "bg-amber-950/70 border-amber-500/80 text-amber-300 shadow-amber-950/50"
+                : "bg-rose-950/70 border-rose-500/80 text-rose-300 shadow-rose-950/50"
             }`}
           >
             {statusMessage.text}
@@ -151,33 +163,55 @@ function Scanner() {
 
         {/* Scanned Ticket Details Card */}
         {scannedTicket && (
-          <div className="bg-gray-950 border border-gray-800 p-6 rounded-3xl space-y-4 shadow-2xl">
-            <div className="flex justify-between items-center pb-3 border-b border-gray-800">
-              <span className="text-xs font-bold text-gray-400">Verified Ticket Details</span>
-              <span className="text-xs font-mono text-red-400">ID: {scannedTicket._id}</span>
+          <div className="bg-slate-900/80 border border-slate-800 p-6 rounded-3xl space-y-5 shadow-2xl backdrop-blur-xl">
+            <div className="flex flex-wrap justify-between items-center pb-3 border-b border-slate-800/80 gap-2">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                Verified Ticket Pass
+              </span>
+              <span className="text-[11px] font-mono text-rose-400 bg-rose-950/40 border border-rose-800/50 px-2.5 py-1 rounded-lg">
+                ID: {scannedTicket._id}
+              </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 text-xs">
-              <div>
-                <span className="text-gray-500 block">Movie Title</span>
-                <span className="font-bold text-white text-sm">{scannedTicket.showId?.movieId?.title || "Cinema Movie"}</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/60">
+                <span className="text-slate-500 block text-[10px] uppercase font-bold tracking-wider mb-1">
+                  Movie Title
+                </span>
+                <span className="font-extrabold text-white text-sm block">
+                  {scannedTicket.showId?.movieId?.title || "Cinema Movie"}
+                </span>
               </div>
-              <div>
-                <span className="text-gray-500 block">Theater</span>
-                <span className="font-bold text-white text-sm">{scannedTicket.showId?.theatre}</span>
+
+              <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/60">
+                <span className="text-slate-500 block text-[10px] uppercase font-bold tracking-wider mb-1">
+                  Theater / Hall
+                </span>
+                <span className="font-extrabold text-white text-sm block">
+                  {scannedTicket.showId?.theatre || "Standard Screen"}
+                </span>
               </div>
-              <div>
-                <span className="text-gray-500 block">Date & Time</span>
-                <span className="font-bold text-white">{scannedTicket.showId?.date} • {scannedTicket.showId?.time}</span>
+
+              <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/60">
+                <span className="text-slate-500 block text-[10px] uppercase font-bold tracking-wider mb-1">
+                  Date & Time
+                </span>
+                <span className="font-bold text-slate-200 block">
+                  {scannedTicket.showId?.date} • {scannedTicket.showId?.time}
+                </span>
               </div>
-              <div>
-                <span className="text-gray-500 block">Admitted Seats</span>
-                <span className="font-extrabold text-emerald-400 text-sm">{scannedTicket.seats?.join(", ")}</span>
+
+              <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/60">
+                <span className="text-slate-500 block text-[10px] uppercase font-bold tracking-wider mb-1">
+                  Admitted Seats
+                </span>
+                <span className="font-extrabold text-emerald-400 text-sm block">
+                  {scannedTicket.seats?.join(", ") || "N/A"}
+                </span>
               </div>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

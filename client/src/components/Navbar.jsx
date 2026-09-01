@@ -489,7 +489,7 @@ export default function Navbar() {
             <div className="p-6 border-b border-gray-800/80 flex items-center justify-between bg-[#12121D]">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-red-600/20 border border-red-500/30 flex items-center justify-center text-xl text-red-500">
-                  ❤️
+                  
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-white tracking-tight">

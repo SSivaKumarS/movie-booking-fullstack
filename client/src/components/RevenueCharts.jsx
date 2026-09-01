@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Chart as ChartJS,
   BarElement,
@@ -9,7 +9,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-// Register only the Chart.js components required by this component
+// Register Chart.js modules
 ChartJS.register(
   BarElement,
   CategoryScale,
@@ -18,349 +18,283 @@ ChartJS.register(
   Legend
 );
 
+/* =========================================================
+   CURRENCY FORMATTERS (INSTANTIATED ONCE)
+========================================================= */
+const fullCurrencyFormatter = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  maximumFractionDigits: 0,
+});
+
+const compactCurrencyFormatter = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
+
+const formatCurrency = (value, compact = false) => {
+  const amount = Number(value) || 0;
+  return compact
+    ? compactCurrencyFormatter.format(amount)
+    : fullCurrencyFormatter.format(amount);
+};
+
+/* =========================================================
+   EMPTY STATE COMPONENT
+========================================================= */
 const EmptyChart = ({ message }) => (
-  <div className="h-[350px] flex items-center justify-center">
-    <div className="text-center">
-      <div className="text-4xl mb-3">📊</div>
-      <p className="text-gray-400 text-sm">
-        {message}
-      </p>
-      <p className="text-gray-600 text-xs mt-1">
-        Revenue data will appear here once available.
+  <div className="h-[320px] sm:h-[360px] flex items-center justify-center rounded-xl bg-gray-950/50 border border-dashed border-gray-800/80">
+    <div className="text-center px-4">
+      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-900 border border-gray-800 text-2xl mb-3 shadow-inner">
+        
+      </div>
+      <p className="text-gray-300 font-medium text-sm">{message}</p>
+      <p className="text-gray-500 text-xs mt-1">
+        Revenue insights will auto-populate once sales data is recorded.
       </p>
     </div>
   </div>
 );
 
 function RevenueCharts({ movieStats = [], theatreStats = [] }) {
-  /* =========================================================
-     CURRENCY FORMATTER
-  ========================================================= */
+  const safeMovieStats = useMemo(
+    () => (Array.isArray(movieStats) ? movieStats : []),
+    [movieStats]
+  );
 
-  const formatCurrency = (value) => {
-    const amount = Number(value) || 0;
-
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
+  const safeTheatreStats = useMemo(
+    () => (Array.isArray(theatreStats) ? theatreStats : []),
+    [theatreStats]
+  );
 
   /* =========================================================
-     SAFE DATA
+     CHART DATA DEFINITIONS
   ========================================================= */
+  const movieData = useMemo(() => {
+    return {
+      labels: safeMovieStats.map((movie) => movie?.title || "Unknown Movie"),
+      datasets: [
+        {
+          label: "Ticket Revenue",
+          data: safeMovieStats.map((movie) => Number(movie?.ticketRevenue) || 0),
+          backgroundColor: "#f43f5e",
+          hoverBackgroundColor: "#fb7185",
+          borderColor: "#e11d48",
+          borderWidth: 1,
+          borderRadius: 8,
+          borderSkipped: false,
+          maxBarThickness: 48,
+        },
+      ],
+    };
+  }, [safeMovieStats]);
 
-  const safeMovieStats = Array.isArray(movieStats)
-    ? movieStats
-    : [];
-
-  const safeTheatreStats = Array.isArray(theatreStats)
-    ? theatreStats
-    : [];
+  const theatreData = useMemo(() => {
+    return {
+      labels: safeTheatreStats.map((theatre) => theatre?.name || theatre?._id || "Unknown Theatre"),
+      datasets: [
+        {
+          label: "Tickets",
+          data: safeTheatreStats.map((theatre) => Number(theatre?.ticketRevenue) || 0),
+          backgroundColor: "#3b82f6",
+          hoverBackgroundColor: "#60a5fa",
+          borderColor: "#2563eb",
+          borderWidth: 1,
+          borderRadius: 6,
+          borderSkipped: false,
+          maxBarThickness: 36,
+        },
+        {
+          label: "Snacks",
+          data: safeTheatreStats.map((theatre) => Number(theatre?.snackRevenue) || 0),
+          backgroundColor: "#eab308",
+          hoverBackgroundColor: "#facc15",
+          borderColor: "#ca8a04",
+          borderWidth: 1,
+          borderRadius: 6,
+          borderSkipped: false,
+          maxBarThickness: 36,
+        },
+        {
+          label: "Parking",
+          data: safeTheatreStats.map((theatre) => Number(theatre?.parkingRevenue) || 0),
+          backgroundColor: "#10b981",
+          hoverBackgroundColor: "#34d399",
+          borderColor: "#059669",
+          borderWidth: 1,
+          borderRadius: 6,
+          borderSkipped: false,
+          maxBarThickness: 36,
+        },
+      ],
+    };
+  }, [safeTheatreStats]);
 
   /* =========================================================
-     MOVIE REVENUE CHART
+     BASE CHART CONFIG GENERATOR
   ========================================================= */
-
-  const movieData = {
-    labels: safeMovieStats.map(
-      (movie) => movie?.title || "Unknown Movie"
-    ),
-
-    datasets: [
-      {
-        label: "Ticket Revenue",
-
-        data: safeMovieStats.map(
-          (movie) => Number(movie?.ticketRevenue) || 0
-        ),
-
-        backgroundColor: "#ef4444",
-        borderColor: "#dc2626",
-        borderWidth: 1,
-
-        borderRadius: 8,
-
-        maxBarThickness: 55,
-      },
-    ],
-  };
-
-  /* =========================================================
-     THEATRE REVENUE CHART
-  ========================================================= */
-
-  const theatreData = {
-    labels: safeTheatreStats.map(
-      (theatre) => theatre?._id || "Unknown Theatre"
-    ),
-
-    datasets: [
-      {
-        label: "Tickets",
-
-        data: safeTheatreStats.map(
-          (theatre) => Number(theatre?.ticketRevenue) || 0
-        ),
-
-        backgroundColor: "#ef4444",
-        borderColor: "#dc2626",
-        borderWidth: 1,
-
-        borderRadius: 6,
-
-        maxBarThickness: 45,
-      },
-
-      {
-        label: "Snacks",
-
-        data: safeTheatreStats.map(
-          (theatre) => Number(theatre?.snackRevenue) || 0
-        ),
-
-        backgroundColor: "#facc15",
-        borderColor: "#eab308",
-        borderWidth: 1,
-
-        borderRadius: 6,
-
-        maxBarThickness: 45,
-      },
-
-      {
-        label: "Parking",
-
-        data: safeTheatreStats.map(
-          (theatre) => Number(theatre?.parkingRevenue) || 0
-        ),
-
-        backgroundColor: "#22c55e",
-        borderColor: "#16a34a",
-        borderWidth: 1,
-
-        borderRadius: 6,
-
-        maxBarThickness: 45,
-      },
-    ],
-  };
-
-  /* =========================================================
-     COMMON CHART OPTIONS
-  ========================================================= */
-
-  const chartOptions = {
+  const getChartOptions = (xAxisLabel) => ({
     responsive: true,
-
     maintainAspectRatio: false,
-
     interaction: {
       mode: "index",
       intersect: false,
     },
-
     plugins: {
       legend: {
         display: true,
-
         position: "top",
-
+        align: "end",
         labels: {
-          color: "#ffffff",
-
+          color: "#9ca3af",
           font: {
             size: 12,
             weight: "600",
+            family: "Inter, system-ui, sans-serif",
           },
-
-          padding: 20,
-
+          padding: 16,
           usePointStyle: true,
-
-          pointStyle: "rectRounded",
+          pointStyle: "circle",
+          boxWidth: 8,
+          boxHeight: 8,
         },
       },
-
       tooltip: {
-        backgroundColor: "#111827",
-
-        titleColor: "#ffffff",
-
-        bodyColor: "#e5e7eb",
-
-        borderColor: "#374151",
-
+        backgroundColor: "#0f172a",
+        titleColor: "#f8fafc",
+        bodyColor: "#cbd5e1",
+        borderColor: "#1e293b",
         borderWidth: 1,
-
         padding: 12,
-
+        cornerRadius: 10,
         titleFont: {
           size: 13,
           weight: "700",
         },
-
         bodyFont: {
           size: 12,
         },
-
+        displayColors: true,
+        boxPadding: 4,
         callbacks: {
-          label: function (context) {
+          label: (context) => {
             const value = context.raw || 0;
-
-            return `${context.dataset.label}: ${formatCurrency(value)}`;
+            return ` ${context.dataset.label}: ${formatCurrency(value)}`;
           },
         },
       },
     },
-
     scales: {
       x: {
         title: {
           display: true,
-
-          text: "Movie / Theatre",
-
-          color: "#9ca3af",
-
+          text: xAxisLabel,
+          color: "#6b7280",
           font: {
             size: 12,
             weight: "600",
           },
+          padding: { top: 10 },
         },
-
         ticks: {
-          color: "#ffffff",
-
+          color: "#9ca3af",
           font: {
             size: 11,
           },
-
-          maxRotation: 45,
-
+          maxRotation: 30,
           minRotation: 0,
-
           autoSkip: true,
-
           maxTicksLimit: 12,
         },
-
         grid: {
-          color: "rgba(55, 65, 81, 0.5)",
-
-          drawBorder: false,
+          display: false,
+        },
+        border: {
+          color: "#1f2937",
         },
       },
-
       y: {
         beginAtZero: true,
-
         title: {
           display: true,
-
           text: "Revenue (₹)",
-
-          color: "#9ca3af",
-
+          color: "#6b7280",
           font: {
             size: 12,
             weight: "600",
           },
+          padding: { bottom: 10 },
         },
-
         ticks: {
-          color: "#ffffff",
-
+          color: "#9ca3af",
           font: {
             size: 11,
           },
-
-          callback: function (value) {
-            return formatCurrency(value);
-          },
+          callback: (value) => formatCurrency(value, true),
         },
-
         grid: {
-          color: "rgba(55, 65, 81, 0.5)",
-
-          drawBorder: false,
+          color: "rgba(31, 41, 55, 0.6)",
+        },
+        border: {
+          dash: [4, 4],
+          color: "transparent",
         },
       },
     },
-  };
+  });
 
-
-
-  /* =========================================================
-     RETURN
-  ========================================================= */
+  const movieOptions = useMemo(() => getChartOptions("Movies"), []);
+  const theatreOptions = useMemo(() => getChartOptions("Theatres"), []);
 
   return (
-    <div className="space-y-8 sm:space-y-10 lg:space-y-12">
-
-      {/* =====================================================
-          MOVIE REVENUE
-      ===================================================== */}
-
-      <div className="bg-gray-900 border border-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg">
-
-        <div className="mb-5">
-
-          <h2 className="text-white font-bold text-base sm:text-lg">
-            Movie Revenue Chart
-          </h2>
-
-          <p className="text-gray-500 text-xs sm:text-sm mt-1">
-            Ticket revenue generated by each movie
-          </p>
-
+    <div className="space-y-8">
+      {/* MOVIE REVENUE CARD */}
+      <div className="bg-gray-900/90 backdrop-blur-md border border-gray-800/80 p-5 sm:p-6 rounded-2xl shadow-xl transition-all duration-200 hover:border-gray-700/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2 border-b border-gray-800/60 pb-4">
+          <div>
+            <h2 className="text-white font-bold text-lg tracking-tight flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]" />
+              Movie Revenue Analysis
+            </h2>
+            <p className="text-gray-400 text-xs sm:text-sm mt-1">
+              Ticket earnings breakdown for current theatrical releases
+            </p>
+          </div>
         </div>
 
         {safeMovieStats.length === 0 ? (
           <EmptyChart message="No movie revenue data available." />
         ) : (
-          <div className="relative h-[300px] sm:h-[350px] lg:h-[400px]">
-            <Bar
-              data={movieData}
-              options={chartOptions}
-            />
+          <div className="relative h-[300px] sm:h-[360px]">
+            <Bar data={movieData} options={movieOptions} />
           </div>
         )}
-
       </div>
 
-      {/* =====================================================
-          THEATRE REVENUE
-      ===================================================== */}
-
-      <div className="bg-gray-900 border border-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg">
-
-        <div className="mb-5">
-
-          <h2 className="text-white font-bold text-base sm:text-lg">
-            Theatre Revenue Chart
-          </h2>
-
-          <p className="text-gray-500 text-xs sm:text-sm mt-1">
-            Ticket, snacks and parking revenue by theatre
-          </p>
-
+      {/* THEATRE REVENUE CARD */}
+      <div className="bg-gray-900/90 backdrop-blur-md border border-gray-800/80 p-5 sm:p-6 rounded-2xl shadow-xl transition-all duration-200 hover:border-gray-700/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2 border-b border-gray-800/60 pb-4">
+          <div>
+            <h2 className="text-white font-bold text-lg tracking-tight flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]" />
+              Theatre Revenue Streams
+            </h2>
+            <p className="text-gray-400 text-xs sm:text-sm mt-1">
+              Categorized revenue breakdown across tickets, snacks, and parking
+            </p>
+          </div>
         </div>
 
         {safeTheatreStats.length === 0 ? (
           <EmptyChart message="No theatre revenue data available." />
         ) : (
-          <div className="relative h-[320px] sm:h-[380px] lg:h-[420px]">
-            <Bar
-              data={theatreData}
-              options={chartOptions}
-            />
+          <div className="relative h-[320px] sm:h-[380px]">
+            <Bar data={theatreData} options={theatreOptions} />
           </div>
         )}
-
       </div>
-
     </div>
   );
 }

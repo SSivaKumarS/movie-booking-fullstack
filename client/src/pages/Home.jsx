@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, lazy, Suspense } from "react";
+import { useEffect, useState, useMemo, lazy, Suspense, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import API from "../api";
@@ -18,36 +18,58 @@ function Home() {
   const [watchlistIds, setWatchlistIds] = useState([]);
   const [toastMsg, setToastMsg] = useState("");
 
+  const toastTimerRef = useRef(null);
   const token = localStorage.getItem("token");
 
+  // Show Toast Helper
+  const showToast = (message) => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    setToastMsg(message);
+    toastTimerRef.current = setTimeout(() => {
+      setToastMsg("");
+    }, 3500);
+  };
+
   useEffect(() => {
+    let isMounted = true;
+
     // Fetch Movies
     API.get("/api/movies")
       .then((res) => {
-        setMovies(res.data || []);
-        setLoading(false);
+        if (isMounted) {
+          setMovies(res.data || []);
+          setLoading(false);
+        }
       })
       .catch((err) => {
         console.error("Home movies fetch error:", err);
-        setLoading(false);
+        if (isMounted) setLoading(false);
       });
 
     // Fetch Watchlist
     if (token) {
       API.get("/api/users/watchlist")
         .then((res) => {
-          const ids = (res.data || []).map((m) => m._id || m);
-          setWatchlistIds(ids);
+          if (isMounted) {
+            const ids = (res.data || []).map((m) => m._id || m);
+            setWatchlistIds(ids);
+          }
         })
         .catch(() => {});
     }
+
+    return () => {
+      isMounted = false;
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
   }, [token]);
 
   // Auto Rotation for Hero Banner
   useEffect(() => {
     if (!movies.length) return;
+    const heroCount = Math.min(movies.length, 5);
     const timer = setInterval(() => {
-      setActiveHero((prev) => (prev + 1) % Math.min(movies.length, 5));
+      setActiveHero((prev) => (prev + 1) % heroCount);
     }, 6000);
     return () => clearInterval(timer);
   }, [movies]);
@@ -56,35 +78,50 @@ function Home() {
   const handleToggleWatchlist = async (e, movieId, movieTitle) => {
     e.stopPropagation();
     if (!token) {
-      setToastMsg("Please log in to save movies to your watchlist!");
-      setTimeout(() => setToastMsg(""), 3500);
+      showToast("Please log in to save movies to your watchlist!");
       return;
     }
+
     try {
       const res = await API.post("/api/users/watchlist/toggle", { movieId });
       const updated = (res.data.watchlist || []).map((m) => m._id || m);
       setWatchlistIds(updated);
 
       const isAdded = updated.includes(movieId);
-      setToastMsg(isAdded ? ` Added "${movieTitle}" to Watchlist!` : `Removed "${movieTitle}" from Watchlist`);
-      setTimeout(() => setToastMsg(""), 3500);
+      showToast(
+        isAdded
+          ? `Added "${movieTitle}" to Watchlist!`
+          : `Removed "${movieTitle}" from Watchlist`
+      );
     } catch (err) {
       console.error("Watchlist error:", err);
+      showToast("Failed to update watchlist. Please try again.");
     }
   };
 
   // Unique Genres
-  const genres = useMemo(() => {
-    return ["All", "Action", "Drama", "Sci-Fi", "Comedy", "Thriller", "Horror"];
-  }, []);
+  const genres = useMemo(
+    () => ["All", "Action", "Drama", "Sci-Fi", "Comedy", "Thriller", "Horror"],
+    []
+  );
 
   // Filtered Movies
   const filteredMovies = useMemo(() => {
+    const query = searchQuery.toLowerCase().trim();
     return movies.filter((movie) => {
-      const matchesSearch = movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            movie.genre?.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesGenre = selectedGenre === "All" || movie.genre?.toLowerCase().includes(selectedGenre.toLowerCase());
-      const matchesLang = selectedLanguage === "All" || (movie.language && movie.language.toLowerCase() === selectedLanguage.toLowerCase());
+      const matchesSearch =
+        !query ||
+        movie.title?.toLowerCase().includes(query) ||
+        movie.genre?.toLowerCase().includes(query);
+
+      const matchesGenre =
+        selectedGenre === "All" ||
+        movie.genre?.toLowerCase().includes(selectedGenre.toLowerCase());
+
+      const matchesLang =
+        selectedLanguage === "All" ||
+        movie.language?.toLowerCase() === selectedLanguage.toLowerCase();
+
       return matchesSearch && matchesGenre && matchesLang;
     });
   }, [movies, searchQuery, selectedGenre, selectedLanguage]);
@@ -93,7 +130,6 @@ function Home() {
 
   return (
     <div className="relative min-h-screen text-white bg-[#06060A] overflow-hidden selection:bg-red-600/40">
-      
       {/* Toast Notification */}
       <AnimatePresence>
         {toastMsg && (
@@ -103,7 +139,7 @@ function Home() {
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
             className="fixed top-24 right-6 z-50 bg-[#161622] border border-red-500/40 text-white text-xs font-bold px-5 py-3 rounded-2xl shadow-2xl shadow-red-950 flex items-center gap-3"
           >
-            <span></span>
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
             <span>{toastMsg}</span>
           </motion.div>
         )}
@@ -133,15 +169,13 @@ function Home() {
                   decoding="async"
                   className="w-full h-full object-cover filter brightness-[0.75] contrast-[1.05]"
                 />
-                {/* Refined gradient overlays for clear background visibility */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#06060A] via-[#06060A]/40 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-r from-[#06060A]/90 via-[#06060A]/50 to-transparent" />
-                
-                {/* Dynamic Ambient Backlight Glow - Lightweight blur on mobile for max GPU performance */}
-                <div 
+
+                <div
                   className="absolute bottom-10 left-10 md:left-20 w-64 h-64 md:w-[450px] md:h-[450px] rounded-full blur-2xl md:blur-[140px] pointer-events-none opacity-30"
                   style={{
-                    background: `radial-gradient(circle, rgba(239,68,68,0.7) 0%, rgba(219,39,119,0.3) 60%, transparent 80%)`
+                    background: `radial-gradient(circle, rgba(239,68,68,0.7) 0%, rgba(219,39,119,0.3) 60%, transparent 80%)`,
                   }}
                 />
               </motion.div>
@@ -161,13 +195,13 @@ function Home() {
             >
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <span className="bg-red-600 text-white text-[11px] font-black uppercase px-3 py-1 rounded-md tracking-wider shadow-lg shadow-red-600/40">
-                   TOP BLOCKBUSTER
+                  TOP BLOCKBUSTER
                 </span>
                 <span className="bg-white/10 backdrop-blur-md text-gray-200 border border-white/15 text-xs font-semibold px-3 py-1 rounded-full">
                   {currentHero.genre || "Action / Adventure"}
                 </span>
                 <span className="text-yellow-400 font-bold text-sm flex items-center gap-1">
-                   {currentHero.rating || "4.9"} / 5
+                  ★ {currentHero.rating || "4.9"} / 5
                 </span>
               </div>
 
@@ -185,7 +219,7 @@ function Home() {
                   onClick={() => navigate(`/movies/${currentHero._id}`)}
                   className="px-8 py-4 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-extrabold text-sm rounded-2xl transition shadow-xl shadow-red-600/30 flex items-center gap-3 group"
                 >
-                  <span> BOOK TICKETS NOW</span>
+                  <span>BOOK TICKETS NOW</span>
                   <span className="group-hover:translate-x-1 transition">→</span>
                 </button>
 
@@ -215,12 +249,13 @@ function Home() {
         )}
       </section>
 
-      {/* ================= AI MOTION CONTROLLER 4K HERO LAUNCH TRAILER ================= */}
+      {/* ================= AI MOTION CONTROLLER HERO LAUNCH TRAILER ================= */}
       <section className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 my-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-2 text-cyan-400 font-extrabold text-xs tracking-widest uppercase mb-1">
-              <span></span> PRODUCT LAUNCH TRAILER
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+              PRODUCT LAUNCH TRAILER
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
               AI Motion-Controlled Cinema Booking
@@ -239,8 +274,13 @@ function Home() {
           </a>
         </div>
 
-        {/* Hero Trailer Canvas Component */}
-        <Suspense fallback={<div className="h-64 bg-gray-950/80 rounded-3xl animate-pulse flex items-center justify-center text-xs text-gray-500">Loading AI Motion Trailer...</div>}>
+        <Suspense
+          fallback={
+            <div className="h-64 bg-gray-950/80 rounded-3xl animate-pulse flex items-center justify-center text-xs text-gray-500">
+              Loading AI Motion Trailer...
+            </div>
+          }
+        >
           <HeroTrailer />
         </Suspense>
       </section>
@@ -248,7 +288,6 @@ function Home() {
       {/* ================= SEARCH & CATEGORY BAR ================= */}
       <section className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 mb-20">
         <div className="bg-[#12121B]/90 backdrop-blur-2xl border border-gray-800 p-6 md:p-8 rounded-3xl shadow-2xl space-y-6">
-          
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search Box */}
             <div className="relative w-full md:w-1/2">
@@ -258,14 +297,15 @@ function Home() {
                 placeholder="Search movies, genres, or keywords..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-gray-950 border border-gray-800 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition shadow-inner"
+                className="w-full bg-gray-950 border border-gray-800 rounded-2xl pl-12 pr-10 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition shadow-inner"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white text-xs"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white text-xs font-bold"
+                  aria-label="Clear search"
                 >
-                  Clear
+                  ✕
                 </button>
               )}
             </div>
@@ -310,7 +350,6 @@ function Home() {
               </button>
             ))}
           </div>
-
         </div>
       </section>
 
@@ -319,7 +358,8 @@ function Home() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <div className="flex items-center gap-2 text-red-500 font-extrabold text-xs tracking-widest uppercase mb-1">
-              <span></span> EXPLORE SHOWTIMES
+              <span className="w-2 h-2 rounded-full bg-red-500" />
+              EXPLORE SHOWTIMES
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
               Now Showing in Theatres
@@ -338,7 +378,7 @@ function Home() {
         {/* Movie Cards Grid */}
         {filteredMovies.length === 0 ? (
           <div className="bg-[#12121A] border border-gray-800 rounded-3xl p-16 text-center">
-            <span className="text-5xl mb-4 block">🎬</span>
+            <span className="text-5xl mb-4 block"></span>
             <h3 className="text-xl font-bold text-white mb-2">No movies match your filters</h3>
             <p className="text-gray-400 text-sm mb-6">Try searching for a different title or resetting genre filters.</p>
             <button
@@ -376,7 +416,7 @@ function Home() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#111119] via-transparent to-transparent opacity-80" />
 
-                    {/* Heart Watchlist Toggle */}
+                    {/* Watchlist Toggle Heart */}
                     <button
                       onClick={(e) => handleToggleWatchlist(e, movie._id, movie.title)}
                       className={`absolute top-4 left-4 p-2.5 rounded-2xl backdrop-blur-xl border transition ${
@@ -385,8 +425,18 @@ function Home() {
                           : "bg-black/60 border-white/10 text-gray-300 hover:text-white hover:border-red-500/50"
                       }`}
                       title={isSaved ? "Remove from Watchlist" : "Add to Watchlist"}
+                      aria-label="Toggle Watchlist"
                     >
-                      {isSaved ? "❤️" : "🤍"}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-4 h-4"
+                        viewBox="0 0 24 24"
+                        fill={isSaved ? "currentColor" : "none"}
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
                     </button>
 
                     {/* Rating Pill */}
@@ -402,6 +452,7 @@ function Home() {
                       onClick={() => setTrailerMovie(movie)}
                       className="absolute bottom-4 right-4 bg-red-600/90 hover:bg-red-600 text-white p-3 rounded-2xl shadow-lg transition opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
                       title="Play Trailer"
+                      aria-label="Play Trailer"
                     >
                       ▶
                     </button>
@@ -445,9 +496,8 @@ function Home() {
       {/* ================= PROMO / EXPERIENCE CARDS ================= */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 mb-28">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
           <div className="bg-gradient-to-br from-red-950/40 via-[#13131D] to-[#0A0A0F] border border-red-500/20 p-8 rounded-3xl relative overflow-hidden shadow-xl">
-            <div className="text-3xl mb-4">🛋️</div>
+            <div className="text-3xl mb-4"></div>
             <h3 className="text-xl font-bold text-white mb-2">VIP Recliner Experience</h3>
             <p className="text-gray-400 text-xs leading-relaxed mb-6">
               Plush luxury leather recliners with personal serving call buttons and Dolby Atmos audio setup.
@@ -478,7 +528,6 @@ function Home() {
               Check My Tickets →
             </Link>
           </div>
-
         </div>
       </section>
 
