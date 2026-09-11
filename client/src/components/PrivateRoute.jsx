@@ -1,18 +1,16 @@
-import { Navigate } from "react-router-dom";
+// frontend/src/components/PrivateRoute.jsx
+import { useContext } from 'react';
+import { Navigate, Route } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 
-/**
- * PrivateRoute — wraps protected pages.
- * Redirects to /login if the user is not authenticated.
- */
-function PrivateRoute({ children }) {
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+const PrivateRoute = ({ element, ...rest }) => {
+  const { isAuthenticated } = useContext(UserContext);
 
-  if (!token || !userId) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return children;
-}
+  return isAuthenticated ? (
+    <Route {...rest} element={element} />
+  ) : (
+    <Navigate to="/login" replace />
+  );
+};
 
 export default PrivateRoute;

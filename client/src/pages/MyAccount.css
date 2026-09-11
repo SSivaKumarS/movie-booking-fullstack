@@ -1,0 +1,59 @@
+/* MyAccount Page Styles */
+.myaccount-container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+.myaccount-header { text-align: center; margin-bottom: 2.5rem; display: flex; flex-direction: column; align-items: center; }
+.myaccount-header h1 { font-size: 2.5rem; color: #75d402; margin-bottom: 0.5rem; }
+.back-btn { background: none; border: none; color: #aaa; cursor: pointer; font-size: 1rem; align-self: flex-start; margin-bottom: 1rem; }
+.back-btn:hover { color: #fff; }
+
+.myaccount-section { background: #1a1a1a; border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.section-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; margin-bottom: 2rem; border-bottom: 2px solid #75d402; }
+.section-header h2 { color: #fff; font-size: 1.75rem; letter-spacing: -0.5px; margin: 0; }
+
+.btn-edit { background: none; border: 1px solid #75d402; color: #75d402; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; }
+.btn-edit:hover { background: rgba(117, 212, 2, 0.1); border-color: #9aff3d; }
+
+.myaccount-form { display: flex; flex-direction: column; gap: 1.5rem; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.75rem; color: #75d402; font-size: 0.95rem; font-weight: 500; }
+input, .myaccount-value { width: 100%; padding: 1rem; background: #1f1f1f; border: 1px solid #2d2d2d; border-radius: 6px; color: #fff; font-size: 1rem; box-sizing: border-box; transition: all 0.3s ease; }
+input:focus { outline: none; border-color: #75d402; box-shadow: 0 0 0 3px rgba(117, 212, 2, 0.1); }
+
+.myaccount-value { background: none; border: 1px solid transparent; }
+.form-actions { display: flex; gap: 1.5rem; padding-top: 1rem; margin-top: 2rem; border-top: 1px solid #2d2d2d; }
+
+/* Password Section */
+.collapsible { cursor: pointer; }
+.toggle-icon { position: relative; width: 20px; height: 20px; transition: transform 0.3s ease; }
+.toggle-icon::before { content: ""; position: absolute; width: 12px; height: 2px; background: #75d402; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.toggle-icon::after { content: ""; position: absolute; width: 2px; height: 12px; background: #75d402; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: opacity 0.3s ease; }
+.toggle-icon.open::after { opacity: 0; }
+.password-form { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+.password-form.open { max-height: 500px; margin-top: 1.5rem; }
+
+/* Alerts */
+.myaccount-alert { padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; display: flex; align-items: center; }
+.myaccount-alert.error { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; }
+.myaccount-alert.success { background: rgba(117, 212, 2, 0.1); border: 1px solid #75d402; color: #75d402; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .myaccount-container { padding: 0 1rem; }
+    .myaccount-section { padding: 1.5rem; }
+    .form-actions { flex-direction: column; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+}
+
+.btn-secondary { background: none; border: 1px solid #75d402; color: #75d402; padding: 0.8rem 1.5rem; border-radius: 4px; transition: all 0.3s ease; }
+.btn-secondary:hover { background: rgba(117, 212, 2, 0.1); transform: translateY(-1px); }
+
+.highlight-box { background: #1f1f1f; border: 1px solid #2d2d2d; border-radius: 6px; padding: 1rem; transition: all 0.3s ease; }
+.myaccount-value.highlight-box { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+.highlight-box:hover { border-color: #363636; }
+
+.myaccount-picture-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.myaccount-picture-preview { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #75d402; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.myaccount-picture-placeholder { width: 150px; height: 150px; border-radius: 50%; background: #2d2d2d; display: flex; align-items: center; justify-content: center; color: #888; border: 3px solid #363636; }
+.myaccount-picture-upload { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.btn-upload { background: #75d402; color: #0a0a0a; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; text-align: center; font-weight: 500; }
+.btn-upload:hover { background: #8eff00; transform: translateY(-1px); }
+.btn-upload:active { transform: translateY(0); }

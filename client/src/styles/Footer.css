@@ -1,0 +1,94 @@
+/* Footer.css */
+.footer {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  padding: 2rem 1rem 1rem; /* Adjusted padding */
+  margin-top: auto; /* Push footer down */
+  border-top: 1px solid #1d1d1d;
+  width: 100%; /* Ensure full width */
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem; /* Horizontal padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping */
+  gap: 1.5rem; /* Gap between items */
+}
+
+.footer-brand h2 {
+  color: #75d402;
+  margin: 0;
+  font-size: 1.8rem; /* Desktop size */
+}
+
+.footer-brand p {
+  margin: 0.5rem 0 0;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 1.5rem; /* Desktop gap */
+}
+
+.social-icon {
+  color: #ffffff;
+  font-size: 1.5rem; /* Desktop size */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #75d402;
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #1d1d1d;
+}
+
+.footer-bottom p {
+  color: #888;
+  font-size: 0.85rem; /* Slightly smaller */
+  margin: 0;
+}
+
+/* ================================== */
+/* --- Responsive Adjustments --- */
+/* ================================== */
+
+@media (max-width: 768px) {
+  .footer {
+      padding: 1.5rem 1rem 1rem; /* Less padding */
+  }
+  .footer-content {
+    flex-direction: column; /* Stack items */
+    text-align: center;
+    gap: 1.5rem;
+  }
+  .footer-brand h2 {
+      font-size: 1.6rem; /* Smaller brand */
+  }
+  .social-links {
+    justify-content: center; /* Center icons */
+    gap: 1.2rem; /* Less gap */
+  }
+  .social-icon {
+      font-size: 1.4rem; /* Smaller icons */
+  }
+   .footer-bottom {
+      margin-top: 1.5rem;
+      padding-top: 0.8rem;
+  }
+   .footer-bottom p {
+      font-size: 0.8rem; /* Smaller copyright */
+  }
+}

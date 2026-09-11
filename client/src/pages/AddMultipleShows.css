@@ -1,0 +1,251 @@
+/* frontend/src/pages/AddMultipleShows.css - Darker Theme Update */
+
+.add-multiple-shows-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: linear-gradient(145deg, #101010, #080808);
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid #202020;
+    color: #cccccc;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.add-multiple-shows-container h2 {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    background: linear-gradient(45deg, #6abe02, #a2d64b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.error-message,
+.success-message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    text-align: center;
+    font-weight: 500;
+}
+
+.error-message {
+    color: #ff9999;
+    background: rgba(179, 30, 44, 0.2);
+    border: 1px solid #7a1c25;
+}
+
+.success-message {
+    color: #b3e699;
+    background: rgba(106, 190, 2, 0.15);
+    border: 1px solid #4a7d0f;
+}
+
+.loading-indicator {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: #666666;
+    font-size: 1.1rem;
+}
+
+.add-multiple-shows-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem; /* Reduced gap */
+}
+
+/* Style for optional row layout if used */
+.form-row {
+    display: flex;
+    gap: 1.1rem; /* Match form gap */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+.form-row .form-group {
+    flex: 1; /* Make items in a row share space */
+    min-width: 200px; /* Minimum width before wrapping */
+}
+
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: #6abe02;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Hint text within labels */
+.label-hint {
+    font-weight: normal;
+    font-size: 0.8rem;
+    color: #888888;
+    margin-left: 0.5rem;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid #282828;
+    background: #050505;
+    color: #e0e0e0;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    line-height: 1.4;
+    font-family: inherit;
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236abe02' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 1em 1em;
+    padding-right: 2.5rem;
+}
+
+.form-group select option {
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #6abe02;
+    box-shadow: 0 0 0 3px rgba(106, 190, 2, 0.3);
+    background: #101010;
+}
+
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+    background-color: #151515;
+    border-color: #202020;
+    color: #555555;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+.form-group select:disabled {
+     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23555555' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+}
+
+/* --- Date Picker Icon Styling --- */
+.form-group input[type="date"] { /* Only date type is used here */
+    position: relative;
+    color-scheme: dark;
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(80%); /* Adjust filter values for desired grey */
+    cursor: pointer;
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(90%); /* Brighter grey on hover */
+}
+/* --- End Date Picker Icon Styling --- */
+
+
+.submit-button {
+    padding: 0.9rem 1.5rem;
+    border: 1px solid #4a7d0f;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #6abe02, #a2d64b);
+    color: #050505;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+    margin-top: 1rem;
+    box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.submit-button:hover:not(:disabled) {
+    background: linear-gradient(45deg, #5a9f02, #8fc43f);
+    border-color: #3f6b0c;
+    box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+}
+
+.submit-button:focus:not(:disabled) {
+    outline: none;
+     box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.15),
+                 0 0 0 3px rgba(106, 190, 2, 0.4);
+}
+
+.submit-button:active:not(:disabled) {
+    transform: translateY(0px);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.submit-button:disabled {
+    background: #35520e;
+    color: #7a8c68;
+    border-color: #2a420a;
+    cursor: not-allowed;
+    box-shadow: none;
+    text-shadow: none;
+    opacity: 0.6;
+}
+
+.form-info, /* Shared style for info/muted text */
+.form-info-muted {
+    font-size: 0.85rem;
+    color: #777777;
+    margin-top: 0.4rem;
+    display: block;
+}
+
+/* Responsive adjustments copied from CreateShow */
+@media (max-width: 768px) {
+    .add-multiple-shows-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    .add-multiple-shows-container h2 {
+        font-size: 1.8rem;
+    }
+     .form-row { /* Adjust row layout on smaller screens */
+        gap: 0;
+        flex-direction: column;
+    }
+    .form-row .form-group {
+        min-width: 100%; /* Stack items in the row */
+        margin-bottom: 1.1rem; /* Add back margin when stacked */
+    }
+     .form-group input,
+     .form-group select,
+     .form-group textarea {
+         font-size: 0.95rem;
+         padding: 0.7rem 1rem;
+     }
+     .form-group select {
+        padding-right: 2.2rem;
+        background-position: right 0.7rem center;
+     }
+      .submit-button {
+         font-size: 0.95rem;
+         padding: 0.8rem 1.2rem;
+     }
+}
+
+/* Further adjustments for very small screens if needed */
+@media (max-width: 480px) {
+     .form-row .form-group {
+         /* Styles already applied above */
+     }
+}

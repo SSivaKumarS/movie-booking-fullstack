@@ -1,33 +1,36 @@
-const mongoose = require("mongoose");
+// backend/models/Review.js
+const mongoose = require('mongoose');
 
-const reviewSchema = new mongoose.Schema(
-  {
+const reviewSchema = new mongoose.Schema({
     movieId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Movie",
-      required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie',
+        required: true,
+        index: true
     },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    userName: {
-      type: String,
-      required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        index: true
     },
     rating: {
-      type: Number,
-      required: true,
-      min: 1,
-      max: 5,
+        type: Number,
+        required: true,
+        min: 0.5,
+        max: 5
     },
     comment: {
-      type: String,
-      required: true,
-    },
-  },
-  { timestamps: true }
-);
+        type: String,
+        trim: true,
+        default: ''
+    }
+}, {
+    timestamps: { createdAt: true, updatedAt: true }
+});
 
-module.exports = mongoose.model("Review", reviewSchema);
+// Prevent multiple reviews by the same user for the same movie
+reviewSchema.index({ movieId: 1, userId: 1 }, { unique: true });
+
+module.exports = mongoose.model('Review', reviewSchema);
+

@@ -1,0 +1,117 @@
+/* Filter.css */
+.filter-container {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.filter-container h3 {
+    color: #75d402;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.filter-button-container {
+    margin-bottom: 10px; /* Spacing below the main Filters button */
+}
+
+.filters-button {
+    display: flex; /* To align text and icon */
+    justify-content: space-between; /* Space between text and icon */
+    align-items: center; /* Vertically align text and icon */
+    width: 200px; /* Fixed width for the Filters button */
+    padding: 10px 15px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left; /* Align text to the left */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.filters-button:hover,
+.filters-button:focus {
+    border-color: #75d402;
+    outline: none;
+    box-shadow: 0 0 5px rgba(117, 212, 2, 0.5);
+}
+
+.dropdown-icon {
+    margin-left: 10px;
+    font-size: 0.8em;
+}
+
+
+.filter-panel {
+    position: relative; /* For positioning dropdown content */
+    background-color: #1a1a1a; /* Match container background */
+    border: 1px solid #555;
+    border-top: none; /* Remove top border to visually connect to button */
+    border-radius: 0 0 5px 5px; /* Round only bottom corners */
+    z-index: 10; /* Ensure it's above other content */
+    overflow: hidden;
+    max-height: 0; /* Initially hidden */
+    transition: max-height 0.3s ease-out;
+}
+
+.filter-panel.open {
+    max-height: 500px; /* Adjust as needed */
+    padding: 15px;
+}
+
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px; /* Spacing above Apply button */
+}
+
+
+.filter-group {
+    display: flex;
+    flex-direction: column; /* Stack label and select/input vertically */
+    gap: 5px; /* Reduced spacing between label and input */
+}
+
+.filter-group label {
+    margin-right: 0;
+    min-width: auto;
+    text-align: left;
+    color: #eee;
+}
+
+.filter-group select,
+.filter-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    background-color: #2a2a2a;
+    color: #fff;
+    font-size: 1rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.filter-group select {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 98%;
+    background-position-y: center;
+    padding-right: 30px;
+}
+
+
+.filter-actions {
+    text-align: right;
+}

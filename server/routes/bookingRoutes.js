@@ -1,45 +1,23 @@
-// bookingRoutes.js
+// backend/routes/bookingRoutes.js
+const express = require('express');
+const bookingController = require('../controllers/bookingController');
+const { authenticateJWT } = require('../middleware/authMiddleware'); // Assuming booking routes require login
 
-const router = require("express").Router();
-const bookingController = require("../controllers/bookingController");
-const Booking = require("../models/Booking");
-const mongoose = require("mongoose");
+const router = express.Router();
 
-/* ── VERIFY BOOKING (QR Scan) ─── must be BEFORE /:id ─── */
-router.get("/verify/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
+// POST /api/v1/bookings - Create a new booking
+router.post('/', authenticateJWT, bookingController.createBooking);
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid booking ID" });
-    }
+// GET /api/v1/bookings/me - Get bookings for the logged-in user
+// ** ADD THIS ROUTE **
+router.get('/me', authenticateJWT, bookingController.getMyBookings);
+// ** OR use GET / if that makes more sense for your structure **
+// router.get('/', authenticateJWT, bookingController.getMyBookings);
 
-    const booking = await Booking.findById(id)
-      .populate({ path: "showId", populate: { path: "movieId" } })
-      .populate("userId");
+// DELETE /api/v1/bookings/:bookingId - Cancel a booking
+router.delete('/:bookingId', authenticateJWT, bookingController.cancelBooking);
 
-    if (!booking) return res.status(404).json(null);
-
-    res.json(booking);
-  } catch (error) {
-    console.error("Verify error:", error);
-    res.status(500).json(null);
-  }
-});
-
-/* ── BOOK SEATS ── */
-router.post("/", bookingController.bookSeats);
-
-/* ── USER BOOKING HISTORY ── */
-router.get("/user/:userId", bookingController.getUserBookings);
-
-/* ── PARKING REVENUE ── */
-router.get("/parking-revenue", bookingController.getParkingRevenue);
-
-/* ── GET SINGLE BOOKING ── */
-router.get("/:id", bookingController.getBookingById);
-
-/* ── MARK TICKET AS USED ── */
-router.put("/use/:id", bookingController.markAsUsed);
+// POST /api/v1/bookings/verify - Verify a ticket
+router.post('/verify-ticket', authenticateJWT, bookingController.verifyTicket);
 
 module.exports = router;
