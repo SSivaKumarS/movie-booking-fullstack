@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.88);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,15 +12,17 @@
 }
 
 .cropper-content {
-    background-color: #1f1f1f;
+    background-color: #0d0d0d;
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 10px;
     width: 90%;
     max-width: 600px;
+    border: 1px solid rgba(255, 20, 147, 0.35);
+    box-shadow: 0 10px 40px rgba(255, 20, 147, 0.12);
 }
 
 .cropper-content h2 {
-    color: #fff;
+    color: #ffffff;
     margin-bottom: 1.5rem;
     text-align: center;
 }
@@ -30,6 +32,8 @@
     max-height: 60vh;
     overflow: hidden;
     margin-bottom: 1.5rem;
+    border-radius: 6px;
+    background-color: #050505;
 }
 
 .cropper-container img {
@@ -45,31 +49,35 @@
 }
 
 .btn-primary {
-    background-color: #75d402;
-    color: #000;
-    border: none;
+    background: linear-gradient(135deg, #ff1493, #ff69b4);
+    color: #ffffff;
+    border: 1px solid rgba(255, 20, 147, 0.5);
     padding: 0.5rem 1rem;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(255, 20, 147, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #8eff00;
+    background: linear-gradient(135deg, #e6007e, #ff1493);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(255, 20, 147, 0.35);
 }
 
 .btn-secondary {
-    background-color: #333;
-    color: #fff;
-    border: none;
+    background-color: #181818;
+    color: #ffffff;
+    border: 1px solid #333;
     padding: 0.5rem 1rem;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: 500;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-secondary:hover {
-    background-color: #444;
-} 
+    background-color: #242424;
+    border-color: rgba(255, 20, 147, 0.45);
+}

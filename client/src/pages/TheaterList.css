@@ -11,7 +11,7 @@
 }
 
 .theater-list-title {
-    color: #8BC34A;
+    color: #ff1493;
     margin-bottom: 2rem;
     text-align: center;
     font-size: 2.5rem;
@@ -66,8 +66,8 @@
 
 .add-screen-button {
     padding: 12px 20px;
-    background-color: #8BC34A;
-    color: #121212;
+    background-color: #ff1493;
+    color: #fff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -78,7 +78,7 @@
 }
 
 .add-screen-button:hover {
-    background-color: #7CB342;
+    background-color: #ff69b4;
     transform: scale(1.05);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
@@ -89,13 +89,12 @@
 
 .theater-actions {
     display: flex;
-    gap: 1rem; /* Spacing between buttons */
+    gap: 1rem;
 }
-
 
 .modify-screens-button {
     padding: 10px 15px;
-    background-color: #00BCD4; /* Example color for modify button */
+    background-color: #ff69b4;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -105,5 +104,5 @@
 }
 
 .modify-screens-button:hover {
-    background-color: #00ACC1;
+    background-color: #ff1493;
 }

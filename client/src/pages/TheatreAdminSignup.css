@@ -4,13 +4,13 @@
     max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: #1a1a1a; /* Card background color from main.css */
-    border-radius: 10px; /* Rounded corners from main.css */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* Optional: Add shadow for depth */
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .theatre-admin-signup-container h2 {
-    color: #75d402; /* Primary green color for headings */
+    color: #ff1493;
     text-align: center;
     margin-bottom: 1.5rem;
 }
@@ -27,7 +27,7 @@
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #ffffff; /* White text color */
+    color: #ffffff;
     font-weight: bold;
 }
 
@@ -37,18 +37,24 @@
 .form-group input[type="tel"],
 .form-group input[type="number"] {
     padding: 0.8rem;
-    border: 1px solid #333; /* Darker border for inputs */
+    border: 1px solid #333;
     border-radius: 5px;
-    background-color: #2a2a2a; /* Input background color similar to seat available */
-    color: #ffffff; /* White text color for input */
+    background-color: #2a2a2a;
+    color: #ffffff;
     width: 100%;
     box-sizing: border-box;
     font-size: 1rem;
 }
 
+.form-group input:focus {
+    outline: none;
+    border-color: #ff1493;
+    box-shadow: 0 0 0 2px rgba(255, 20, 147, 0.15);
+}
+
 .submit-button {
-    background-color: hsl(87, 98%, 42%); /* Primary green button color */
-    color: #121212; /* Dark text on button */
+    background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+    color: #ffffff;
     border: none;
     padding: 0.8rem 1.5rem;
     border-radius: 5px;
@@ -58,13 +64,13 @@
 }
 
 .submit-button:hover {
-    background-color: #5aa700; /* Darker green on hover */
-    transform: translateY(-1px); /* Slight lift on hover */
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    transform: translateY(-1px);
 }
 
 .error-message {
-    color: #ff4d4d; /* Red color for errors */
-    background-color: #331a1a; /* Dark red background for error message */
+    color: #ff4d4d;
+    background-color: #331a1a;
     padding: 0.8rem;
     border-radius: 5px;
     margin-top: 1rem;
@@ -72,8 +78,9 @@
 }
 
 .success-message {
-    color: #75d402; /* Green color for success */
-    background-color: #1a331a; /* Dark green background for success message */
+    color: #ff69b4;
+    background-color: rgba(255, 20, 147, 0.12);
+    border: 1px solid rgba(255, 20, 147, 0.3);
     padding: 0.8rem;
     border-radius: 5px;
     margin-top: 1rem;

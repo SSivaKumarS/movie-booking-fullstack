@@ -1,3 +1,5 @@
+/* QR Scanner Styles */
+
 .qr-scanner-container {
     max-width: 800px;
     margin: 2rem auto;
@@ -36,7 +38,9 @@
     border-radius: 10px !important;
 }
 
+
 /* Hide unnecessary HTML5QRCode elements */
+
 #qr-reader__status_span,
 #qr-reader__header_message,
 #qr-reader__dashboard_section_swaplink,
@@ -64,8 +68,8 @@
     display: none !important;
 }
 
-#qr-reader__scan_region > div {
-    border: 2px solid #75d402 !important;
+#qr-reader__scan_region>div {
+    border: 2px solid #ff1493 !important;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5) !important;
 }
 
@@ -114,7 +118,7 @@
 .showtime-selector select:focus,
 .camera-selector select:focus {
     outline: none;
-    border-color: #75d402;
+    border-color: #ff1493;
 }
 
 .selected-showtime {
@@ -136,13 +140,13 @@
 }
 
 .success-message {
-    background: rgba(117, 212, 2, 0.1);
-    color: #75d402;
+    background: rgba(255, 20, 147, 0.1);
+    color: #ff69b4;
     padding: 1rem;
     border-radius: 5px;
     margin: 1rem 0;
     text-align: center;
-    border: 1px solid rgba(117, 212, 2, 0.2);
+    border: 1px solid rgba(255, 20, 147, 0.2);
 }
 
 .scan-result {
@@ -154,7 +158,7 @@
 }
 
 .scan-result h3 {
-    color: #75d402;
+    color: #ff1493;
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
@@ -169,14 +173,14 @@
 }
 
 .scan-result p strong {
-    color: #75d402;
+    color: #ff69b4;
     min-width: 100px;
 }
 
 .status-accepted {
-    color: #75d402;
+    color: #ff69b4;
     font-weight: bold;
-    background: rgba(117, 212, 2, 0.1);
+    background: rgba(255, 20, 147, 0.1);
     padding: 4px 8px;
     border-radius: 4px;
 }
@@ -186,7 +190,7 @@
     width: 100%;
     padding: 12px;
     margin-top: 20px;
-    background: #75d402;
+    background: linear-gradient(45deg, #ff1493, #ff4db8);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -197,11 +201,11 @@
 }
 
 .scan-next-button:hover {
-    background: #66bb02;
+    background: #ff69b4;
 }
 
 .scan-next-button:active {
-    background: #579b02;
+    background: #ff4db8;
 }
 
 .loading {
@@ -212,15 +216,17 @@
 }
 
 .qr-scanner-container h1 {
-    color: #75d402;
+    color: #ff1493;
     text-align: center;
     margin-bottom: 2rem;
 }
 
+
 /* Style the permission button */
+
 #qr-reader__camera_permission_button {
     padding: 10px 20px !important;
-    background: #75d402 !important;
+    background: #ff1493 !important;
     color: #fff !important;
     border: none !important;
     border-radius: 5px !important;
@@ -230,7 +236,7 @@
 }
 
 #qr-reader__dashboard_section_csr button {
-    background: #75d402 !important;
+    background: #ff1493 !important;
     color: white !important;
     border: none !important;
     padding: 8px 16px !important;
@@ -256,36 +262,42 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(117, 212, 2, 0.2);
-    color: #75d402;
+    background: rgba(255, 20, 147, 0.2);
+    color: #ff69b4;
     padding: 10px 20px;
     border-radius: 5px;
     text-align: center;
     z-index: 10;
     font-weight: 500;
-    border: 1px solid rgba(117, 212, 2, 0.3);
+    border: 1px solid rgba(255, 20, 147, 0.3);
 }
 
+
 /* Hide HTML5QRCode's error messages */
+
 #qr-reader__status_span,
 #qr-reader__header_message,
 #qr-reader__dashboard_section_swaplink,
 #qr-reader__dashboard_section_csr select,
 #qr-reader__dashboard_section_csr span,
-#qr-reader__status_span > span {
+#qr-reader__status_span>span {
     display: none !important;
 }
 
+
 /* Make sure the scanner region is visible */
-#qr-reader__scan_region > div {
-    border: 2px solid #75d402 !important;
+
+#qr-reader__scan_region>div {
+    border: 2px solid #ff1493 !important;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5) !important;
 }
 
+
 /* Ensure the video feed is visible */
+
 #qr-reader__camera_selection,
 #qr-reader__camera_permission_button {
-    background: #75d402 !important;
+    background: #ff1493 !important;
     color: white !important;
     border: none !important;
     padding: 8px 16px !important;
@@ -309,9 +321,8 @@
         margin: 1rem;
         padding: 1rem;
     }
-
     .scanner-wrapper {
         margin: 1rem 0;
         height: 400px;
     }
-} 
+}

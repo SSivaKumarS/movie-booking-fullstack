@@ -1,15 +1,15 @@
-/* AdminPanel.css - Darker Theme Update */
+/* AdminPanel.css - Black + Pink Theme */
 
 .admin-panel-container {
     padding: 2.5rem 2rem;
     max-width: 1400px;
     margin: 0 auto;
     min-height: calc(100vh - 60px);
-    background: linear-gradient(145deg, #101010, #080808);
+    background: linear-gradient(145deg, #101010, #050505);
     color: #cccccc;
     font-family: 'Segoe UI', system-ui, sans-serif;
     animation: fadeIn 0.4s ease-out;
-    border-top: 1px solid #202020;
+    border-top: 1px solid #242424;
 }
 
 .admin-header {
@@ -20,7 +20,7 @@
 }
 
 .admin-title {
-    background: linear-gradient(45deg, #6abe02, #a2d64b);
+    background: linear-gradient(45deg, #ff2d95, #ff72b6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 2.4rem;
@@ -42,7 +42,7 @@
 }
 
 .admin-card {
-    background: #0f0f0f;
+    background: #0d0d0d;
     border-radius: 16px;
     padding: 2rem;
     border: 1px solid #282828;
@@ -53,7 +53,7 @@
 
 .admin-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
 }
 
 .card-title {
@@ -61,7 +61,7 @@
     font-size: 1.4rem;
     margin-bottom: 1.8rem;
     padding-bottom: 0.6rem;
-    border-bottom: 2px solid #6abe02;
+    border-bottom: 2px solid #ff2d95;
     display: inline-block;
     align-self: flex-start;
 }
@@ -84,30 +84,33 @@
     text-decoration: none;
     color: #cccccc;
     transition: all 0.25s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .card-link:hover {
-    background: #252525;
-    border-color: #353535;
+    background: #222222;
+    border-color: #3a3a3a;
     transform: translateX(4px);
-    box-shadow: 0 4px 8px rgba(0,0,0, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
 }
 
-/* Specific style for the single link card (Theater Controls) */
+
+/* Theater Controls / Full Link */
+
 .full-link {
     height: 100%;
-    align-items: center; /* Center items horizontally in the column */
-    justify-content: center; /* Center items vertically */
-    text-align: center; /* Ensure text itself is centered */
-    flex-direction: column; /* Stack icon and text */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
     gap: 1.5rem;
     min-height: 150px;
     padding: 7rem 1.5rem;
 }
+
 .full-link:hover {
-     transform: translateX(0) translateY(-3px); /* Adjust hover */
-     background: #282828;
+    transform: translateX(0) translateY(-3px);
+    background: #252525;
 }
 
 .link-icon {
@@ -117,7 +120,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #6abe02;
+    color: #ff2d95;
     flex-shrink: 0;
 }
 
@@ -139,7 +142,9 @@
     line-height: 1.4;
 }
 
-/* Access Denied Styling */
+
+/* Access Denied */
+
 .access-denied {
     text-align: center;
     padding: 5rem 1rem;
@@ -149,49 +154,57 @@
     align-items: center;
     justify-content: center;
     min-height: calc(80vh - 60px);
-    background: linear-gradient(145deg, #101010, #080808);
+    background: linear-gradient(145deg, #101010, #050505);
 }
 
 .access-denied h1 {
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
-    color: #ff6666;
+    color: #ff5c8a;
     font-weight: 600;
 }
+
 .access-denied p {
     font-size: 1.1rem;
     color: #aaaaaa;
 }
 
+
 /* Animations */
+
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+
 /* Responsive Design */
+
 @media (max-width: 768px) {
     .admin-panel-container {
         padding: 2rem 1rem;
     }
-
     .admin-title {
         font-size: 2rem;
     }
     .admin-greeting {
         font-size: 1rem;
     }
-
     .admin-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
         padding: 0;
     }
-
     .card-link {
         padding: 1rem 1.2rem;
     }
-     .admin-card {
+    .admin-card {
         padding: 1.5rem;
     }
 }
@@ -200,20 +213,18 @@
     .admin-title {
         font-size: 1.8rem;
     }
-
     .link-icon {
         font-size: 1.8rem;
         width: 40px;
         height: 40px;
     }
-
     .link-content h3 {
         font-size: 1.05rem;
     }
-     .admin-card {
+    .admin-card {
         border-radius: 12px;
     }
     .card-link {
-         border-radius: 8px;
+        border-radius: 8px;
     }
 }

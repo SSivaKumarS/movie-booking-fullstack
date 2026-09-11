@@ -39,7 +39,7 @@ const AdminPanel = () => {
                         {isTheatreAdmin && (
                             <section className="admin-card">
                                 <Link to="/admin/theater-dashboard" className="card-link full-link">
-                                    <span className="link-icon">📊</span>
+                                    <span className="link-icon"></span>
                                     <div className="link-content">
                                         <h3>Theater Dashboard</h3>
                                         <p>View theater statistics and performance</p>

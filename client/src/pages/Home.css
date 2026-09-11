@@ -14,8 +14,7 @@
     min-height: 80vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url('../assets/background.png');
+    background: linear-gradient( rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.82)), url('../assets/background.png');
     background-position: center;
     background-size: 100% auto;
     background-repeat: no-repeat;
@@ -55,17 +54,20 @@
     align-items: center;
     gap: 0.75rem;
     padding: 1rem 2rem;
-    background: #75d402;
-    color: #0a0a0a;
+    background: linear-gradient( 135deg, #ff1493, #ff4db8);
+    color: #ffffff;
+    border: 1px solid rgba(255, 20, 147, 0.5);
     border-radius: 50px;
     font-weight: 600;
     text-decoration: none;
-    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 6px 20px rgba(255, 20, 147, 0.2);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cta-button:hover {
-    background: #8eff00;
+    background: linear-gradient( 135deg, #e6007e, #ff1493);
     transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 20, 147, 0.35);
 }
 
 .cta-button svg {
@@ -79,7 +81,7 @@
 .section-header {
     position: relative;
     padding-bottom: 1rem;
-    border-bottom: none; /* Remove original border */
+    border-bottom: none;
 }
 
 .section-header::after {
@@ -89,11 +91,7 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(to right, 
-        #75d402 0%, 
-        #75d402 15%, 
-        rgba(117, 212, 2, 0) 100%
-    );
+    background: linear-gradient( to right, #ff1493 0%, #ff1493 15%, rgba(255, 20, 147, 0) 100%);
     transform-origin: left center;
     transition: all 0.3s ease;
 }
@@ -107,58 +105,135 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: #75d402;
+    color: #ff1493;
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.2s;
+    transition: color 0.2s ease;
 }
 
 .section-link:hover {
-    color: #8eff00;
+    color: #ff69b4;
 }
 
 .movie-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat( auto-fill, minmax(240px, 1fr));
     gap: 2rem;
     padding: 1rem 0;
 }
 
+
 /* Tablets and Large Phones */
+
 @media (max-width: 1024px) {
-    .hero-section h1 { font-size: 2.8rem; }
-    .hero-section p { font-size: 1.1rem; max-width: 90%; }
-    .movie-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
-    .section-header h2 { font-size: 1.6rem; }
-    /* Adjust container padding if needed */
-    .home-page > .container { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .hero-section h1 {
+        font-size: 2.8rem;
+    }
+    .hero-section p {
+        font-size: 1.1rem;
+        max-width: 90%;
+    }
+    .movie-grid {
+        grid-template-columns: repeat( auto-fill, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+    .section-header h2 {
+        font-size: 1.6rem;
+    }
+    .home-page>.container {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+    }
 }
 
-/* Medium sized phones to Small Tablets */
+
+/* Medium Sized Phones to Small Tablets */
+
 @media (max-width: 768px) {
-    .hero-section { min-height: 60vh; } /* Shorter hero */
-    .hero-section h1 { font-size: 2.2rem; }
-    .hero-section p { font-size: 1rem; margin-bottom: 2rem; }
-    .cta-button { padding: 0.8rem 1.5rem; font-size: 0.9rem; }
-    .cta-button svg { width: 18px; height: 18px; }
-    .section-header h2 { font-size: 1.4rem; }
-    .section-link { font-size: 0.85rem; }
-    .section-link svg { width: 12px; height: 12px; }
-    .movie-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.2rem; } /* More columns for smaller cards */
-    .home-page > .container { padding-left: 1rem; padding-right: 1rem; } /* Use App.css padding */
+    .hero-section {
+        min-height: 60vh;
+    }
+    .hero-section h1 {
+        font-size: 2.2rem;
+    }
+    .hero-section p {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    .cta-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    .cta-button svg {
+        width: 18px;
+        height: 18px;
+    }
+    .section-header h2 {
+        font-size: 1.4rem;
+    }
+    .section-link {
+        font-size: 0.85rem;
+    }
+    .section-link svg {
+        width: 12px;
+        height: 12px;
+    }
+    .movie-grid {
+        grid-template-columns: repeat( auto-fill, minmax(160px, 1fr));
+        gap: 1.2rem;
+    }
+    .home-page>.container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
+
 
 /* Small Phones */
+
 @media (max-width: 480px) {
-    .hero-section { min-height: 150%; background-position: center 40%; }
-    .hero-content { width: 95%; padding: 1.5rem 0.5rem; }
-    .hero-section h1 { font-size: 1.9rem; margin-bottom: 1rem; }
-    .hero-section p { font-size: 0.9rem; margin-bottom: 1.8rem; }
-    .cta-button { padding: 0.7rem 1.2rem; font-size: 0.85rem; }
-    .section-header { margin-bottom: 1rem; padding-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem; }
-    .section-header h2 { font-size: 1.25rem; width: 100%; }
-    .section-header::after { width: 80px; }
-    .section-link { font-size: 0.8rem; }
-    .movie-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } /* Explicitly 2 columns */
-    .home-page > .container { padding-left: 0.75rem; padding-right: 0.75rem; } /* Use App.css padding */
+    .hero-section {
+        min-height: 150%;
+        background-position: center 40%;
+    }
+    .hero-content {
+        width: 95%;
+        padding: 1.5rem 0.5rem;
+    }
+    .hero-section h1 {
+        font-size: 1.9rem;
+        margin-bottom: 1rem;
+    }
+    .hero-section p {
+        font-size: 0.9rem;
+        margin-bottom: 1.8rem;
+    }
+    .cta-button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+    }
+    .section-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.8rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .section-header h2 {
+        font-size: 1.25rem;
+        width: 100%;
+    }
+    .section-header::after {
+        width: 80px;
+    }
+    .section-link {
+        font-size: 0.8rem;
+    }
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .home-page>.container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
 }

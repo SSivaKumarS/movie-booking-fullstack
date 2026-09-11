@@ -1,117 +1,249 @@
 /* Filter.css */
+
+
+/* ================================
+   Filter Container
+================================ */
+
 .filter-container {
     margin-bottom: 20px;
     padding: 20px;
-    border: 1px solid #333;
+    border: 1px solid #2d2d2d;
     border-radius: 10px;
-    background-color: #1a1a1a;
-    color: #fff;
+    background: #151515;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .filter-container h3 {
-    color: #75d402;
+    color: #ff1493;
     margin-top: 0;
     margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
+
+/* ================================
+   Filter Button
+================================ */
+
 .filter-button-container {
-    margin-bottom: 10px; /* Spacing below the main Filters button */
+    margin-bottom: 10px;
 }
 
 .filters-button {
-    display: flex; /* To align text and icon */
-    justify-content: space-between; /* Space between text and icon */
-    align-items: center; /* Vertically align text and icon */
-    width: 200px; /* Fixed width for the Filters button */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
     padding: 10px 15px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #2a2a2a;
-    color: #fff;
+    border: 1px solid #383838;
+    border-radius: 6px;
+    background: #222222;
+    color: #ffffff;
     font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
-    text-align: left; /* Align text to the left */
+    text-align: left;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 }
 
-.filters-button:hover,
-.filters-button:focus {
-    border-color: #75d402;
-    outline: none;
-    box-shadow: 0 0 5px rgba(117, 212, 2, 0.5);
+.filters-button:hover {
+    background: #292929;
+    border-color: #ff1493;
+    box-shadow: 0 0 10px rgba(255, 20, 147, 0.15);
 }
+
+.filters-button:focus {
+    border-color: #ff1493;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 20, 147, 0.12), 0 0 10px rgba(255, 20, 147, 0.15);
+}
+
+.filters-button:active {
+    transform: translateY(1px);
+}
+
+
+/* ================================
+   Dropdown Icon
+================================ */
 
 .dropdown-icon {
     margin-left: 10px;
     font-size: 0.8em;
+    color: #ff69b4;
+    transition: transform 0.25s ease, color 0.25s ease;
 }
 
 
+/* ================================
+   Filter Panel
+================================ */
+
 .filter-panel {
-    position: relative; /* For positioning dropdown content */
-    background-color: #1a1a1a; /* Match container background */
-    border: 1px solid #555;
-    border-top: none; /* Remove top border to visually connect to button */
-    border-radius: 0 0 5px 5px; /* Round only bottom corners */
-    z-index: 10; /* Ensure it's above other content */
+    position: relative;
+    background: #151515;
+    border: 1px solid #383838;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    z-index: 10;
     overflow: hidden;
-    max-height: 0; /* Initially hidden */
-    transition: max-height 0.3s ease-out;
+    max-height: 0;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
 }
 
 .filter-panel.open {
-    max-height: 500px; /* Adjust as needed */
+    max-height: 500px;
     padding: 15px;
+    border-color: #ff1493;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
 }
 
+
+/* ================================
+   Filter Options
+================================ */
 
 .filter-options {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-bottom: 15px; /* Spacing above Apply button */
+    margin-bottom: 15px;
 }
 
 
+/* ================================
+   Filter Groups
+================================ */
+
 .filter-group {
     display: flex;
-    flex-direction: column; /* Stack label and select/input vertically */
-    gap: 5px; /* Reduced spacing between label and input */
+    flex-direction: column;
+    gap: 5px;
 }
 
 .filter-group label {
     margin-right: 0;
     min-width: auto;
     text-align: left;
-    color: #eee;
+    color: #dddddd;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
+
+
+/* ================================
+   Select & Number Input
+================================ */
 
 .filter-group select,
 .filter-group input[type="number"] {
     width: 100%;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #555;
-    background-color: #2a2a2a;
-    color: #fff;
+    border-radius: 6px;
+    border: 1px solid #383838;
+    background: #222222;
+    color: #ffffff;
     font-size: 1rem;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     cursor: pointer;
+    outline: none;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
+
+.filter-group select:hover,
+.filter-group input[type="number"]:hover {
+    border-color: #555555;
+}
+
+.filter-group select:focus,
+.filter-group input[type="number"]:focus {
+    border-color: #ff1493;
+    background: #252525;
+    box-shadow: 0 0 0 2px rgba(255, 20, 147, 0.1), 0 0 8px rgba(255, 20, 147, 0.12);
+}
+
+
+/* ================================
+   Select Dropdown Arrow
+================================ */
 
 .filter-group select {
-    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>\
+<path fill='%23ff1493' d='M7 10l5 5 5-5z'/>\
+</svg>");
     background-repeat: no-repeat;
-    background-position-x: 98%;
-    background-position-y: center;
-    padding-right: 30px;
+    background-position: calc(100% - 8px) center;
+    background-size: 20px;
+    padding-right: 35px;
 }
 
+
+/* ================================
+   Number Input
+================================ */
+
+.filter-group input[type="number"] {
+    box-sizing: border-box;
+}
+
+.filter-group input[type="number"]::placeholder {
+    color: #777777;
+}
+
+
+/* ================================
+   Filter Actions
+================================ */
 
 .filter-actions {
     text-align: right;
+}
+
+
+/* ================================
+   Responsive Design
+================================ */
+
+@media (max-width: 768px) {
+    .filter-container {
+        padding: 15px;
+    }
+    .filters-button {
+        width: 100%;
+    }
+    .filter-panel.open {
+        padding: 12px;
+    }
+    .filter-options {
+        gap: 12px;
+    }
+    .filter-group select,
+    .filter-group input[type="number"] {
+        font-size: 0.95rem;
+        padding: 9px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-container {
+        padding: 12px;
+    }
+    .filter-container h3 {
+        font-size: 1.05rem;
+    }
+    .filter-panel.open {
+        padding: 10px;
+    }
+    .filter-actions {
+        text-align: center;
+    }
 }

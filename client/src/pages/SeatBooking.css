@@ -1,4 +1,5 @@
 /* SeatBooking.css */
+
 .seat-booking {
     display: flex;
     flex-direction: column;
@@ -7,7 +8,8 @@
     background-color: #0a0a0a;
     color: #fff;
     min-height: 100vh;
-    padding-bottom: 100px; /* Add space for fixed bottom bar */
+    padding-bottom: 100px;
+    /* Add space for fixed bottom bar */
 }
 
 .booking-summary-bar {
@@ -16,7 +18,7 @@
     left: 0;
     right: 0;
     background: #0d0c0c;
-    border-top: 2px solid #75d402;
+    border-top: 2px solid #ff1493;
     padding: 1rem 2rem;
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
     z-index: 1000;
@@ -42,14 +44,14 @@
 }
 
 .summary-value {
-    color: #75d402;
+    color: #ff1493;
     font-size: 1.3rem;
     font-weight: 600;
 }
 
 .seat-booking h2 {
     margin-bottom: 1rem;
-    color: #75d402;
+    color: #ff1493;
 }
 
 .booking-status {
@@ -60,10 +62,11 @@
 }
 
 .booking-status.success {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: #28a745;
-    border: 1px solid #28a745;
+    background-color: rgba(255, 20, 147, 0.15);
+    color: #ff69b4;
+    border: 1px solid #ff1493;
 }
+
 
 /* .booking-status.error {
     background-color: rgba(220, 53, 69, 0.2);
@@ -72,8 +75,8 @@
 } */
 
 .book-now-button {
-    background: linear-gradient(135deg, #75d402 0%, #b4ec51 100%);
-    color: #121212;
+    background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+    color: #ffffff;
     border: none;
     padding: 0.8rem 2.5rem;
     border-radius: 8px;
@@ -93,7 +96,10 @@
     cursor: not-allowed;
     transform: none;
 }
+
+
 /* Add to existing SeatBooking.css */
+
 .booking-alert {
     padding: 1rem;
     border-radius: 8px;
@@ -110,7 +116,7 @@
 }
 
 .login-link {
-    color: #75d402;
+    color: #ff1493;
     text-decoration: none;
     font-weight: 500;
     margin-left: 0.5rem;
@@ -149,35 +155,31 @@
     background-color: #333;
 }
 
+
 /* Mobile Responsive Styles */
+
 @media screen and (max-width: 768px) {
     .booking-summary-bar {
         padding: 0.8rem 1rem;
     }
-
     .summary-content {
         flex-direction: column;
         gap: 0.5rem;
         align-items: flex-start;
     }
-
     .summary-item {
         font-size: 0.9rem;
     }
-
     .summary-label {
         font-size: 0.9rem;
     }
-
     .summary-value {
         font-size: 1rem;
     }
-
     .selected-seat-labels {
         font-size: 0.85rem;
-        color: #75d402;
+        color: #ff1493;
     }
-
     .book-now-button {
         width: 100%;
         padding: 0.6rem 1.5rem;
@@ -186,28 +188,23 @@
     }
 }
 
+
 /* Additional spacing for very small screens */
+
 @media screen and (max-width: 480px) {
     .booking-summary-bar {
         padding: 0.6rem 0.8rem;
     }
-
     .summary-item {
         font-size: 0.85rem;
     }
-
     .summary-label {
         font-size: 0.85rem;
     }
-
     .summary-value {
         font-size: 0.95rem;
     }
-
     .selected-seat-labels {
         font-size: 0.8rem;
     }
 }
-
-
-

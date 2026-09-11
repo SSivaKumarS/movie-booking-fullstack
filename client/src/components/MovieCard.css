@@ -1,89 +1,137 @@
 /* MovieCard.css */
 
+
+/* Original black + pink styling */
+
+
+/* ================================
+   Movie Card Link
+================================ */
+
 .movie-card-link {
     text-decoration: none;
     color: inherit;
     display: block;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 12px;
-    height: 100%; /* Ensure link fills grid item */
+    height: 100%;
 }
 
 .movie-card-link:hover {
     transform: translateY(-6px);
-    box-shadow: 0 8px 20px rgba(117, 212, 2, 0.2);
+    box-shadow: 0 8px 20px rgba(255, 20, 147, 0.25);
 }
 
+
+/* ================================
+   Movie Card
+================================ */
+
 .movie-card {
-    background: #1a1a1a;
+    background: #151515;
     border-radius: 12px;
     overflow: hidden;
     position: relative;
     height: 100%;
     display: flex;
     flex-direction: column;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    border: 1px solid #242424;
 }
 
 .movie-card-link:hover .movie-card {
-    background-color: #222; /* Optional subtle bg change */
+    background-color: #1e1e1e;
+    border-color: rgba(255, 20, 147, 0.45);
 }
+
+
+/* ================================
+   Movie Poster
+================================ */
 
 .movie-card img {
     width: 100%;
     height: auto;
-    aspect-ratio: 2 / 3; /* Maintain aspect ratio */
+    aspect-ratio: 2 / 3;
     object-fit: cover;
+    object-position: center;
     display: block;
-    background-color: #2a2a2a;
-    border-bottom: 1px solid #333;
+    background-color: #222222;
+    border-bottom: 1px solid #333333;
+    transition: transform 0.3s ease;
 }
 
-/* Movie Info Section */
+.movie-card-link:hover .movie-card img {
+    transform: scale(1.02);
+}
+
+
+/* ================================
+   Movie Information
+================================ */
+
 .movie-info {
-    padding: 1rem; /* Desktop padding */
+    padding: 1rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 75px; /* Desktop min height */
+    min-height: 75px;
+    box-sizing: border-box;
 }
 
-/* Movie Title Styling */
+
+/* ================================
+   Movie Title
+================================ */
+
 .movie-title {
-    font-size: 1rem; /* Desktop size */
+    font-size: 1rem;
     font-weight: 600;
     margin: 0 0 0.3rem;
     color: #ffffff;
     line-height: 1.3;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Clamp to 2 lines */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-height: 2.6em; /* Reserve space for two lines */
+    min-height: 2.6em;
+    transition: color 0.2s ease;
 }
 
-/* Movie Genre Styling */
+.movie-card-link:hover .movie-title {
+    color: #ff69b4;
+}
+
+
+/* ================================
+   Movie Genre
+================================ */
+
 .movie-genre {
-    font-size: 0.85rem; /* Desktop size */
+    font-size: 0.85rem;
     color: #aaaaaa;
     margin: 0;
     font-weight: 400;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: color 0.2s ease;
+}
+
+.movie-card-link:hover .movie-genre {
+    color: #cccccc;
 }
 
 
-/* ================================== */
-/* --- Responsive Adjustments --- */
-/* ================================== */
+/* ==================================
+   Responsive - Tablet
+================================== */
 
-/* Adjust for smaller grid cells on tablets */
 @media (max-width: 768px) {
     .movie-info {
-        padding: 0.8rem; /* Less padding */
+        padding: 0.8rem;
         min-height: 65px;
     }
     .movie-title {
@@ -95,7 +143,11 @@
     }
 }
 
-/* Adjust for 2-column layout on small phones */
+
+/* ==================================
+   Responsive - Mobile
+================================== */
+
 @media (max-width: 480px) {
     .movie-info {
         padding: 0.7rem;
@@ -114,7 +166,17 @@
         transform: none;
         box-shadow: none;
     }
-     .movie-card-link:hover .movie-card {
-        background-color: #1a1a1a; /* Keep original background */
+    .movie-card-link:hover .movie-card {
+        background-color: #151515;
+        border-color: #242424;
+    }
+    .movie-card-link:hover .movie-card img {
+        transform: none;
+    }
+    .movie-card-link:hover .movie-title {
+        color: #ffffff;
+    }
+    .movie-card-link:hover .movie-genre {
+        color: #aaaaaa;
     }
 }

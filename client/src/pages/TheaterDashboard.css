@@ -1,89 +1,113 @@
+/* Theater Dashboard */
+
 .theater-dashboard {
     padding: 2rem;
     max-width: 1400px;
     margin: 0 auto;
-    color: #fff;
+    color: #ffffff;
+    background: #0a0a0a;
 }
+
+
+/* Dashboard Header */
 
 .dashboard-header {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #252525;
 }
 
 .dashboard-header h1 {
-    color: #fff;
+    color: #ffffff;
     margin-bottom: 0.5rem;
     font-size: 2.5rem;
+    font-weight: 700;
 }
 
 .last-updated {
-    color: #888;
+    color: #888888;
     font-size: 0.9rem;
 }
 
+
+/* Dashboard Sections */
+
 .dashboard-section {
-    background: #1a1a1a;
-    border-radius: 8px;
+    background: #151515;
+    border-radius: 10px;
     padding: 1.5rem;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid #252525;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dashboard-section:hover {
+    border-color: rgba(255, 20, 147, 0.25);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 18px rgba(255, 20, 147, 0.04);
 }
 
 .dashboard-section h2 {
-    color: #fff;
+    color: #ffffff;
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #2c2c2c;
     font-size: 1.8rem;
+    font-weight: 600;
 }
 
+
 /* Overview Section */
+
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
 }
 
 .stat-card {
-    background: #242424;
+    background: #1d1d1d;
     padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #333;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+    border: 1px solid #303030;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+    border-color: rgba(255, 20, 147, 0.55);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 15px rgba(255, 20, 147, 0.08);
 }
 
 .stat-card h3 {
-    color: #888;
+    color: #999999;
     font-size: 1rem;
     margin-bottom: 0.5rem;
 }
 
 .stat-value {
     font-size: 2rem;
-    font-weight: bold;
-    color: #fff;
+    font-weight: 700;
+    color: #ff1493;
     margin: 0.5rem 0;
+    text-shadow: 0 0 12px rgba(255, 20, 147, 0.25);
 }
 
 .stat-comparison {
     display: flex;
     justify-content: space-between;
-    color: #888;
+    color: #888888;
     font-size: 0.9rem;
 }
 
+
 /* Shows Table */
+
 .shows-table {
     overflow-x: auto;
-    background: #242424;
-    border-radius: 8px;
-    border: 1px solid #333;
+    background: #1d1d1d;
+    border-radius: 10px;
+    border: 1px solid #303030;
 }
 
 table {
@@ -91,45 +115,57 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
     padding: 1rem;
     text-align: left;
-    border-bottom: 1px solid #333;
-    color: #fff;
+    border-bottom: 1px solid #303030;
+    color: #ffffff;
 }
 
 th {
-    background: #1a1a1a;
+    background: #111111;
     font-weight: 600;
-    color: #888;
+    color: #ff69b4;
+}
+
+tr {
+    transition: background 0.2s ease;
 }
 
 tr:hover {
-    background: #2a2a2a;
+    background: #242424;
 }
 
+tr:last-child td {
+    border-bottom: none;
+}
+
+
 /* Movie Statistics */
+
 .movies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat( auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
 .movie-stat-card {
-    background: #242424;
+    background: #1d1d1d;
     padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #333;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+    border: 1px solid #303030;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .movie-stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+    border-color: rgba(255, 20, 147, 0.55);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 15px rgba(255, 20, 147, 0.08);
 }
 
 .movie-stat-card h3 {
-    color: #fff;
+    color: #ffffff;
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
@@ -140,28 +176,31 @@ tr:hover {
     gap: 1rem;
 }
 
+
 /* Screen Statistics */
+
 .screens-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
 }
 
 .screen-stat-card {
-    background: #242424;
+    background: #1d1d1d;
     padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #333;
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+    border: 1px solid #303030;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .screen-stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+    border-color: rgba(255, 20, 147, 0.55);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 15px rgba(255, 20, 147, 0.08);
 }
 
 .screen-stat-card h3 {
-    color: #fff;
+    color: #ffffff;
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
@@ -172,21 +211,25 @@ tr:hover {
     gap: 1rem;
 }
 
+
 /* Loading State */
+
 .loading {
     text-align: center;
     padding: 2rem;
-    color: #888;
+    color: #ff69b4;
     font-size: 1.2rem;
 }
 
+
 /* Stat Items */
+
 .stat-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #303030;
 }
 
 .stat-item:last-child {
@@ -194,23 +237,26 @@ tr:hover {
 }
 
 .stat-label {
-    color: #888;
+    color: #999999;
     font-size: 0.9rem;
 }
 
 .stat-number {
-    color: #fff;
-    font-weight: bold;
+    color: #ffffff;
+    font-weight: 700;
 }
 
+
 /* Occupancy Bar */
+
 .occupancy-bar {
     position: relative;
     width: 100%;
     height: 24px;
-    background: #1a1a1a;
+    background: #111111;
     border-radius: 12px;
     overflow: hidden;
+    border: 1px solid #292929;
 }
 
 .occupancy-fill {
@@ -218,7 +264,8 @@ tr:hover {
     top: 0;
     left: 0;
     height: 100%;
-    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+    background: linear-gradient( 90deg, #ff1493, #ff69b4);
+    box-shadow: 0 0 12px rgba(255, 20, 147, 0.35);
     transition: width 0.3s ease;
 }
 
@@ -229,42 +276,65 @@ tr:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: #ffffff;
     font-size: 0.9rem;
-    font-weight: bold;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     z-index: 1;
 }
 
+
 /* Responsive Design */
+
 @media (max-width: 768px) {
     .theater-dashboard {
         padding: 1rem;
     }
-
     .stats-grid {
         grid-template-columns: 1fr;
     }
-
     .movies-grid,
     .screens-grid {
         grid-template-columns: 1fr;
     }
-
     .stat-value {
         font-size: 1.5rem;
     }
-
     .dashboard-header h1 {
         font-size: 2rem;
     }
-
     .dashboard-section h2 {
         font-size: 1.5rem;
     }
-
     .shows-table {
         margin: 0 -1rem;
         border-radius: 0;
+        border-left: none;
+        border-right: none;
     }
-} 
+}
+
+@media (max-width: 480px) {
+    .theater-dashboard {
+        padding: 0.75rem;
+    }
+    .dashboard-section {
+        padding: 1rem;
+    }
+    .dashboard-header h1 {
+        font-size: 1.7rem;
+    }
+    .dashboard-section h2 {
+        font-size: 1.3rem;
+    }
+    .stat-card,
+    .movie-stat-card,
+    .screen-stat-card {
+        padding: 1.2rem;
+    }
+    th,
+    td {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+}

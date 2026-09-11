@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-brand">
-          <img src={logoIcon} alt="CinePlus+ Logo" style={{ height: '160px', marginTop: '-80px', marginBottom: '-70px', marginLeft: '-10px' }} />
+          <img src={logoIcon} alt="Xavier" style={{ height: '160px', marginTop: '-80px', marginBottom: '-70px', marginLeft: '-10px' }} />
           <p>Your Ultimate Movie Experience</p>
         </div>
         

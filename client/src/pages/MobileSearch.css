@@ -1,6 +1,8 @@
+/* Mobile Search Page - Black + Pink Theme */
+
 .mobile-search-page {
     padding: 1rem;
-    min-height: calc(100vh - 140px); /* Adjust based on navbar and bottomnav */
+    min-height: calc(100vh - 140px);
     background-color: #0a0a0a;
 }
 
@@ -14,7 +16,7 @@
     border: 1px solid #2a2a2a;
     border-radius: 20px;
     background: #1a1a1a;
-    color: #fff;
+    color: #ffffff;
     font-size: 1.1rem;
     transition: all 0.3s ease;
     box-sizing: border-box;
@@ -22,19 +24,19 @@
 
 .mobile-search-input:focus {
     outline: none;
-    border-color: #75d402;
-    box-shadow: 0 0 8px rgba(117, 212, 2, 0.2);
+    border-color: #ff1493;
+    box-shadow: 0 0 8px rgba(255, 20, 147, 0.2);
 }
 
 .mobile-search-empty {
     text-align: center;
-    color: #888;
+    color: #888888;
     margin-top: 2rem;
     font-size: 1rem;
 }
 
 .mobile-search-results {
-    background: #111;
+    background: #111111;
     border-radius: 12px;
     overflow: hidden;
 }
@@ -46,7 +48,7 @@
 }
 
 .mobile-search-results .result-item {
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid #222222;
 }
 
 .mobile-search-results .result-item:last-child {
@@ -63,14 +65,14 @@
 }
 
 .mobile-search-results .result-link:active {
-    background-color: #222;
+    background-color: #251522;
 }
 
 .mobile-search-results .result-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #75d402;
+    color: #ff1493;
     margin-right: 1rem;
     flex-shrink: 0;
 }
@@ -87,6 +89,6 @@
 
 .mobile-search-results .result-subtitle {
     font-size: 0.8rem;
-    color: #888;
+    color: #888888;
     margin-top: 0.2rem;
 }
