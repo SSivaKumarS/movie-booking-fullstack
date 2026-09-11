@@ -1,62 +1,167 @@
-.App {
+/* App.css */
+
+
+/* --- Global Reset and Base Styles --- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+
+/* Dark Theme Styles */
+
+body {
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    /* Use flexbox to help push footer down */
+    flex-direction: column;
+    transition: background-color 0.3s ease;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    width: 100%;
+}
+
+
+/* Root & Theme Wrapper structure */
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.dark-theme {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    /* Allow this wrapper to grow */
+    width: 100%;
+}
+
+
+/* Container for content */
+
+.container {
+    flex-grow: 1;
+    /* Allow container to take up available space */
+    max-width: 1400px;
+    /* Desktop max width */
+    width: 100%;
+    /* Use full width up to max */
+    margin: 0 auto;
+    /* Center the container */
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    /* More space for footer */
+    padding-left: 1.5rem;
+    /* Desktop horizontal padding */
+    padding-right: 1.5rem;
+    /* box-sizing is handled globally */
+}
+
+
+/* Custom Green Buttons */
+
+.btn-primary {
+    background-color: hsl(87, 98%, 42%);
+    color: #121212;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
     text-align: center;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.btn-primary:hover {
+    background-color: #5aa700;
+    transform: translateY(-1px);
 }
 
 
-/* QR Scanner animation */
+/* Movie Poster Styles - Example if used elsewhere */
 
-.scan-line {
+.movie-poster {
+    display: block;
     width: 100%;
-    height: 4px;
-    background: linear-gradient( 90deg, transparent, rgba(0, 255, 180, 0.8), transparent);
-    animation: scanMove 2.5s linear infinite;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
 }
 
-@keyframes scanMove {
-    0% {
-        transform: translateY(0);
-        opacity: 0;
+
+/* Loading Styles */
+
+.loading {
+    color: #75d402;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 500;
+    min-height: 200px;
+    flex-grow: 1;
+    text-align: center;
+    padding: 2rem;
+}
+
+
+/* ================================== */
+
+
+/* --- Responsive Adjustments --- */
+
+
+/* ================================== */
+
+
+/* Tablets and below */
+
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        /* Reduce side padding */
+        padding-right: 1rem;
+        padding-top: 1.5rem;
+        padding-bottom: 3rem;
     }
-    50% {
-        opacity: 1;
+}
+
+
+/* Small phones */
+
+@media (max-width: 480px) {
+    .container {
+        padding-left: 0.75rem;
+        /* Further reduce side padding */
+        padding-right: 0.75rem;
     }
-    100% {
-        transform: translateY(120px);
-        opacity: 0;
+    .btn-primary {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    .loading {
+        font-size: 1.5rem;
+        /* Smaller loading text */
     }
 }

@@ -1,0 +1,218 @@
+/* Styles for the Delete Movie Admin Page */
+.delete-movie-container {
+    max-width: 90%; /* Slightly wider */
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background-color: #0a0a0a;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    border: 1px solid #333;
+}
+
+.delete-movie-container h1 {
+    text-align: center;
+    color: #75d402;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* Form group styling */
+.delete-movie-container .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.delete-movie-container .form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: #aaa;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Search Bar */
+.search-bar-container .search-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: #171717;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.search-bar-container .search-input:focus {
+     outline: none;
+    border-color: #75d402;
+    box-shadow: 0 0 0 3px rgba(117, 212, 2, 0.15);
+}
+.search-bar-container .search-input:disabled {
+    background-color: #171717;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Table Container */
+.table-container {
+    overflow-x: auto;
+    margin-top: 1.5rem;
+    border: 1px solid #383838;
+    border-radius: 8px;
+}
+
+/* Movie Table Styling */
+.movie-delete-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px; /* Ensure minimum width */
+}
+
+.movie-delete-table thead {
+    background-color: #2a2a2a;
+}
+
+.movie-delete-table th {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    color: #ccc;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border-bottom: 2px solid #444;
+}
+
+/* Center Action column header */
+.action-column-header {
+    text-align: center !important; /* Force center alignment */
+}
+
+.movie-delete-table tbody tr {
+    border-bottom: 1px solid #333;
+    transition: background-color 0.2s ease;
+}
+
+.movie-delete-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.movie-delete-table tbody tr:hover {
+    background-color: #282828;
+}
+
+/* REMOVED: .movie-delete-table tbody tr.selected-row */
+
+.movie-delete-table td {
+    padding: 0.8rem 1rem;
+    color: #d0d0d0;
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+/* Center content in the action cell */
+.action-cell {
+    text-align: center;
+}
+
+/* No results message */
+.no-results-message {
+    text-align: center;
+    padding: 2rem;
+    color: #888;
+    font-style: italic;
+}
+
+/* Delete Button in Table Row */
+.delete-row-button {
+    background-color: transparent; /* Make transparent */
+    color: #ff4d4d; /* Red text */
+    border: 1px solid #ff4d4d; /* Red border */
+    padding: 0.4rem 0.9rem;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-weight: 500; /* Normal weight */
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    white-space: nowrap;
+}
+
+.delete-row-button:hover:not(:disabled) {
+    background-color: rgba(255, 77, 77, 0.1); /* Subtle red background on hover */
+    border-color: #ff6b6b; /* Slightly lighter border */
+    color: #ff6b6b; /* Slightly lighter text */
+}
+
+.delete-row-button:disabled {
+    border-color: #555;
+    color: #666;
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: transparent !important; /* Ensure no bg when disabled */
+}
+
+/* REMOVED: .select-button and .select-button.selected styles */
+
+/* REMOVED: .confirmation-section styles */
+/* REMOVED: .delete-button styles (as the final button is gone) */
+
+
+/* Loading/Status Indicators */
+.delete-movie-container .loading-indicator,
+.delete-movie-container .deleting-indicator { /* Optional general indicator */
+    text-align: center;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    color: #aaa;
+    font-style: italic;
+    background-color: #2a2a2a;
+    border-radius: 6px;
+}
+
+/* Success/Error Messages (keep as is) */
+.delete-movie-container .success-message {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.delete-movie-container .error-message {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+
+/* Responsive Adjustments (keep mostly as is, maybe adjust table padding) */
+@media (max-width: 768px) {
+    .delete-movie-container {
+        margin: 2rem 1rem;
+        padding: 2rem;
+    }
+    .delete-movie-container h1 {
+        font-size: 1.6rem;
+    }
+    .movie-delete-table th,
+    .movie-delete-table td {
+        padding: 0.7rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    .delete-row-button {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .delete-movie-container {
+        padding: 1.5rem;
+    }
+     /* No full-width button needed anymore */
+}

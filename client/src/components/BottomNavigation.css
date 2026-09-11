@@ -1,0 +1,54 @@
+.bottom-navigation {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #0a0a0a;
+    border-top: 1px solid #333;
+    z-index: 1000;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    text-decoration: none;
+    font-size: 0.75rem;
+    gap: 0.2rem;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    flex: 1;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.bottom-nav-item svg {
+    width: 24px;
+    height: 24px;
+}
+
+.bottom-nav-item:hover,
+.bottom-nav-item:focus,
+.bottom-nav-item.active {
+    color: #75d402;
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .bottom-navigation {
+        display: flex;
+    }
+    
+    /* Make space for the bottom nav so content isn't hidden behind it */
+    body {
+        padding-bottom: 60px;
+    }
+}

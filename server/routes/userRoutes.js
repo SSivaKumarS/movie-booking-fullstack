@@ -1,87 +1,151 @@
-const router = require("express").Router();
-const mongoose = require("mongoose");
-const User = require("../models/User");
-require("../models/Movie");
-const { authMiddleware } = require("../middleware/authMiddleware");
+const express = require('express');
+const router = express.Router();
+const { upload, cloudinary } = require('../config/cloudinary');
+const { authenticateJWT } = require('../middleware/authMiddleware');
+const mongoose = require('mongoose');
+const User = require('../models/User');
+const Theater = require('../models/Theater');
+const Movie = require('../models/Movie');
 
-// Get logged-in user
-router.get("/me", authMiddleware, async (req, res) => {
-  try {
-    const userId = req.user?.id || req.user?._id;
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: "Invalid user session" });
+// Upload profile picture
+router.post('/upload-profile-picture', authenticateJWT, upload.single('profile_picture'), async (req, res) => {
+    try {
+        console.log('Received profile picture upload request');
+        
+        if (!req.file) {
+            console.error('No file received in the request');
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+
+        // Get the full Cloudinary URL
+        const cloudinaryUrl = cloudinary.url(req.file.filename, {
+            secure: true,
+            transformation: [{ width: 500, height: 500, crop: 'fill' }]
+        });
+
+        console.log('File uploaded successfully to Cloudinary:', cloudinaryUrl);
+
+        // Update the user's profile picture in the database with the full URL
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user.userId,
+            { profile_picture: cloudinaryUrl },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Return the complete Cloudinary URL
+        res.json({
+            success: true,
+            profile_picture: cloudinaryUrl
+        });
+    } catch (error) {
+        console.error('Error uploading profile picture:', error);
+        
+        // Check if it's a Cloudinary error
+        if (error.http_code) {
+            return res.status(error.http_code).json({
+                message: `Cloudinary error: ${error.message}`
+            });
+        }
+
+        res.status(500).json({ 
+            message: 'Error uploading profile picture',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
-    const user = await User.findById(userId).select("-password").populate("watchlist");
-    if (!user) return res.status(404).json({ message: "User not found" });
-    return res.json(user);
-  } catch (error) {
-    return res.status(500).json({ message: "Failed to fetch user profile", error: error.message });
-  }
 });
 
-// Get user watchlist
-router.get("/watchlist", authMiddleware, async (req, res) => {
-  try {
-    const userId = req.user?.id || req.user?._id;
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
-      return res.json([]);
-    }
-    const user = await User.findById(userId).populate("watchlist");
-    if (!user) return res.json([]);
+module.exports = router; 
 
-    const validWatchlist = (user.watchlist || []).filter((item) => item !== null);
-    return res.json(validWatchlist);
-  } catch (error) {
-    console.error("Watchlist error:", error);
-    return res.json([]);
-  }
+// --- Like/Unlike Theater ---
+router.post('/liked-theaters/:theaterId', authenticateJWT, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const { theaterId } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(theaterId)) {
+            return res.status(400).json({ message: 'Invalid theater ID' });
+        }
+        const theater = await Theater.findById(theaterId).select('_id');
+        if (!theater) return res.status(404).json({ message: 'Theater not found' });
+
+        const updated = await User.findByIdAndUpdate(
+            userId,
+            { $addToSet: { likedTheaters: theater._id } },
+            { new: true }
+        ).select('likedTheaters movieNotifications');
+
+        return res.json({ likedTheaters: updated.likedTheaters || [], movieNotifications: updated.movieNotifications || [] });
+    } catch (err) {
+        console.error('Error liking theater:', err);
+        res.status(500).json({ message: 'Failed to like theater' });
+    }
 });
 
-// Toggle movie in watchlist
-router.post("/watchlist/toggle", authMiddleware, async (req, res) => {
-  try {
-    const { movieId } = req.body;
-    if (!movieId) return res.status(400).json({ message: "Movie ID is required" });
+router.delete('/liked-theaters/:theaterId', authenticateJWT, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const { theaterId } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(theaterId)) {
+            return res.status(400).json({ message: 'Invalid theater ID' });
+        }
 
-    const rawUserId = req.user?.id || req.user?._id;
-    if (!rawUserId || !mongoose.Types.ObjectId.isValid(rawUserId)) {
-      return res.status(400).json({ message: "Invalid user session. Please log in again." });
+        const updated = await User.findByIdAndUpdate(
+            userId,
+            { $pull: { likedTheaters: theaterId } },
+            { new: true }
+        ).select('likedTheaters movieNotifications');
+
+        return res.json({ likedTheaters: updated.likedTheaters || [], movieNotifications: updated.movieNotifications || [] });
+    } catch (err) {
+        console.error('Error unliking theater:', err);
+        res.status(500).json({ message: 'Failed to unlike theater' });
     }
-
-    const userId = new mongoose.Types.ObjectId(rawUserId);
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User profile not found" });
-    }
-
-    if (!user.watchlist) user.watchlist = [];
-
-    const existingIndex = user.watchlist.findIndex(
-      (id) => id && id.toString() === movieId.toString()
-    );
-    let isBookmarked = false;
-
-    if (existingIndex > -1) {
-      user.watchlist.splice(existingIndex, 1);
-      isBookmarked = false;
-    } else {
-      user.watchlist.push(new mongoose.Types.ObjectId(movieId));
-      isBookmarked = true;
-    }
-
-    await user.save();
-    const updatedUser = await User.findById(user._id).populate("watchlist");
-    const validWatchlist = (updatedUser.watchlist || []).filter((item) => item !== null);
-
-    return res.json({
-      message: isBookmarked ? "Added to Watchlist ❤️" : "Removed from Watchlist",
-      isBookmarked,
-      watchlist: validWatchlist,
-    });
-  } catch (error) {
-    console.error("Toggle watchlist error:", error);
-    return res.status(500).json({ message: "Failed to toggle watchlist", error: error.message });
-  }
 });
 
-module.exports = router;
+// --- Movie Notifications toggle ---
+router.post('/movie-notifications/:movieId', authenticateJWT, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const { movieId } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(movieId)) {
+            return res.status(400).json({ message: 'Invalid movie ID' });
+        }
+        const movie = await Movie.findById(movieId).select('_id');
+        if (!movie) return res.status(404).json({ message: 'Movie not found' });
+
+        const updated = await User.findByIdAndUpdate(
+            userId,
+            { $addToSet: { movieNotifications: movie._id } },
+            { new: true }
+        ).select('likedTheaters movieNotifications');
+
+        return res.json({ likedTheaters: updated.likedTheaters || [], movieNotifications: updated.movieNotifications || [] });
+    } catch (err) {
+        console.error('Error enabling movie notification:', err);
+        res.status(500).json({ message: 'Failed to enable notification' });
+    }
+});
+
+router.delete('/movie-notifications/:movieId', authenticateJWT, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const { movieId } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(movieId)) {
+            return res.status(400).json({ message: 'Invalid movie ID' });
+        }
+
+        const updated = await User.findByIdAndUpdate(
+            userId,
+            { $pull: { movieNotifications: movieId } },
+            { new: true }
+        ).select('likedTheaters movieNotifications');
+
+        return res.json({ likedTheaters: updated.likedTheaters || [], movieNotifications: updated.movieNotifications || [] });
+    } catch (err) {
+        console.error('Error disabling movie notification:', err);
+        res.status(500).json({ message: 'Failed to disable notification' });
+    }
+});

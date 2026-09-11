@@ -1,0 +1,272 @@
+/* Showtimes.css */
+.showtimes-container {
+  padding: 1rem 1rem 2rem 1rem;
+  background: #0a0a0a;
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.movie-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.movie-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #75d402 0%, #b4ec51 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  text-shadow: 0 2px 4px rgba(117, 212, 2, 0.2);
+  letter-spacing: -0.5px;
+}
+
+.genre-tag { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+.release-info { font-size: 0.9rem; color: #75d402; margin-top: 0.5rem; font-weight: 500; letter-spacing: 0.5px; }
+
+/* --- Controls Section Wrapper --- */
+.controls-section { margin-bottom: 2rem; }
+
+/* --- Date Selector --- */
+.date-selector {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  gap: 0.6rem;
+  -ms-overflow-style: none; scrollbar-width: none;
+}
+.date-selector::-webkit-scrollbar { display: none; }
+
+.date-card {
+  background: #1a1a1a; border: 1px solid #333; border-radius: 8px;
+  padding: 0.7rem 0.4rem; text-align: center; cursor: pointer;
+  transition: all 0.3s ease; color: #fff; display: flex; flex-direction: column;
+  gap: 0.3rem; min-height: 70px; justify-content: center; position: relative;
+  overflow: hidden; flex-shrink: 0; width: 75px;
+}
+.date-card:hover:not(.no-shows):not(.loading) { border-color: #75d402; transform: translateY(-2px); }
+.date-card.active { background: linear-gradient(135deg, #75d402 0%, #b4ec51 100%); border-color: #75d402; color: #121212; box-shadow: 0 4px 15px rgba(117, 212, 2, 0.3); transform: translateY(-1px); }
+.date-card.no-shows { opacity: 0.5; cursor: not-allowed; background: #151515; border-color: #282828; }
+.date-card.no-shows:hover { border-color: #282828; transform: none; }
+.date-card.no-shows .day-name, .date-card.no-shows .date-day, .date-card.no-shows .date-month { color: #555; }
+.date-card.loading { cursor: default; opacity: 0.6; }
+.date-card .spinner { display: inline-block; width: 1em; height: 1em; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spinner-rotation 0.75s linear infinite; position: absolute; top: calc(50% - 0.5em); left: calc(50% - 0.5em); opacity: 0.8; }
+@keyframes spinner-rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.day-name { font-size: 0.7rem; color: #888; font-weight: 600; text-transform: uppercase; }
+.date-card.active .day-name { color: #121212; }
+.date-day { font-size: 1.3rem; font-weight: 700; line-height: 1; }
+.date-month { font-size: 0.7rem; color: #888; text-transform: uppercase; }
+.date-card.active .date-month { color: #121212; }
+
+.loading-dates { font-size: 0.9rem; color: #888; text-align: center; margin-bottom: 1rem; font-style: italic; }
+
+
+/* --- Filter Section --- */
+.filter-section-wrapper { position: relative; }
+
+/* Filter Toggle Button (Hidden on Desktop by default) */
+.filter-toggle-button {
+  display: none; /* Hide on desktop */
+  width: 100%; padding: 0.8rem 1rem; margin-bottom: 1rem;
+  background-color: #222; border: 1px solid #444; color: #ccc;
+  border-radius: 6px; text-align: left; font-size: 0.9rem;
+  font-weight: 500; cursor: pointer; display: flex;
+  justify-content: space-between; align-items: center;
+  transition: background-color 0.2s ease;
+}
+.filter-toggle-button:hover { background-color: #333; }
+.filter-arrow-icon { transition: transform 0.3s ease-out; }
+.filter-arrow-icon.open { transform: rotate(-180deg); }
+
+/* Filter Content Area - Default Row Layout for Desktop */
+.filter-section {
+  display: flex; /* Default row layout */
+  flex-wrap: wrap; /* Allow wrapping */
+  gap: 0.8rem 1rem;
+  align-items: flex-end;
+  padding: 1rem 1.5rem;
+  background-color: rgba(31, 31, 31, 0.5);
+  border: 1px solid #282828;
+  border-radius: 8px;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out, border 0.3s ease, overflow 0s ease-out 0.4s;
+  max-height: 1000px;
+  overflow: visible;
+  opacity: 1;
+}
+
+/* Filter Group - Flex item */
+.filter-group { flex: 1 1 auto; min-width: 140px; }
+.filter-group label { display: block; margin-bottom: 0.4rem; color: #999; font-size: 0.8rem; font-weight: 500; }
+.filter-group select, .filter-group input { width: 100%; padding: 0.7rem 0.8rem; background: #2a2a2a; border: 1px solid #333; border-radius: 6px; color: #fff; font-size: 0.9rem; }
+.filter-group input[type="number"] { -moz-appearance: textfield; }
+.filter-group input[type="number"]::-webkit-outer-spin-button, .filter-group input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.filter-group input::placeholder { color: #666; }
+.filter-group select:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Filter Action Buttons - Flex item */
+.filter-actions {
+  display: flex; /* Ensure buttons are flex items */
+  gap: 0.8rem;
+  margin-left: 1rem; /* Spacing on desktop */
+  flex-shrink: 0;
+}
+
+.apply-filters, .clear-filters-button {
+  border: none; padding: 0.7rem 1rem; border-radius: 6px;
+  font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+  height: fit-content; white-space: nowrap; font-size: 0.8rem; line-height: 1.4;
+  flex-grow: 0; /* Don't grow by default */
+  flex-shrink: 0;
+}
+.apply-filters:disabled, .clear-filters-button:disabled { opacity: 0.6; cursor: not-allowed; }
+.apply-filters:hover:not(:disabled), .clear-filters-button:hover:not(:disabled) { transform: translateY(-1px); }
+.apply-filters { background: #75d402; color: #121212; }
+.apply-filters:hover:not(:disabled) { background: #8eff00; }
+.clear-filters-button { background: #444; color: #ccc; border: 1px solid #555; padding: calc(0.7rem - 1px) calc(1rem - 1px); }
+.clear-filters-button:hover:not(:disabled) { background: #555; border-color: #666; color: #fff; }
+
+
+/* --- Theaters List & Showtimes --- */
+.theaters-list { display: grid; gap: 1.5rem; margin-top: 2rem; }
+.theater-card { background: #1a1a1a; border-radius: 12px; padding: 1.5rem; border: 1px solid #2d2d2d; }
+.theater-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid #333; }
+.theater-title-row { display: inline-flex; align-items: center; gap: 0.6rem; }
+.theater-header h3 { font-size: 1.2rem; color: #eee; font-weight: 600; margin: 0; }
+.like-theater-inline-btn { display: inline-flex; align-items: center; justify-content: center; color: #75d402; cursor: pointer; transition: color 0.2s ease, transform 0.15s ease; background: transparent; border: none; padding: 0; }
+.like-theater-inline-btn:hover { color: #8eff00; transform: translateY(-1px); }
+.like-theater-inline-btn svg { display: block; }
+.like-theater-inline-btn.liked { color: #a1e85c; }
+.like-theater-inline-btn.liked:hover { color: #baff66; }
+.theater-info-link { color: #75d402; text-decoration: none; font-size: 0.85rem; transition: opacity 0.3s ease; display: inline-flex; align-items: center; gap: 0.3rem; }
+.theater-info-link i { font-size: 1em; }
+.theater-info-link:hover { opacity: 0.8; }
+.showtimes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.8rem; }
+.showtime-slot { background-color: transparent; padding: 0.7rem; border-radius: 8px; text-align: center; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 55px; box-sizing: border-box; position: relative; overflow: hidden; border-width: 1px; border-style: solid; }
+/* Color States */
+.showtime-slot.plenty, .showtime-slot:not(.limited):not(.few):not(.soldout) { color: #75d402; border-color: #4a5c37; }
+.showtime-slot.plenty:hover, .showtime-slot:not(.limited):not(.few):not(.soldout):hover { background-color: rgba(117, 212, 2, 0.1); border-color: #75d402; color: #a1e85c; transform: translateY(-1px); }
+.showtime-slot.limited { color: #FFC107; border-color: #664d03; }
+.showtime-slot.limited:hover { background-color: rgba(255, 193, 7, 0.1); border-color: #FFC107; color: #ffd54f; transform: translateY(-1px); }
+.showtime-slot.few { color: #F44336; border-color: #601e1a; }
+.showtime-slot.few:hover { background-color: rgba(244, 67, 54, 0.1); border-color: #F44336; color: #ef9a9a; transform: translateY(-1px); }
+.showtime-slot.soldout { background-color: #1f1f1f; color: #666; border-color: #333; cursor: not-allowed; }
+.showtime-slot.soldout:hover { transform: none; }
+/* Screen Format */
+.screen-format { display: block; font-size: 0.7rem; font-weight: 400; margin-top: 3px; color: inherit; opacity: 0.7; }
+.showtime-slot.soldout .screen-format { opacity: 0.5; }
+/* Loading/Error */
+.loading, .error, .no-showtimes { text-align: center; padding: 3rem 1rem; font-size: 1.1rem; color: #888; }
+.no-showtimes { line-height: 1.5; }
+
+
+/* ================================== */
+/* --- Responsive Design Adjustments --- */
+/* ================================== */
+
+/* Medium Screens / Tablets (Keep Desktop Filter Layout) */
+@media (max-width: 992px) {
+   .filter-section { gap: 0.6rem 0.8rem; padding: 0.8rem 1rem; }
+   .filter-actions { margin-left: 0.8rem; }
+}
+
+
+/* Small Tablets / Large Phones (Apply Mobile Layout Changes) */
+@media (max-width: 768px) {
+  .showtimes-container { padding: 1rem; }
+  .movie-header h1 { font-size: 1.8rem; }
+
+  /* Date Selector: Ensure flex scroll */
+  .date-selector { display: flex; overflow-x: auto; padding-bottom: 1rem; margin-bottom: 1.5rem; gap: 0.6rem; -ms-overflow-style: none; scrollbar-width: none; }
+  .date-selector::-webkit-scrollbar { display: none; }
+  .date-card { width: 75px; padding: 0.6rem 0.4rem; min-height: 65px; flex-shrink: 0; }
+  .date-day { font-size: 1.2rem; }
+  .day-name, .date-month { font-size: 0.65rem; }
+
+  /* --- Filter Section: Show Toggle, Collapse by Default --- */
+  .filter-toggle-button {
+      display: flex; /* <<< SHOW the toggle button on mobile */
+  }
+  .filter-section {
+      /* Default collapsed state on mobile */
+      max-height: 0;
+      padding-top: 0; padding-bottom: 0;
+      margin-top: 0; margin-bottom: 0;
+      border-width: 0; opacity: 0;
+      overflow: hidden;
+      /* Layout when expanded on mobile */
+      flex-direction: column; /* Stack groups */
+      align-items: stretch;
+      gap: 0.8rem;
+      background-color: rgba(31, 31, 31, 0.5); /* Keep background */
+      border-radius: 8px; /* Keep radius */
+  }
+  .filter-section.visible {
+      /* Expanded state */
+      max-height: 1000px; /* Or use 'fit-content' if transitions allow */
+      padding: 1rem 0.8rem; /* Restore padding */
+      margin-top: 1rem; margin-bottom: 1rem;
+      border-width: 1px; border-color: #282828;
+      opacity: 1;
+      overflow: visible;
+  }
+  .filter-group { min-width: unset; flex-basis: auto; } /* Groups stack */
+
+  /* --- Action Buttons within Mobile Filter Section --- */
+  .filter-actions {
+      width: 100%;
+      display: flex; /* <<< Ensure flex display */
+      justify-content: space-between; /* Space out buttons */
+      gap: 0.8rem; /* Add gap between buttons */
+      margin-left: 0;
+      margin-top: 0.8rem; /* Space above buttons */
+  }
+   .apply-filters, .clear-filters-button {
+       padding: 0.7rem 1rem;
+       margin-top: 0.1px;
+       font-size: 0.8rem;
+       flex-grow: 1; /* <<< Make buttons share space */
+       flex-basis: 0; /* <<< Allow shrinking/growing from 0 */
+       text-align: center;
+       /* Adjust padding for border on clear button */
+       &.clear-filters-button { padding: calc(0.7rem - 1px) calc(1rem - 1px); }
+   }
+
+  /* Theater List Adjustments */
+  .theaters-list { gap: 1.2rem; }
+  .theater-card { padding: 1.2rem; }
+  .theater-header h3 { font-size: 1.1rem; }
+  .theater-info-link { font-size: 0.8rem; }
+  .showtimes-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 0.6rem; }
+  .showtime-slot { padding: 0.6rem; font-size: 0.8rem; min-height: 50px; }
+  .screen-format { font-size: 0.65rem; }
+}
+
+/* Small Phones */
+@media (max-width: 480px) {
+   .movie-header h1 { font-size: 1.6rem; }
+   .date-card { width: 65px; padding: 0.5rem 0.3rem; min-height: 60px;}
+   .date-day { font-size: 1.1rem; }
+
+   .filter-toggle-button { font-size: 0.85rem; padding: 0.7rem 0.8rem; }
+   .filter-section.visible { padding: 0.8rem 0.6rem; }
+   .filter-actions { gap: 0.6rem; }
+   .apply-filters, .clear-filters-button {
+       font-size: 0.75rem; padding: 0.6rem 0.8rem;
+       margin-top: 0.1px;
+       /* Adjust padding for border */
+       &.clear-filters-button { padding: calc(0.6rem - 1px) calc(0.8rem - 1px); }
+    }
+
+   .theaters-list { gap: 1rem; }
+   .theater-card { padding: 1rem; }
+   .theater-header { margin-bottom: 1rem; padding-bottom: 0.6rem; }
+   .theater-header h3 { font-size: 1rem; }
+
+   .showtimes-grid { grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 0.5rem; }
+   .showtime-slot { padding: 0.5rem; font-size: 0.75rem; min-height: 45px; font-weight: 500; }
+   .screen-format { font-size: 0.6rem; }
+}

@@ -1,0 +1,149 @@
+/* Inherit styles from CreateMovie.css if needed */
+/* Specific styles for EditMovie */
+
+.edit-movie-container {
+    margin: 3rem auto;
+    /* Inherits from admin-form-container if used */
+    max-width: 700px; /* Adjust width as needed */
+}
+
+.edit-movie-container h1 {
+    color: #75d402; /* Green theme for edit */
+}
+
+/* Search Section */
+.search-movie-section {
+    position: relative; /* Needed for absolute positioning of results */
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #333;
+}
+
+.edit-movie-container .search-input {
+    /* Styles for the search input itself */
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-movie-container .search-input:focus {
+    outline: none;
+    border-color: #75d402;
+    box-shadow: 0 0 0 3px rgba(117, 212, 2, 0.15);
+}
+
+.search-results-container {
+    position: absolute;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-top: none; /* Remove top border as it touches input */
+    border-radius: 0 0 6px 6px; /* Rounded bottom corners */
+    max-height: 300px; /* Limit height and enable scroll */
+    overflow-y: auto;
+    width: 100%; /* Match input width */
+    z-index: 10; /* Ensure it appears above other content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: -1px; /* Overlap slightly with input border */
+}
+
+.searching-indicator,
+.no-search-results {
+     padding: 0.8rem 1rem;
+     color: #888;
+     font-style: italic;
+}
+
+
+.search-results-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-results-list li {
+    padding: 0.8rem 1rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #383838;
+}
+.search-results-list li:last-child {
+    border-bottom: none;
+}
+
+
+.search-results-list li:hover {
+    background-color: #3a3a3a;
+    color: #fff;
+}
+
+/* Edit Form Specifics */
+.edit-movie-form {
+    margin-top: 2rem;
+}
+
+.editing-title {
+    text-align: center;
+    color: #ccc;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    border-bottom: 1px dashed #444;
+    padding-bottom: 1rem;
+}
+
+/* Use existing .form-group styles from CreateMovie.css */
+/* Add any overrides if needed */
+.edit-movie-form .form-group label {
+    color: #bbb; /* Slightly brighter labels */
+}
+
+.edit-movie-form .submit-button {
+    background-color: #75d402; /* Green theme */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.edit-movie-form .submit-button:hover:not(:disabled) {
+    background-color: #5a9e02; /* Darker green */
+    transform: translateY(-2px);
+}
+.edit-movie-form .submit-button:disabled {
+    background-color: #4a6a1a; /* Dull green */
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Loading Indicator */
+.edit-movie-container .loading-indicator {
+    text-align: center;
+    padding: 1rem;
+    color: #aaa;
+    font-style: italic;
+    margin-top: 1rem;
+}
+
+/* Error message specific to search */
+.search-error {
+    font-size: 0.9em;
+    margin-top: -1rem; /* Pull up slightly */
+    margin-bottom: 1.5rem;
+    text-align: left; /* Align left below input */
+}
+
+/* Ensure success/error messages from CreateMovie.css apply */
+/* Optional: Adjust success/error message styles */
+.edit-movie-container .success-message {
+     background-color: rgba(40, 167, 69, 0.15);
+     color: #28a745;
+     border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.edit-movie-container .error-message {
+     background-color: rgba(220, 53, 69, 0.1);
+     color: #dc3545;
+     border: 1px solid rgba(220, 53, 69, 0.3);
+}

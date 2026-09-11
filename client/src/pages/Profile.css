@@ -1,0 +1,159 @@
+/* Profile Dashboard Styles */
+.profile-dashboard-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.profile-dashboard-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #1a1a1a;
+    padding: 2.5rem 1rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #2d2d2d;
+}
+
+.profile-dashboard-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #75d402;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(117, 212, 2, 0.2);
+}
+
+.profile-dashboard-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #2d2d2d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    border: 3px solid #363636;
+    margin-bottom: 1rem;
+}
+
+.profile-dashboard-name {
+    font-size: 1.8rem;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+}
+
+.profile-dashboard-email {
+    color: #aaa;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.profile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.profile-menu-item {
+    display: flex;
+    align-items: center;
+    background: #1a1a1a;
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.3s ease;
+    border: 1px solid #2d2d2d;
+}
+
+.profile-menu-item:hover, .profile-menu-item:focus {
+    background: #222;
+    border-color: #75d402;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(117, 212, 2, 0.1);
+    outline: none;
+}
+
+.menu-item-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(117, 212, 2, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #75d402;
+    margin-right: 1.2rem;
+    flex-shrink: 0;
+}
+
+.menu-item-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.menu-item-content {
+    flex-grow: 1;
+}
+
+.menu-item-content h3 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.menu-item-content p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.menu-item-arrow {
+    font-size: 1.8rem;
+    color: #555;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.profile-menu-item:hover .menu-item-arrow {
+    transform: translateX(4px);
+    color: #75d402;
+}
+
+.profile-dashboard-logout {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+}
+
+@media (max-width: 768px) {
+    .profile-dashboard-container {
+        padding: 0 1rem;
+    }
+}

@@ -1,220 +1,118 @@
-import React, { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { CityProvider } from './context/CityContext';
+import { UserProvider } from './context/UserContext';
+import { LoadingProvider } from './context/LoadingContext';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import BottomNavigation from './components/BottomNavigation';
+import Movies from './pages/Movies';
+import MobileSearch from './pages/MobileSearch';
+import MovieDetails from './pages/MovieDetails';
+import SeatBooking from './pages/SeatBooking';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import AdminSignup from './pages/AdminSignup';
+import AdminPanel from './pages/AdminPanel';
+import CreateMovie from './pages/CreateMovie';
+import CreateShow from './pages/CreateShow';
+import DeleteShow from './pages/DeleteShow';
+import ProtectedRoute from './components/ProtectedRoute';
+import './App.css';
+import Showtimes from "./pages/Showtimes";
+import TheatreAdminSignup from './pages/TheatreAdminSignup';
+import CreateScreen from './pages/CreateScreen';
+import TheaterList from './pages/TheaterList';
+import ScreenList from './pages/ScreenList';
+import Profile from './pages/Profile';
+import MyAccount from './pages/MyAccount';
+import Bookings from './pages/Bookings';
+import EditMovie from './pages/EditMovie';
+import DeleteMovie from './pages/DeleteMovie';
+import AddMultipleShows from './pages/AddMultipleShows';
+import TheaterDetailsPage from './pages/TheaterDetails';
+import QRScanner from './pages/QRScanner';
+import TheaterDashboard from './pages/TheaterDashboard';
+import OffersAdmin from './pages/OffersAdmin';
+import Checkout from './pages/Checkout';
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import PrivateRoute from "./components/PrivateRoute";
-import AdminGate from "./components/AdminGate";
+// Create a wrapper component to handle Footer rendering
+const AppContent = () => {
+    const location = useLocation();
+    const isSeatBookingPage = location.pathname.includes('/booking/screen/');
 
-import Home from "./pages/Home";
+    return (
+        <div className="dark-theme">
+            <Navbar />
+            <div className="container">
+                <Routes>
+                    {/* Home Route */}
+                    <Route path="/" element={<Home />} />
 
-const Movies = lazy(() => import("./pages/Movies"));
-const MovieDetails = lazy(() => import("./pages/MovieDetails"));
-const Login = lazy(() => import("./pages/Login"));
-const Register = lazy(() => import("./pages/Register"));
-const Seats = lazy(() => import("./pages/Seats"));
-const AddOns = lazy(() => import("./pages/AddOns"));
-const MyBookings = lazy(() => import("./pages/MyBookings"));
-const VerifyTicket = lazy(() => import("./pages/VerifyTicket"));
-const SnacksHub = lazy(() => import("./pages/SnacksHub"));
-const Admin = lazy(() => import("./pages/Admin"));
-const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const AdminScan = lazy(() => import("./pages/AdminScan"));
-const Scanner = lazy(() => import("./pages/Scanner"));
+                    {/* Public routes - Login, Signup, etc. */}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/adminsignup" element={<AdminSignup />} />
+                    <Route path="/theatreadminsignup" element={<TheatreAdminSignup />} />
 
-const AdminMovies = lazy(() => import("./pages/admin/AdminMovies"));
-const AdminShows = lazy(() => import("./pages/admin/AdminShows"));
-const AdminSnacks = lazy(() => import("./pages/admin/AdminSnacks"));
-const AdminParking = lazy(() => import("./pages/admin/AdminParking"));
-const AdminAnalytics = lazy(() => import("./pages/admin/AdminAnalytics"));
-const AdminIoTConsole = lazy(() => import("./pages/admin/AdminIoTConsole"));
+                    {/* Theater details route */}
+                    <Route path="/theaters/:theaterId" element={<TheaterDetailsPage />} />
 
-const GiftCards = lazy(() => import("./pages/GiftCards"));
-const LoyaltyWallet = lazy(() => import("./pages/LoyaltyWallet"));
-const Watchlist = lazy(() => import("./pages/Watchlist"));
+                    {/* Admin routes protected by ProtectedRoute component */}
+                    <Route path="/admin" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+                    <Route path="/admin/theater-dashboard" element={<ProtectedRoute><TheaterDashboard /></ProtectedRoute>} />
+                    <Route path="/admin/offers" element={<ProtectedRoute><OffersAdmin /></ProtectedRoute>} />
+                    <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+                    <Route path="/admin/theaters" element={<ProtectedRoute><TheaterList /></ProtectedRoute>} />
+                    <Route path="/admin/theaters/:theaterId/screens" element={<ProtectedRoute><ScreenList /></ProtectedRoute>} />
+                    <Route path="/admin/theaters/:theaterId/create-screen" element={<ProtectedRoute><CreateScreen /></ProtectedRoute>} />
 
-function PageLoader() {
-  return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center bg-[#0B0B0F] text-white">
-      <div className="w-12 h-12 border-4 border-red-600/30 border-t-red-600 rounded-full animate-spin mb-4"></div>
-      <span className="text-xs font-bold text-gray-400 uppercase tracking-widest animate-pulse">
-        Loading CineBook...
-      </span>
-    </div>
-  );
+                    {/* Movie management routes */}
+                    <Route path="/admin/add-movie" element={<ProtectedRoute><CreateMovie /></ProtectedRoute>} />
+                    <Route path="/admin/edit-movie" element={<ProtectedRoute><EditMovie /></ProtectedRoute>} />
+                    <Route path="/admin/delete-movie" element={<ProtectedRoute><DeleteMovie /></ProtectedRoute>} />
+
+                    {/* Show management routes */}
+                    <Route path="/admin/add-show" element={<ProtectedRoute><CreateShow /></ProtectedRoute>} />
+                    <Route path="/admin/add-multiple-shows" element={<ProtectedRoute><AddMultipleShows /></ProtectedRoute>} />
+                    <Route path="/admin/delete-show" element={<ProtectedRoute><DeleteShow /></ProtectedRoute>} />
+
+                    {/* QR Scanner route */}
+                    <Route path="/admin/scanner" element={<ProtectedRoute><QRScanner /></ProtectedRoute>} />
+
+                    {/* Movie and showtime browsing routes */}
+                    <Route path="/search" element={<MobileSearch />} />
+                    <Route path="/movies" element={<Movies />} />
+                    <Route path="/movies/:id" element={<MovieDetails />} />
+                    <Route path="/showtimes/:id" element={<Showtimes />} />
+                    <Route path="/booking/screen/:screenId/showtime/:showtimeId" element={<SeatBooking />} />
+
+                    {/* User profile and bookings */}
+                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                    <Route path="/myaccount" element={<ProtectedRoute><MyAccount /></ProtectedRoute>} />
+                    <Route path="/bookings" element={<ProtectedRoute><Bookings /></ProtectedRoute>} />
+                </Routes>
+            </div>
+            {!isSeatBookingPage && <Footer />}
+            {!isSeatBookingPage && <BottomNavigation />}
+        </div>
+    );
+};
+
+function App() {
+    return (
+        <UserProvider>
+            <CityProvider>
+                <LoadingProvider>
+                    <Router>
+                        <AppContent />
+                    </Router>
+                </LoadingProvider>
+            </CityProvider>
+        </UserProvider>
+    );
 }
 
-function NotFound() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950">
-      <div className="text-center space-y-4">
-        <h1 className="text-6xl font-black text-red-500">404</h1>
-        <p className="text-white text-lg font-bold">Page Not Found</p>
-        <a
-          href="/"
-          className="inline-block bg-red-600 text-white font-bold px-6 py-3 rounded-2xl hover:bg-red-700 transition"
-        >
-          Go Home
-        </a>
-      </div>
-    </div>
-  );
-}
-
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Navbar />
-
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          
-          <Route path="/" element={<Home />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/:movieId" element={<MovieDetails />} />
-          <Route path="/movie/:movieId" element={<MovieDetails />} />
-          <Route path="/watchlist" element={<Watchlist />} />
-          <Route path="/gift-cards" element={<GiftCards />} />
-          <Route path="/loyalty" element={<LoyaltyWallet />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/verify/:bookingId" element={<VerifyTicket />} />
-          <Route path="/snacks" element={<SnacksHub />} />
-          <Route path="/food-beverages" element={<SnacksHub />} />
-
-          
-          <Route
-            path="/seats/:showId"
-            element={
-              <PrivateRoute>
-                <Seats />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/addons/:showId"
-            element={
-              <PrivateRoute>
-                <AddOns />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/my-bookings"
-            element={
-              <PrivateRoute>
-                <MyBookings />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/mybookings"
-            element={
-              <PrivateRoute>
-                <MyBookings />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/scanner"
-            element={
-              <PrivateRoute>
-                <Scanner />
-              </PrivateRoute>
-            }
-          />
-
-          
-          <Route
-            path="/admin"
-            element={
-              <AdminGate>
-                <Admin />
-              </AdminGate>
-            }
-          />
-
-          <Route
-            path="/admin/dashboard"
-            element={
-              <AdminGate>
-                <AdminDashboard />
-              </AdminGate>
-            }
-          />
-
-          <Route
-            path="/admin/movies"
-            element={
-              <AdminGate>
-                <AdminMovies />
-              </AdminGate>
-            }
-          />
-
-          <Route
-            path="/admin/shows"
-            element={
-              <AdminGate>
-                <AdminShows />
-              </AdminGate>
-            }
-          />
-
-          <Route
-            path="/admin/snacks"
-            element={
-              <AdminGate>
-                <AdminSnacks />
-              </AdminGate>
-            }
-          />
-
-          <Route
-            path="/admin/parking"
-            element={
-              <AdminGate>
-                <AdminParking />
-              </AdminGate>
-            }
-          />
-
-          <Route
-            path="/admin/analytics"
-            element={
-              <AdminGate>
-                <AdminAnalytics />
-              </AdminGate>
-            }
-          />
-
-          <Route
-            path="/admin/iot"
-            element={
-              <AdminGate>
-                <AdminIoTConsole />
-              </AdminGate>
-            }
-          />
-
-          <Route
-            path="/admin/scan"
-            element={
-              <AdminGate>
-                <AdminScan />
-              </AdminGate>
-            }
-          />
-
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-
-      <Footer />
-    </BrowserRouter>
-  );
-}
+export default App;

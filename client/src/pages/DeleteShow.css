@@ -1,0 +1,286 @@
+/* DeleteShow.css - Darker Theme */
+.delete-show-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: linear-gradient(145deg, #101010, #080808);
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid #202020;
+    color: #cccccc;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.delete-show-title {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+    background: linear-gradient(45deg, #6abe02, #a2d64b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: #0a0a0a;
+    border-radius: 12px;
+    border: 1px solid #1a1a1a;
+    align-items: flex-end;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+    min-width: 200px;
+}
+
+.filter-item label {
+    font-weight: 500;
+    color: #6abe02;
+    font-size: 0.9rem;
+    margin-bottom: 0.1rem;
+}
+
+.filter-input {
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid #282828;
+    background: #050505;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    line-height: 1.4;
+}
+
+.filter-input:focus {
+    border-color: #6abe02;
+    box-shadow: 0 0 0 3px rgba(106, 190, 2, 0.3);
+    outline: none;
+    background: #101010;
+}
+
+.filter-input[type="date"] {
+    position: relative;
+    color-scheme: dark;
+}
+
+.filter-input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(80%);
+    cursor: pointer;
+}
+
+.filter-input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(90%);
+}
+
+.clear-filters-button {
+    padding: 0.8rem 1.5rem;
+    background: #252525;
+    color: #aaaaaa;
+    border: 1px solid #303030;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    height: calc(1.6rem + 1.4em + 2px);
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+
+.clear-filters-button:hover {
+    background-color: #303030;
+    color: #cccccc;
+    border-color: #404040;
+}
+
+.clear-filters-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #181818;
+    color: #666666;
+    border-color: #202020;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #1f1f1f;
+    margin-top: 1rem;
+    background: #080808;
+}
+
+.showtimes-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header th {
+    padding: 1.2rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #a2d64b;
+    border-bottom: 2px solid #282828;
+    background-color: #121212;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.table-row {
+    transition: background-color 0.2s ease;
+}
+
+.table-row:nth-child(even) {
+     background-color: #0f0f0f;
+}
+
+.table-row:hover {
+    background-color: #1a1a1a;
+}
+
+.table-data {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #222222;
+    font-size: 0.95rem;
+    vertical-align: middle;
+    color: #b0b0b0;
+}
+
+.no-shows, .loading-indicator {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #555555;
+    font-size: 1.1rem;
+}
+
+.loading-indicator {
+     color: #666666;
+}
+
+.delete-button {
+    background: linear-gradient(45deg, #a51d2a 0%, #c42a3a 100%);
+    color: #f0f0f0;
+    border: 1px solid #801620;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.25s ease-out;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                0 2px 5px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.delete-button:hover:not(:disabled) {
+    background: linear-gradient(45deg, #b31e2c 0%, #d03141 100%);
+    border-color: #931b25;
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.delete-button:focus:not(:disabled) {
+    outline: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                0 0 0 3px rgba(200, 42, 58, 0.5);
+}
+
+.delete-button:active:not(:disabled) {
+    transform: translateY(0px);
+    background: linear-gradient(45deg, #9a1a25 0%, #b02635 100%);
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.delete-button:disabled {
+    background: #4d1c22;
+    color: #776a6c;
+    border-color: #3b151a;
+    cursor: not-allowed;
+    box-shadow: none;
+    text-shadow: none;
+    opacity: 0.6;
+    transform: none;
+}
+
+.error-message,
+.success-message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    text-align: center;
+    font-weight: 500;
+}
+
+.error-message {
+    color: #ff9999;
+    background: rgba(179, 30, 44, 0.2);
+    border: 1px solid #7a1c25;
+}
+
+.success-message {
+    color: #b3e699;
+    background: rgba(106, 190, 2, 0.15);
+    border: 1px solid #4a7d0f;
+}
+
+@media (max-width: 992px) {
+     .filters {
+         gap: 1rem;
+     }
+     .filter-item {
+         min-width: 180px;
+     }
+}
+
+@media (max-width: 768px) {
+    .delete-show-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    .filters {
+        padding: 1rem;
+    }
+     .filter-item {
+         min-width: calc(50% - 1rem);
+     }
+     .clear-filters-button {
+         width: 100%;
+         margin-top: 1rem;
+     }
+    .table-wrapper {
+        border-radius: 8px;
+    }
+    .table-header th {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    .table-data {
+        padding: 0.8rem;
+        font-size: 0.85rem;
+    }
+    .delete-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+     .filter-item {
+         min-width: 100%;
+     }
+     .clear-filters-button {
+         margin-top: 1rem;
+     }
+      .delete-show-title {
+        font-size: 1.8rem;
+    }
+}

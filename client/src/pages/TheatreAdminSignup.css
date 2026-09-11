@@ -1,0 +1,81 @@
+/* src/pages/TheatreAdminSignup.css */
+
+.theatre-admin-signup-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #1a1a1a; /* Card background color from main.css */
+    border-radius: 10px; /* Rounded corners from main.css */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* Optional: Add shadow for depth */
+}
+
+.theatre-admin-signup-container h2 {
+    color: #75d402; /* Primary green color for headings */
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ffffff; /* White text color */
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"],
+.form-group input[type="number"] {
+    padding: 0.8rem;
+    border: 1px solid #333; /* Darker border for inputs */
+    border-radius: 5px;
+    background-color: #2a2a2a; /* Input background color similar to seat available */
+    color: #ffffff; /* White text color for input */
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.submit-button {
+    background-color: hsl(87, 98%, 42%); /* Primary green button color */
+    color: #121212; /* Dark text on button */
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #5aa700; /* Darker green on hover */
+    transform: translateY(-1px); /* Slight lift on hover */
+}
+
+.error-message {
+    color: #ff4d4d; /* Red color for errors */
+    background-color: #331a1a; /* Dark red background for error message */
+    padding: 0.8rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.success-message {
+    color: #75d402; /* Green color for success */
+    background-color: #1a331a; /* Dark green background for success message */
+    padding: 0.8rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    text-align: center;
+}
