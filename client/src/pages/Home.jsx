@@ -103,7 +103,7 @@ const Home = () => {
                           colors={["#58a002", "#75d402", "#b4ec51", "#75d402", "#58a002"]}
                           animationSpeed={3}
                         >
-                          Experience Cinema Magic
+                          Experience XavierCinema Magic
                         </GradientText>
                     </h1>
                     <p>Book tickets for the latest blockbusters in seconds</p>

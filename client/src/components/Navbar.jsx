@@ -199,7 +199,7 @@ const Navbar = () => {
         // Add class to navbar when mobile search is active to potentially hide other elements
         <nav className={`navbar ${isMobileSearchActive ? 'mobile-search-active' : ''}`}>
             <Link to="/" className="navbar-brand">
-                <img src={logoIcon} alt="CinePlus+ Logo" style={{ height: '160px', marginTop: '-80px', marginBottom: '-70px', marginLeft: '-10px' }} />
+                <img src={logoIcon} alt="  Xaviercinema" style={{ height: '160px', marginTop: '-80px', marginBottom: '-70px', marginLeft: '-10px' }} />
             </Link>
 
             {/* Container for controls, search icon moved here */}

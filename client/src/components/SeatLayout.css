@@ -1,41 +1,60 @@
 /* frontend/src/components/SeatLayout.css */
 
+
+/* Original black + pink styling */
+
+
+/* ================================
+   Seat Layout Container
+================================ */
+
 .seat-layout-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
+    align-items: center;
     padding: 20px;
-    background-color: #0d0c0c; /* Match your movie-card background or adjust */
+    background-color: #0a0a0a;
     border-radius: 8px;
-    font-family: 'Arial', sans-serif; /* Cleaner font */
-    color: #eee; /* Lighter text color */
-    width: 100vw; /* Allow full viewport width */
+    font-family: Arial, sans-serif;
+    color: #eeeeee;
+    width: 100vw;
     margin: 0 auto;
-    overflow-x: auto; /* Enable horizontal scroll */
+    overflow-x: auto;
     box-sizing: border-box;
 }
 
+
+/* ================================
+   Seat Category
+================================ */
+
 .seat-category-section {
-    margin-bottom: 30px; /* More space between seat categories */
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center category content */
-    background-color: #121111;
+    align-items: center;
+    background-color: #121212;
     padding: 15px;
     border-radius: 8px;
     min-width: 700px;
     width: max-content;
+    border: 1px solid #222222;
 }
 
 .seat-category-label {
-    color: #fff; /* White color for category label */
+    color: #ffffff;
     font-size: 1.2em;
     margin-bottom: 15px;
-    text-align: center; /* Center text for category label */
+    text-align: center;
     padding-bottom: 8px;
     width: 100%;
-   
+    border-bottom: 1px solid #2a2a2a;
 }
+
+
+/* ================================
+   Seat Rows
+================================ */
 
 .seat-row {
     display: flex;
@@ -43,17 +62,22 @@
     margin-bottom: 1px;
     min-width: max-content;
     justify-content: flex-start;
-    background-color: #121111f9 !important;
+    background-color: #121212 !important;
 }
 
 .row-label {
     color: #ffffff;
     font-size: 1em;
-    min-width: 32px;      /* Fixed width for alignment */
-    margin-right: 18px;   /* Gap between label and seats */
-    text-align: right;    /* Right-align text in label */
-    position: static;     /* Remove absolute positioning */
+    min-width: 32px;
+    margin-right: 18px;
+    text-align: right;
+    position: static;
 }
+
+
+/* ================================
+   Seats Container
+================================ */
 
 .seats {
     display: flex;
@@ -63,42 +87,75 @@
     gap: 8px;
 }
 
-.seat {
-    width: 32px; /* Slightly larger seat width */
-    height: 32px; /* Slightly larger seat height */
-    border-radius: 6px; /* More rounded corners for seats */
-    margin: 3px; /* Increased spacing around seats */
-    border: none;
-    cursor: pointer;
-    font-size: 0.8em; /* Seat number font size */
-    display: flex;
-    justify-content: center; /* Center number horizontally */
-    align-items: center; /* Center number vertically */
-    color: #fff;
-    transition: transform 0.15s ease-in-out; /* Smooth transform for clicks */
-    flex-shrink: 0; /* Prevent seats from shrinking */
 
+/* ================================
+   Individual Seat
+================================ */
+
+.seat {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    margin: 3px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 0.8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    transition: transform 0.15s ease-in-out, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+    box-sizing: border-box;
 }
+
+
+/* ================================
+   Seat Hover
+================================ */
 
 .seat:hover {
-    transform: scale(1.1); /* Slightly scale up on hover */
-    border: 1px solid #75d402;
+    transform: scale(1.1);
+    border: 1px solid #ff1493;
+    box-shadow: 0 0 10px rgba(255, 20, 147, 0.45);
 }
+
+
+/* ================================
+   Available Seat
+================================ */
 
 .seat.available {
-    background-color: #1d1d1d; /* Slightly lighter available seat color */
-    color: #fff;
+    background-color: #1d1d1d;
+    color: #ffffff;
+    border-color: #303030;
 }
+
+.seat.available:hover {
+    background-color: #252525;
+}
+
+
+/* ================================
+   Selected Seat
+================================ */
 
 .seat.selected {
-    background-color: hsl(87, 98%, 42%); /* Green for selected */
-    color: #1a1a1a; /* Darker text for selected seat */
-    font-weight: bold; /* Make selected seat number bold */
+    background: linear-gradient( 135deg, #ff1493, #ff69b4);
+    color: #0a0a0a;
+    font-weight: bold;
+    border-color: #ff69b4;
+    box-shadow: 0 0 8px rgba(255, 20, 147, 0.7), 0 0 18px rgba(255, 20, 147, 0.35);
 }
 
+
+/* ================================
+   Booked Seat
+================================ */
+
 .seat.booked {
-    background-color: #726d6d !important;
-    color: #d2d2d2 !important;
+    background-color: #555555 !important;
+    color: #cccccc !important;
     cursor: not-allowed !important;
     opacity: 0.5 !important;
     pointer-events: none !important;
@@ -107,90 +164,122 @@
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
     -ms-user-select: none !important;
+    border-color: #555555 !important;
+    box-shadow: none !important;
 }
 
 .seat.booked:hover {
-    background-color: #444 !important;
+    background-color: #555555 !important;
     transform: none !important;
     cursor: not-allowed !important;
     pointer-events: none !important;
 }
 
+
+/* ================================
+   Seat Space
+================================ */
+
 .seat-space {
-    width: 20px; /* Adjust the width as needed for the space */
-    height: 32px; /* Match seat height for vertical alignment */
-    margin: 5px;   /* Match seat margin */
-    /* No background or border to make it visually a space */
+    width: 20px;
+    height: 32px;
+    margin: 5px;
 }
 
 
-/* Legend Styles */
+/* ================================
+   Legend
+================================ */
+
 .seat-legend {
     display: flex;
-    justify-content: center; /* Center legend items */
+    justify-content: center;
+    align-items: center;
     margin-top: 30px;
-    gap: 30px; /* More spacing between legend items */
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #ddd; /* Legend text color */
+    color: #dddddd;
     font-size: 1em;
 }
 
 .legend-item .seat {
     width: 24px;
     height: 24px;
-    margin: 0; /* Reset margins for legend seats */
-    font-size: 0; /* Hide numbers in legend seats */
+    margin: 0;
+    font-size: 0;
     border-radius: 5px;
+    cursor: default;
 }
 
-/* Selected Seats Display */
+.legend-item .seat:hover {
+    transform: none;
+}
+
+
+/* ================================
+   Selected Seats Display
+================================ */
+
 .selected-seats-display {
     margin-top: 25px;
-    padding: 12px;
-    background-color: #2a2a2a;
+    padding: 12px 18px;
+    background-color: #181818;
+    border: 1px solid #292929;
     border-radius: 6px;
-    color: hsl(87, 98%, 42%); /* Green color for selected seats text */
+    color: #ff1493;
     font-size: 1em;
     text-align: center;
+    box-shadow: 0 0 12px rgba(255, 20, 147, 0.12);
 }
 
 
+/* ================================
+   Empty Seat Row
+================================ */
 
 .empty-seat-row {
-    width: 100%; /* Take full width of the container */
-    height: 20px; /* Adjust the height of the empty row as needed */
-    margin-bottom: 15px; /* Add some margin below the empty row */
-    /* You can add a border or background for visual separation if needed */
-    /* border-bottom: 1px dashed #777; */ /* Example dashed line for separation */
+    width: 100%;
+    height: 20px;
+    margin-bottom: 15px;
 }
 
-/* SeatLayout.css */
+
+/* ================================
+   Screen View
+================================ */
+
 .screen-view {
     min-width: 700px;
     width: max-content;
     margin-left: auto;
     margin-right: auto;
     display: block;
-    background: linear-gradient(to bottom, #141414, #0d0c0c);
-    color: #979797;
+    background: linear-gradient( to bottom, #171717, #0d0d0d);
+    color: #999999;
     text-align: center;
     padding: 0.3rem 1.2rem;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
     letter-spacing: 1px;
-    /* text-shadow: 0 2px 4px rgba(117, 212, 2, 0.3); */
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
     position: relative;
-    /* box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); */
-    /* border: 1px solid #75d402;
-} */}
+    border: 1px solid #252525;
+    border-bottom: none;
+    box-shadow: 0 -5px 25px rgba(255, 20, 147, 0.08);
+}
+
+
+/* ================================
+   Screen Pink Glow
+================================ */
 
 .screen-view::before {
     content: '';
@@ -199,13 +288,14 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(to right, 
-        rgba(117, 212, 2, 0) 0%,
-        rgb(0, 255, 89) 50%,
-        rgba(117, 212, 2, 0) 100%
-    );
+    background: linear-gradient( to right, rgba(255, 20, 147, 0) 0%, #ff1493 50%, rgba(255, 20, 147, 0) 100%);
     filter: blur(5px);
 }
+
+
+/* ================================
+   Blank Seat
+================================ */
 
 .seat.blank-space {
     visibility: hidden;
@@ -218,39 +308,57 @@
     height: 0;
 }
 
+
+/* ================================
+   Decimal Space
+================================ */
+
 .seat.decimal-space {
-    width: 32px; /* Same width as regular seats */
-    height: 32px; /* Same height as regular seats */
-    margin: 5px; /* Same margin as regular seats */
+    width: 32px;
+    height: 32px;
+    margin: 5px;
     background: transparent;
     border: none;
     pointer-events: none;
-    flex-shrink: 0; /* Prevent decimal spaces from shrinking */
+    flex-shrink: 0;
 }
 
+
+/* ================================
+   Mobile
+================================ */
+
 @media (max-width: 600px) {
-  .seat-layout-container {
-    display: flex !important;
-    justify-content: center;
-    align-items: flex-start;
-    overflow-x: auto !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-    padding-bottom: 100px;
-  }
-  .seat-category-section {
-    display: block !important;
-    min-width: 700px !important;
-    width: max-content !important;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .screen-view {
-    min-width: 700px !important;
-    width: max-content !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    display: block !important;
-  }
+    .seat-layout-container {
+        display: flex !important;
+        justify-content: center;
+        align-items: flex-start;
+        overflow-x: auto !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        min-width: 0 !important;
+        padding: 15px;
+        padding-bottom: 100px;
+        box-sizing: border-box;
+    }
+    .seat-category-section {
+        display: block !important;
+        min-width: 700px !important;
+        width: max-content !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .screen-view {
+        min-width: 700px !important;
+        width: max-content !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        display: block !important;
+    }
+    .seat-legend {
+        gap: 15px;
+    }
+    .legend-item {
+        font-size: 0.9em;
+    }
 }

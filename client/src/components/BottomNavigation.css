@@ -5,12 +5,13 @@
     left: 0;
     right: 0;
     height: 60px;
-    background-color: #0a0a0a;
-    border-top: 1px solid #333;
+    background-color: #050505;
+    border-top: 1px solid rgba(255, 20, 147, 0.35);
     z-index: 1000;
     justify-content: space-around;
     align-items: center;
     padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -4px 18px rgba(255, 20, 147, 0.08);
 }
 
 .bottom-nav-item {
@@ -18,7 +19,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #888;
+    color: #888888;
     text-decoration: none;
     font-size: 0.75rem;
     gap: 0.2rem;
@@ -27,28 +28,53 @@
     padding: 0.5rem;
     flex: 1;
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: color 0.25s ease, transform 0.2s ease;
 }
 
 .bottom-nav-item svg {
     width: 24px;
     height: 24px;
+    transition: filter 0.25s ease, transform 0.2s ease;
 }
 
 .bottom-nav-item:hover,
 .bottom-nav-item:focus,
 .bottom-nav-item.active {
-    color: #75d402;
+    color: #ff1493;
     outline: none;
+}
+
+.bottom-nav-item:hover svg,
+.bottom-nav-item:focus svg,
+.bottom-nav-item.active svg {
+    filter: drop-shadow(0 0 6px rgba(255, 20, 147, 0.6));
+    transform: translateY(-1px);
+}
+
+.bottom-nav-item:active {
+    transform: scale(0.95);
 }
 
 @media (max-width: 768px) {
     .bottom-navigation {
         display: flex;
     }
-    
-    /* Make space for the bottom nav so content isn't hidden behind it */
+    /* Make space for the bottom navigation */
     body {
         padding-bottom: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bottom-navigation {
+        height: 58px;
+    }
+    .bottom-nav-item {
+        font-size: 0.7rem;
+        padding: 0.4rem;
+    }
+    .bottom-nav-item svg {
+        width: 22px;
+        height: 22px;
     }
 }

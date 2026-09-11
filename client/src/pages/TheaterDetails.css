@@ -19,19 +19,19 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem; /* Add some space between title and button */
+    gap: 1rem;
     margin-bottom: 0.5rem;
 }
 
 .theater-info-header h1 {
     font-size: 2.5rem;
-    margin-bottom: 0; /* Remove bottom margin as it's on the container now */
-    background: linear-gradient(135deg, #75d402 0%, #b4ec51 100%);
+    margin-bottom: 0;
+    background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
-    text-shadow: 0 2px 4px rgba(117, 212, 2, 0.2);
+    text-shadow: 0 2px 4px rgba(255, 20, 147, 0.2);
     letter-spacing: -0.5px;
 }
 
@@ -42,35 +42,39 @@
     letter-spacing: 1px;
 }
 
+
 /* --- Like Button Styles --- */
+
 .like-theater-btn {
     background: transparent;
     border: none;
-    color: #75d402;
+    color: #ff1493;
     cursor: pointer;
     transition: transform 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px; /* Clickable area */
+    padding: 5px;
     margin: 0;
     flex-shrink: 0;
 }
 
 .like-theater-btn:hover {
-    transform: scale(1.15); /* Enlarge icon on hover */
+    transform: scale(1.15);
 }
 
 .like-theater-btn.liked {
-    color: #75d402; /* Use theme color for the liked icon */
+    color: #ff69b4;
 }
 
+
 /* No special hover for liked, the default scale is enough */
-.like-theater-btn.liked:hover {
-}
+
+.like-theater-btn.liked:hover {}
 
 
 /* Date Selector */
+
 .theater-date-selector {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -96,14 +100,14 @@
 }
 
 .date-card:hover {
-    border-color: #75d402;
+    border-color: #ff1493;
 }
 
 .date-card.active {
-    background: linear-gradient(135deg, #75d402 0%, #b4ec51 100%);
-    border-color: #75d402;
+    background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+    border-color: #ff1493;
     color: #121212;
-    box-shadow: 0 4px 15px rgba(117, 212, 2, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
 }
 
 .day-name {
@@ -133,7 +137,9 @@
     color: #121212;
 }
 
+
 /* Movies List */
+
 .movies-showtimes-section {
     display: grid;
     gap: 2rem;
@@ -163,7 +169,7 @@
 }
 
 .view-movie-details-link {
-    color: #75d402;
+    color: #ff1493;
     text-decoration: none;
     font-size: 0.9rem;
     transition: opacity 0.3s ease;
@@ -202,13 +208,13 @@
 
 .showtime-slot:hover {
     background-color: #2a2a2a;
-    border-color: #75d402;
+    border-color: #ff1493;
 }
 
 .showtime-slot.plenty {
     background-color: #1f1f1f;
     color: #fff;
-    border-color: #75d402;
+    border-color: #ff1493;
 }
 
 .showtime-slot.limited {
@@ -245,7 +251,9 @@
     grid-column: 1 / -1;
 }
 
+
 /* Loading and Error States */
+
 .loading,
 .error {
     text-align: center;
@@ -254,7 +262,9 @@
     font-size: 1.2rem;
 }
 
+
 /* Responsive Design */
+
 @media (max-width: 992px) {
     .theater-date-selector {
         grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
@@ -265,16 +275,13 @@
     .theater-details-page-container {
         padding: 1rem;
     }
-
     .theater-info-header h1 {
         font-size: 2rem;
     }
-
     .theater-date-selector,
     .movies-showtimes-section {
         padding: 0 1rem;
     }
-
     .movie-showtime-card {
         padding: 1.5rem;
     }
@@ -284,15 +291,12 @@
     .date-card {
         padding: 0.8rem;
     }
-
     .date-day {
         font-size: 1.5rem;
     }
-
     .showtimes-grid {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
-
     .showtime-slot {
         padding: 0.6rem;
         min-height: 4rem;

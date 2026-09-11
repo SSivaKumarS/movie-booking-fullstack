@@ -1,36 +1,53 @@
 /* Navbar.css */
 
-/* --- Existing styles ... --- */
+
+/* ================================
+   Navbar
+================================ */
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8rem 1.5rem; /* Desktop padding */
+    padding: 0.8rem 1.5rem;
     background: #0a0a0a;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
-    position: sticky;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
     top: 0;
     z-index: 1000;
     gap: 1rem;
     flex-wrap: nowrap;
-    /* Add relative positioning for absolute search */
-    position: relative;
 }
+
+
+/* ================================
+   Brand
+================================ */
 
 .navbar-brand {
     font-size: 1.8rem;
     font-weight: 700;
-    background: linear-gradient(45deg, #75d402, #b4ec51);
+    background: linear-gradient( 45deg, #ff1493, #ff69b4);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     text-decoration: none;
     white-space: nowrap;
     margin-right: 1rem;
     flex-shrink: 0;
-    /* Ensure brand stays visible when search is active */
-    z-index: 1003; /* Higher than active search */
-    position: relative; /* Needed for z-index */
+    z-index: 1003;
+    position: relative;
+    transition: filter 0.25s ease;
 }
+
+.navbar-brand:hover {
+    filter: drop-shadow( 0 0 8px rgba(255, 20, 147, 0.45));
+}
+
+
+/* ================================
+   Navigation Controls
+================================ */
 
 .nav-controls {
     display: flex;
@@ -41,90 +58,176 @@
     min-width: 0;
 }
 
+
+/* ================================
+   Search
+================================ */
+
 .search-container {
-    /* Desktop styles */
     position: relative;
     flex-grow: 1;
     max-width: 450px;
     min-width: 150px;
-    display: flex; /* Use flex for input and close button */
+    display: flex;
     align-items: center;
 }
 
 .search-input {
     width: 100%;
     padding: 0.7rem 1.2rem;
-    border: 1px solid #2a2a2a;
+    padding-right: 2.5rem;
+    border: 1px solid #292929;
     border-radius: 20px;
-    background: #1a1a1a;
-    color: #fff;
+    background: #171717;
+    color: #ffffff;
     font-size: 0.9rem;
-    transition: all 0.3s ease;
-    /* Make space for close button if needed */
-    padding-right: 2.5rem; /* Adjust as needed */
+    outline: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
-.search-input:focus { outline: none; border-color: #75d402; box-shadow: 0 0 8px rgba(117, 212, 2, 0.2); }
 
-/* Search Results Styling */
+.search-input::placeholder {
+    color: #777777;
+}
+
+.search-input:focus {
+    border-color: #ff1493;
+    background: #1b1b1b;
+    box-shadow: 0 0 0 2px rgba(255, 20, 147, 0.08), 0 0 12px rgba(255, 20, 147, 0.18);
+}
+
+
+/* ================================
+   Search Results
+================================ */
+
 .search-results {
     position: absolute;
     top: calc(100% + 6px);
     left: 0;
     right: 0;
-    background: #0a0a0a;
+    background: #0d0d0d;
     border-radius: 8px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-    border: 1px solid #333;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+    border: 1px solid #292929;
     overflow-y: auto;
     max-height: 300px;
-    z-index: 1001; /* Below active mobile search overlay */
+    z-index: 1001;
 }
-/* ... other result styles ... */
-.results-list { list-style: none; padding: 0.3rem 0; margin: 0; }
-.result-item { margin: 0; padding: 0; border-bottom: 1px solid #333; }
-.result-item:last-child { border-bottom: none; }
-.result-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1.2rem; color: #e0e0e0; text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; cursor: pointer; font-size: 0.9rem; }
-.result-link:hover, .result-link:focus { background-color: rgba(117, 212, 2, 0.1); color: #ffffff; outline: none; }
-.result-icon { display: flex; align-items: center; justify-content: center; color: #75d402; flex-shrink: 0; }
-.result-title { flex-grow: 1; }
-.result-subtitle { font-size: 0.8rem; color: #888; margin-left: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.result-error { padding: 0.7rem 1.2rem; color: #ff6b6b; font-style: italic; font-size: 0.9rem; }
 
-/* Mobile Search Icon Button */
+.results-list {
+    list-style: none;
+    padding: 0.3rem 0;
+    margin: 0;
+}
+
+.result-item {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #292929;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1.2rem;
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.result-link:hover,
+.result-link:focus {
+    background: rgba(255, 20, 147, 0.09);
+    color: #ffffff;
+    outline: none;
+}
+
+.result-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff1493;
+    flex-shrink: 0;
+}
+
+.result-title {
+    flex-grow: 1;
+}
+
+.result-subtitle {
+    font-size: 0.8rem;
+    color: #888888;
+    margin-left: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-error {
+    padding: 0.7rem 1.2rem;
+    color: #ff6b8a;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+
+/* ================================
+   Search Icon
+================================ */
+
 .search-icon-button {
-    display: none; /* Hidden on desktop */
+    display: none;
     background: none;
     border: none;
     color: #e0e0e0;
     padding: 0.5rem;
     cursor: pointer;
-    margin-left: 0.5rem; /* Space from brand */
-    z-index: 1003; /* Keep above potential overlays */
+    margin-left: 0.5rem;
+    z-index: 1003;
     position: relative;
-}
-.search-icon-button:hover {
-    color: #75d402;
+    transition: color 0.2s ease;
 }
 
-/* Mobile Search Close Button */
+.search-icon-button:hover {
+    color: #ff1493;
+}
+
+
+/* ================================
+   Search Close Button
+================================ */
+
 .search-close-button {
-    display: none; /* Hidden by default */
+    display: none;
     position: absolute;
     right: 0.5rem;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: #aaa;
+    color: #aaaaaa;
     cursor: pointer;
     padding: 0.3rem;
     line-height: 1;
-}
-.search-close-button:hover {
-    color: #fff;
+    transition: color 0.2s ease;
 }
 
-/* Navigation Tools Section */
+.search-close-button:hover {
+    color: #ff69b4;
+}
+
+
+/* ================================
+   Navigation Tools
+================================ */
+
 .nav-tools {
     display: flex;
     align-items: center;
@@ -132,174 +235,384 @@
     flex-shrink: 0;
 }
 
-/* ... City Selector, Nav Links, Scanner, Auth, Profile Dropdown styles ... */
-/* City Selector */
+
+/* ================================
+   City Selector
+================================ */
+
 .city-selector select {
     padding: 0.6rem 0.8rem;
-    border: 1px solid #2a2a2a;
+    border: 1px solid #292929;
     border-radius: 6px;
-    background: #1a1a1a;
-    color: #fff;
+    background: #171717;
+    color: #ffffff;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    max-width: 150px; /* Limit width */
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.city-selector select:hover { border-color: #444; }
-.city-selector select:focus { border-color: #75d402; outline: none; box-shadow: 0 0 5px rgba(117, 212, 2, 0.2); }
 
-/* Nav Links */
+.city-selector select:hover {
+    border-color: #444444;
+}
+
+.city-selector select:focus {
+    border-color: #ff1493;
+    outline: none;
+    box-shadow: 0 0 8px rgba(255, 20, 147, 0.18);
+}
+
+
+/* ================================
+   Navigation Links
+================================ */
+
 .nav-link {
     color: #e0e0e0;
     text-decoration: none;
     padding: 0.6rem 0.8rem;
     border-radius: 6px;
-    transition: all 0.3s ease;
+    transition: background 0.25s ease, color 0.25s ease;
     font-size: 0.95rem;
-    white-space: nowrap; /* Prevent wrapping */
+    white-space: nowrap;
 }
-.nav-link:hover { background: rgba(117, 212, 2, 0.1); color: #75d402; }
 
-/* Scanner Link */
-.scanner-link { display: flex; align-items: center; gap: 0.4rem; color: #75d402; } /* Base style */
-.scanner-link:hover { color: #8eff00; }
-.scanner-icon { fill: currentColor; }
-.dropdown-item.scanner-link-mobile-item { display: none; padding: 0; }
-.dropdown-item.scanner-link-mobile-item .dropdown-link { display: flex; align-items: center; gap: 0.8rem; color: inherit; text-decoration: none; flex-grow: 1; padding: 0.7rem 1.2rem; }
-.dropdown-item:hover, .dropdown-item.scanner-link-mobile-item:hover { background-color: rgba(117, 212, 2, 0.1); color: #ffffff !important; }
-.dropdown-item:hover .dropdown-icon, .dropdown-item.scanner-link-mobile-item:hover .dropdown-icon { fill: #ffffff; }
-
-
-/* Auth Links (Login/Signup) */
-.auth-links { display: flex; gap: 0.8rem; align-items: center; }
-.auth-link { color: #e0e0e0; text-decoration: none; padding: 0.6rem 1rem; border-radius: 6px; transition: all 0.3s ease; font-size: 0.95rem; white-space: nowrap; }
-.auth-link:hover { background: rgba(255, 255, 255, 0.08); }
-.signup-link { background: #75d402; color: #0a0a0a; font-weight: 500; }
-.signup-link:hover { background: #8eff00; color: #0a0a0a; }
-
-/* Profile Dropdown */
-.profile-dropdown { position: relative; }
-.profile-button { display: flex; align-items: center; gap: 0.5rem; background: none; border: none; color: #e0e0e0; cursor: pointer; padding: 0.5rem 0.8rem; border-radius: 6px; transition: all 0.3s ease; }
-.profile-button:hover { background-color: rgba(255, 255, 255, 0.08); }
-.profile-icon { width: 28px; height: 28px; fill: #75d402; }
-.profile-picture-nav { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #75d402; background-color: #1f1f1f; }
-.profile-text { font-size: 1rem; font-weight: 500; white-space: nowrap; }
-.dropdown-menu { position: absolute; right: 0; top: calc(100% + 5px); background-color: #0a0a0a; border-radius: 6px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); list-style: none; padding: 0.4rem 0; margin: 0; min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(5px); transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease; z-index: 1000; border: 1px solid #333; }
-.dropdown-menu.visible { opacity: 1; visibility: visible; transform: translateY(0); }
-.dropdown-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.7rem 1.2rem; color: #e0e0e0; text-decoration: none; transition: all 0.2s ease; font-size: 0.9rem; white-space: nowrap; }
-.dropdown-icon { width: 18px; height: 18px; fill: #aaa; transition: fill 0.2s ease; }
-.dropdown-divider { border-top: 1px solid #444; margin: 0.4rem 0; }
-.logout-btn { background: none; border: none; width: 100%; text-align: left; cursor: pointer; color: #ff6b6b; }
-.logout-btn:hover { background-color: rgba(244, 67, 54, 0.1); color: #ff4d4d !important; }
-.logout-btn:hover .dropdown-icon { fill: #ff4d4d; }
-.logout-btn .dropdown-icon { fill: #ff6b6b; }
-
-/* ================================== */
-/* --- Responsive Adjustments --- */
-/* ================================== */
-
-@media (max-width: 992px) { /* Tablet breakpoint */
-    .search-container { max-width: 300px; }
-    .nav-tools { gap: 0.8rem; }
-    .nav-link { font-size: 0.9rem; padding: 0.5rem 0.6rem; }
-    .city-selector select { font-size: 0.85rem; padding: 0.5rem 0.6rem; max-width: 120px; }
+.nav-link:hover {
+    background: rgba(255, 20, 147, 0.09);
+    color: #ff1493;
 }
 
 
-@media (max-width: 768px) { /* Mobile breakpoint */
-    .navbar { padding: 0.6rem 1rem; gap: 0.5rem; }
-    .navbar-brand { font-size: 1.5rem; margin-right: auto; } /* Push brand left */
+/* ================================
+   Scanner
+================================ */
 
-    .nav-controls {
-        /* Change order: Icon -> Tools -> (Hidden Search Container) */
-        gap: 0; /* Remove gap, managed by margins */
-        justify-content: flex-end; /* Keep tools to the right */
-        flex-grow: 0; /* Don't grow */
-        margin-left: auto; /* Push controls to the right */
+.scanner-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #ff1493;
+}
+
+.scanner-link:hover {
+    color: #ff69b4;
+}
+
+.scanner-icon {
+    fill: currentColor;
+}
+
+.dropdown-item.scanner-link-mobile-item {
+    display: none;
+    padding: 0;
+}
+
+.dropdown-item.scanner-link-mobile-item .dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: inherit;
+    text-decoration: none;
+    flex-grow: 1;
+    padding: 0.7rem 1.2rem;
+}
+
+.dropdown-item:hover,
+.dropdown-item.scanner-link-mobile-item:hover {
+    background-color: rgba(255, 20, 147, 0.09);
+    color: #ffffff !important;
+}
+
+.dropdown-item:hover .dropdown-icon,
+.dropdown-item.scanner-link-mobile-item:hover .dropdown-icon {
+    fill: #ffffff;
+}
+
+
+/* ================================
+   Authentication
+================================ */
+
+.auth-links {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.auth-link {
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    transition: background 0.25s ease, color 0.25s ease;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.auth-link:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.signup-link {
+    background: linear-gradient( 135deg, #ff1493, #ff4db8);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(255, 20, 147, 0.18);
+}
+
+.signup-link:hover {
+    background: linear-gradient( 135deg, #e6007e, #ff1493);
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(255, 20, 147, 0.28);
+}
+
+
+/* ================================
+   Profile Dropdown
+================================ */
+
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    cursor: pointer;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+.profile-button:hover {
+    background-color: rgba(255, 20, 147, 0.08);
+    color: #ffffff;
+}
+
+.profile-icon {
+    width: 28px;
+    height: 28px;
+    fill: #ff1493;
+}
+
+.profile-picture-nav {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff1493;
+    background-color: #1f1f1f;
+}
+
+.profile-text {
+    font-size: 1rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+
+/* ================================
+   Dropdown Menu
+================================ */
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 5px);
+    background-color: #0d0d0d;
+    border-radius: 7px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+    list-style: none;
+    padding: 0.4rem 0;
+    margin: 0;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    z-index: 1000;
+    border: 1px solid #292929;
+}
+
+.dropdown-menu.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.7rem 1.2rem;
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.dropdown-icon {
+    width: 18px;
+    height: 18px;
+    fill: #aaaaaa;
+    transition: fill 0.2s ease;
+}
+
+.dropdown-divider {
+    border-top: 1px solid #333333;
+    margin: 0.4rem 0;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    color: #ff6b8a;
+}
+
+.logout-btn:hover {
+    background-color: rgba(255, 20, 147, 0.08);
+    color: #ff69b4 !important;
+}
+
+.logout-btn:hover .dropdown-icon {
+    fill: #ff69b4;
+}
+
+.logout-btn .dropdown-icon {
+    fill: #ff6b8a;
+}
+
+
+/* ================================
+   Tablet
+================================ */
+
+@media (max-width: 992px) {
+    .search-container {
+        max-width: 300px;
     }
+    .nav-tools {
+        gap: 0.8rem;
+    }
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.6rem;
+    }
+    .city-selector select {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.6rem;
+        max-width: 120px;
+    }
+}
 
-     /* --- Mobile Search Active State --- */
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.6rem 1rem;
+        gap: 0.5rem;
+    }
+    .navbar-brand {
+        font-size: 1.5rem;
+        margin-right: auto;
+    }
+    .nav-controls {
+        gap: 0;
+        justify-content: flex-end;
+        flex-grow: 0;
+        margin-left: auto;
+    }
+    /* Mobile Search Active */
     .navbar.mobile-search-active .nav-tools {
-        opacity: 0; /* Hide tools when search is active */
+        opacity: 0;
         visibility: hidden;
         transition: opacity 0.2s ease, visibility 0.2s ease;
     }
     .navbar.mobile-search-active .navbar-brand {
-        opacity: 0; /* Optionally hide brand */
+        opacity: 0;
         visibility: hidden;
     }
     .navbar.mobile-search-active .search-icon-button {
         display: none;
     }
-
-    /* Style the search container for mobile overlay */
+    /* Mobile Search Container */
     .search-container {
-        display: none; /* Hidden by default on mobile */
+        display: none;
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #0a0a0a; /* Match navbar */
+        background-color: #0a0a0a;
         padding: 0.5rem 1rem;
         box-sizing: border-box;
-        z-index: 1002; /* Above other elements but below brand maybe */
+        z-index: 1002;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
         transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-        max-width: none; /* Override desktop max-width */
-        min-width: auto; /* Override desktop min-width */
+        max-width: none;
+        min-width: auto;
     }
-
     .search-container.mobile-active {
-        display: flex; /* Show as flex container */
+        display: flex;
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
     }
-
     .search-input {
-        font-size: 0.9rem; /* Slightly larger for mobile focus */
+        font-size: 0.9rem;
         padding: 0.6rem 1rem;
-        padding-right: 2.8rem; /* Ensure space for close btn */
-        border-radius: 8px; /* Less rounded maybe */
-        height: calc(100% - 0.4rem); /* Fill height minus padding */
+        padding-right: 2.8rem;
+        border-radius: 8px;
+        height: calc(100% - 0.4rem);
         align-self: center;
-        margin: 0.2rem 0; /* Small vertical margin */
+        margin: 0.2rem 0;
     }
-
-    /* Show mobile search icon but visually hide it since bottom nav handles it now, or keep it if needed. Let's hide it from the Navbar. */
+    /* Hide Navbar Search Icon */
     .search-icon-button {
         display: none;
     }
-
-    /* Show mobile close button */
+    /* Mobile Close Button */
     .search-container.mobile-active .search-close-button {
         display: block;
         color: #e0e0e0;
     }
-
-    /* Adjust results position for mobile overlay */
+    .search-container.mobile-active .search-close-button:hover {
+        color: #ff1493;
+    }
+    /* Mobile Search Results */
     .search-container.mobile-active .search-results {
         top: 100%;
         left: 0;
         right: 0;
         width: 100%;
         max-width: none;
-        border-radius: 0 0 8px 8px; /* Adjust rounding */
-        border-top: 1px solid #333;
+        border-radius: 0 0 8px 8px;
+        border-top: 1px solid #333333;
     }
-    .result-link { font-size: 0.85rem; padding: 0.7rem 1rem; }
-
-
-    /* Hide/show elements */
+    .result-link {
+        font-size: 0.85rem;
+        padding: 0.7rem 1rem;
+    }
+    /* Mobile Navigation Tools */
     .nav-tools {
-        gap: 0.3rem; /* Tighter gap */
-        transition: opacity 0.2s ease, visibility 0.2s ease; /* Add transition */
+        gap: 0.3rem;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
     }
     .city-selector select {
         font-size: 0.75rem;
@@ -309,14 +622,34 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    /* Hide nav links normally on mobile, since they are in bottom nav now. */
-    .nav-link { display: none; }
-    .scanner-link-desktop { display: none; }
-    .dropdown-item.scanner-link-mobile-item { display: flex; }
-    /* Hide profile and auth section on mobile since it's in bottom nav */
-    .profile-dropdown, .auth-links { display: none; }
-    .dropdown-menu { min-width: 180px; }
-    .dropdown-item { font-size: 0.85rem; padding: 0.6rem 1rem; gap: 0.6rem; }
-    .dropdown-item.scanner-link-mobile-item .dropdown-link { padding: 0.6rem 1rem; }
-    .dropdown-icon { width: 16px; height: 16px; }
+    /* Hide Desktop Navigation */
+    .nav-link {
+        display: none;
+    }
+    .scanner-link-desktop {
+        display: none;
+    }
+    .dropdown-item.scanner-link-mobile-item {
+        display: flex;
+    }
+    /* Hide Desktop Profile/Auth */
+    .profile-dropdown,
+    .auth-links {
+        display: none;
+    }
+    .dropdown-menu {
+        min-width: 180px;
+    }
+    .dropdown-item {
+        font-size: 0.85rem;
+        padding: 0.6rem 1rem;
+        gap: 0.6rem;
+    }
+    .dropdown-item.scanner-link-mobile-item .dropdown-link {
+        padding: 0.6rem 1rem;
+    }
+    .dropdown-icon {
+        width: 16px;
+        height: 16px;
+    }
 }

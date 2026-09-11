@@ -1,4 +1,5 @@
-/* DeleteShow.css - Darker Theme */
+/* DeleteShow.css - Black + Pink Theme */
+
 .delete-show-container {
     max-width: 1200px;
     margin: 2rem auto;
@@ -16,11 +17,14 @@
     margin-bottom: 2.5rem;
     font-size: 2.2rem;
     font-weight: 600;
-    background: linear-gradient(45deg, #6abe02, #a2d64b);
+    background: linear-gradient(45deg, #ff1493, #ff69b4);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
 }
+
+
+/* Filters */
 
 .filters {
     display: flex;
@@ -44,7 +48,7 @@
 
 .filter-item label {
     font-weight: 500;
-    color: #6abe02;
+    color: #ff69b4;
     font-size: 0.9rem;
     margin-bottom: 0.1rem;
 }
@@ -58,11 +62,12 @@
     font-size: 1rem;
     transition: all 0.3s ease;
     line-height: 1.4;
+    box-sizing: border-box;
 }
 
 .filter-input:focus {
-    border-color: #6abe02;
-    box-shadow: 0 0 0 3px rgba(106, 190, 2, 0.3);
+    border-color: #ff1493;
+    box-shadow: 0 0 0 3px rgba(255, 20, 147, 0.2);
     outline: none;
     background: #101010;
 }
@@ -73,13 +78,16 @@
 }
 
 .filter-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(80%);
+    filter: invert(35%) sepia(90%) saturate(3000%) hue-rotate(310deg) brightness(105%) contrast(100%);
     cursor: pointer;
 }
 
 .filter-input[type="date"]::-webkit-calendar-picker-indicator:hover {
-    filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(90%);
+    filter: invert(50%) sepia(90%) saturate(3000%) hue-rotate(310deg) brightness(115%) contrast(105%);
 }
+
+
+/* Clear Filters Button */
 
 .clear-filters-button {
     padding: 0.8rem 1.5rem;
@@ -97,9 +105,9 @@
 }
 
 .clear-filters-button:hover {
-    background-color: #303030;
-    color: #cccccc;
-    border-color: #404040;
+    background-color: #301528;
+    color: #ff69b4;
+    border-color: #ff1493;
 }
 
 .clear-filters-button:disabled {
@@ -110,6 +118,9 @@
     border-color: #202020;
 }
 
+
+/* Table Wrapper */
+
 .table-wrapper {
     overflow-x: auto;
     border-radius: 12px;
@@ -117,6 +128,9 @@
     margin-top: 1rem;
     background: #080808;
 }
+
+
+/* Showtimes Table */
 
 .showtimes-table {
     width: 100%;
@@ -127,7 +141,7 @@
     padding: 1.2rem 1rem;
     text-align: left;
     font-weight: 600;
-    color: #a2d64b;
+    color: #ff69b4;
     border-bottom: 2px solid #282828;
     background-color: #121212;
     position: sticky;
@@ -140,11 +154,11 @@
 }
 
 .table-row:nth-child(even) {
-     background-color: #0f0f0f;
+    background-color: #0f0f0f;
 }
 
 .table-row:hover {
-    background-color: #1a1a1a;
+    background-color: #1a1017;
 }
 
 .table-data {
@@ -155,7 +169,11 @@
     color: #b0b0b0;
 }
 
-.no-shows, .loading-indicator {
+
+/* No Shows / Loading */
+
+.no-shows,
+.loading-indicator {
     text-align: center;
     padding: 3rem 1rem;
     color: #555555;
@@ -163,53 +181,56 @@
 }
 
 .loading-indicator {
-     color: #666666;
+    color: #666666;
 }
 
+
+/* Delete Button */
+
 .delete-button {
-    background: linear-gradient(45deg, #a51d2a 0%, #c42a3a 100%);
-    color: #f0f0f0;
-    border: 1px solid #801620;
+    background: linear-gradient(45deg, #ff1493 0%, #ff4db8 100%);
+    color: #ffffff;
+    border: 1px solid #ff1493;
     padding: 0.6rem 1.2rem;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.25s ease-out;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1),
-                0 2px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 2px 5px rgba(0, 0, 0, 0.4);
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 .delete-button:hover:not(:disabled) {
-    background: linear-gradient(45deg, #b31e2c 0%, #d03141 100%);
-    border-color: #931b25;
+    background: linear-gradient(45deg, #ff4db8 0%, #ff69c5 100%);
+    border-color: #ff69b4;
     transform: translateY(-1px);
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1),
-                0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 4px 10px rgba(255, 20, 147, 0.25);
 }
 
 .delete-button:focus:not(:disabled) {
     outline: none;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1),
-                0 0 0 3px rgba(200, 42, 58, 0.5);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 0 0 3px rgba(255, 20, 147, 0.35);
 }
 
 .delete-button:active:not(:disabled) {
-    transform: translateY(0px);
-    background: linear-gradient(45deg, #9a1a25 0%, #b02635 100%);
+    transform: translateY(0);
+    background: linear-gradient(45deg, #e60083 0%, #f238a9 100%);
     box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 .delete-button:disabled {
-    background: #4d1c22;
-    color: #776a6c;
-    border-color: #3b151a;
+    background: #351526;
+    color: #776a72;
+    border-color: #3b1a2c;
     cursor: not-allowed;
     box-shadow: none;
     text-shadow: none;
     opacity: 0.6;
     transform: none;
 }
+
+
+/* Error and Success Messages */
 
 .error-message,
 .success-message {
@@ -227,18 +248,21 @@
 }
 
 .success-message {
-    color: #b3e699;
-    background: rgba(106, 190, 2, 0.15);
-    border: 1px solid #4a7d0f;
+    color: #ff69b4;
+    background: rgba(255, 20, 147, 0.1);
+    border: 1px solid rgba(255, 20, 147, 0.35);
 }
 
+
+/* Responsive */
+
 @media (max-width: 992px) {
-     .filters {
-         gap: 1rem;
-     }
-     .filter-item {
-         min-width: 180px;
-     }
+    .filters {
+        gap: 1rem;
+    }
+    .filter-item {
+        min-width: 180px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -249,13 +273,13 @@
     .filters {
         padding: 1rem;
     }
-     .filter-item {
-         min-width: calc(50% - 1rem);
-     }
-     .clear-filters-button {
-         width: 100%;
-         margin-top: 1rem;
-     }
+    .filter-item {
+        min-width: calc(50% - 1rem);
+    }
+    .clear-filters-button {
+        width: 100%;
+        margin-top: 1rem;
+    }
     .table-wrapper {
         border-radius: 8px;
     }
@@ -274,13 +298,13 @@
 }
 
 @media (max-width: 480px) {
-     .filter-item {
-         min-width: 100%;
-     }
-     .clear-filters-button {
-         margin-top: 1rem;
-     }
-      .delete-show-title {
+    .filter-item {
+        min-width: 100%;
+    }
+    .clear-filters-button {
+        margin-top: 1rem;
+    }
+    .delete-show-title {
         font-size: 1.8rem;
     }
 }
